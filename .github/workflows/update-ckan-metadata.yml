@@ -208,60 +208,7 @@ jobs:
           dynamic_metadata_update.csv
           logs/
         retention-days: 30
-    
-    - name: Commit and push changes (optional)
-      if: steps.update_catalog.outputs.step3_success == 'true'
-      run: |
-        # Configure git
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        
-        # Add generated files (optional - you might not want to commit these)
-        # git add url_list.csv dynamic_metadata_update.csv logs/
-        
-        # Add only the summary file
-        git add logs/execution_summary.md
-        
-        # Check if there are changes to commit
-        if ! git diff --staged --quiet; then
-          git commit -m "Weekly CKAN metadata update - $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
-          git push
-          echo "Changes committed and pushed"
-        else
-          echo "No changes to commit"
-        fi
-    
-    - name: Create issue on failure
-      if: failure()
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const title = `Weekly CKAN Metadata Update Failed - ${new Date().toISOString().split('T')[0]}`;
-          const body = `
-          ## Weekly CKAN Metadata Update Failure
-          
-          The weekly metadata update workflow failed on ${new Date().toISOString()}.
-          
-          **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          
-          **Failed Steps:**
-          - Step 1 (Extract URLs): ${{ steps.extract_urls.outputs.step1_success == 'true' && '✅' || '❌' }}
-          - Step 2 (Fetch Metadata): ${{ steps.fetch_metadata.outputs.step2_success == 'true' && '✅' || '❌' }}
-          - Step 3 (Update CKAN): ${{ steps.update_catalog.outputs.step3_success == 'true' && '✅' || '❌' }}
-          
-          Please check the workflow logs for more details and take appropriate action.
-          
-          **Artifacts:** Download the artifacts from the failed run to investigate further.
-          `;
-          
-          github.rest.issues.create({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            title: title,
-            body: body,
-            labels: ['automation', 'bug', 'workflow-failure']
-          });
-    
+
     - name: Send notification (optional)
       if: always()
       run: |
