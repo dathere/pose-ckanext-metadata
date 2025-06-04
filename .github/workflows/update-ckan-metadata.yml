@@ -1,0 +1,277 @@
+name: Weekly CKAN Metadata Update
+
+on:
+  # Run every Sunday at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * 0'
+  
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update even if no changes detected'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.9'
+
+jobs:
+  update-ckan-metadata:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        # This ensures we can push changes back
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas requests PyGithub python-dateutil
+        # Install any other dependencies your scripts might need
+    
+    - name: Create required directories
+      run: |
+        mkdir -p logs
+        mkdir -p artifacts
+    
+    - name: Step 1 - Extract GitHub URLs from CKAN catalog
+      id: extract_urls
+      run: |
+        echo "Starting URL extraction..."
+        python 1get_URL.py > logs/step1_extract_urls.log 2>&1
+        
+        # Check if the step completed successfully
+        if [ $? -eq 0 ]; then
+          echo "step1_success=true" >> $GITHUB_OUTPUT
+          echo "URL extraction completed successfully"
+          
+          # Check if url_list.csv was created and has content
+          if [ -f "url_list.csv" ] && [ -s "url_list.csv" ]; then
+            URL_COUNT=$(tail -n +2 url_list.csv | wc -l)
+            echo "url_count=$URL_COUNT" >> $GITHUB_OUTPUT
+            echo "Found $URL_COUNT repository URLs"
+          else
+            echo "step1_success=false" >> $GITHUB_OUTPUT
+            echo "No URLs extracted or file is empty"
+            exit 1
+          fi
+        else
+          echo "step1_success=false" >> $GITHUB_OUTPUT
+          echo "URL extraction failed"
+          exit 1
+        fi
+      continue-on-error: false
+    
+    - name: Step 2 - Fetch dynamic metadata from GitHub
+      id: fetch_metadata
+      if: steps.extract_urls.outputs.step1_success == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
+      run: |
+        echo "Starting metadata extraction..."
+        
+        # Verify GitHub token is available
+        if [ -z "$GITHUB_TOKEN" ]; then
+          echo "Error: GITHUB_METADATA_TOKEN secret not set"
+          exit 1
+        fi
+        
+        # Update the token in the script (more secure way)
+        sed -i "s/GITHUB_TOKEN = .*/GITHUB_TOKEN = '$GITHUB_TOKEN'/" 2refresh.py
+        
+        python 2refresh.py > logs/step2_fetch_metadata.log 2>&1
+        
+        # Check if the step completed successfully
+        if [ $? -eq 0 ]; then
+          echo "step2_success=true" >> $GITHUB_OUTPUT
+          echo "Metadata extraction completed successfully"
+          
+          # Check if dynamic_metadata_update.csv was created and has content
+          if [ -f "dynamic_metadata_update.csv" ] && [ -s "dynamic_metadata_update.csv" ]; then
+            METADATA_COUNT=$(tail -n +2 dynamic_metadata_update.csv | wc -l)
+            echo "metadata_count=$METADATA_COUNT" >> $GITHUB_OUTPUT
+            echo "Fetched metadata for $METADATA_COUNT repositories"
+          else
+            echo "step2_success=false" >> $GITHUB_OUTPUT
+            echo "No metadata extracted or file is empty"
+            exit 1
+          fi
+        else
+          echo "step2_success=false" >> $GITHUB_OUTPUT
+          echo "Metadata extraction failed"
+          exit 1
+        fi
+      continue-on-error: false
+    
+    - name: Step 3 - Update CKAN catalog
+      id: update_catalog
+      if: steps.fetch_metadata.outputs.step2_success == 'true'
+      env:
+        CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+      run: |
+        echo "Starting CKAN catalog update..."
+        
+        # Verify CKAN API key is available
+        if [ -z "$CKAN_API_KEY" ]; then
+          echo "Error: CKAN_API_KEY secret not set"
+          exit 1
+        fi
+        
+        # Update the API key in the script (more secure way)
+        sed -i "s/CKAN_API_KEY = .*/CKAN_API_KEY = '$CKAN_API_KEY'/" 3update_catalog.py
+        
+        # Run the update script with automatic confirmation
+        echo "y" | python 3update_catalog.py > logs/step3_update_catalog.log 2>&1
+        
+        # Check if the step completed successfully
+        if [ $? -eq 0 ]; then
+          echo "step3_success=true" >> $GITHUB_OUTPUT
+          echo "CKAN catalog update completed successfully"
+          
+          # Extract success/error counts from the log
+          UPDATED_COUNT=$(grep -o "Successfully updated: [0-9]*" logs/step3_update_catalog.log | grep -o "[0-9]*" || echo "0")
+          ERROR_COUNT=$(grep -o "Errors encountered: [0-9]*" logs/step3_update_catalog.log | grep -o "[0-9]*" || echo "0")
+          
+          echo "updated_count=$UPDATED_COUNT" >> $GITHUB_OUTPUT
+          echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
+          echo "Updated $UPDATED_COUNT packages, $ERROR_COUNT errors"
+        else
+          echo "step3_success=false" >> $GITHUB_OUTPUT
+          echo "CKAN catalog update failed"
+          exit 1
+        fi
+      continue-on-error: false
+    
+    - name: Generate execution summary
+      id: summary
+      if: always()
+      run: |
+        echo "Generating execution summary..."
+        
+        TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        SUMMARY_FILE="logs/execution_summary.md"
+        
+        cat > $SUMMARY_FILE << EOF
+        # CKAN Metadata Update Summary
+        
+        **Execution Date:** $TIMESTAMP
+        **Workflow:** Weekly CKAN Metadata Update
+        **Repository:** ${{ github.repository }}
+        **Commit:** ${{ github.sha }}
+        
+        ## Results Summary
+        
+        | Step | Status | Details |
+        |------|--------|---------|
+        | 1. Extract URLs | ${{ steps.extract_urls.outputs.step1_success == 'true' && '✅ Success' || '❌ Failed' }} | ${{ steps.extract_urls.outputs.url_count || '0' }} URLs extracted |
+        | 2. Fetch Metadata | ${{ steps.fetch_metadata.outputs.step2_success == 'true' && '✅ Success' || '❌ Failed' }} | ${{ steps.fetch_metadata.outputs.metadata_count || '0' }} repositories processed |
+        | 3. Update CKAN | ${{ steps.update_catalog.outputs.step3_success == 'true' && '✅ Success' || '❌ Failed' }} | ${{ steps.update_catalog.outputs.updated_count || '0' }} updated, ${{ steps.update_catalog.outputs.error_count || '0' }} errors |
+        
+        ## Detailed Information
+        
+        - **Total URLs Found:** ${{ steps.extract_urls.outputs.url_count || 'N/A' }}
+        - **Metadata Processed:** ${{ steps.fetch_metadata.outputs.metadata_count || 'N/A' }}
+        - **Successfully Updated:** ${{ steps.update_catalog.outputs.updated_count || 'N/A' }}
+        - **Update Errors:** ${{ steps.update_catalog.outputs.error_count || 'N/A' }}
+        
+        ## Files Generated
+        
+        - \`url_list.csv\` - Repository URLs from CKAN catalog
+        - \`dynamic_metadata_update.csv\` - Fresh metadata from GitHub
+        - Log files in \`logs/\` directory
+        
+        ---
+        *This summary was automatically generated by GitHub Actions*
+        EOF
+        
+        echo "Summary generated in $SUMMARY_FILE"
+        cat $SUMMARY_FILE
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: ckan-update-artifacts-${{ github.run_number }}
+        path: |
+          url_list.csv
+          dynamic_metadata_update.csv
+          logs/
+        retention-days: 30
+    
+    - name: Commit and push changes (optional)
+      if: steps.update_catalog.outputs.step3_success == 'true'
+      run: |
+        # Configure git
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # Add generated files (optional - you might not want to commit these)
+        # git add url_list.csv dynamic_metadata_update.csv logs/
+        
+        # Add only the summary file
+        git add logs/execution_summary.md
+        
+        # Check if there are changes to commit
+        if ! git diff --staged --quiet; then
+          git commit -m "Weekly CKAN metadata update - $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+          git push
+          echo "Changes committed and pushed"
+        else
+          echo "No changes to commit"
+        fi
+    
+    - name: Create issue on failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const title = `Weekly CKAN Metadata Update Failed - ${new Date().toISOString().split('T')[0]}`;
+          const body = `
+          ## Weekly CKAN Metadata Update Failure
+          
+          The weekly metadata update workflow failed on ${new Date().toISOString()}.
+          
+          **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          
+          **Failed Steps:**
+          - Step 1 (Extract URLs): ${{ steps.extract_urls.outputs.step1_success == 'true' && '✅' || '❌' }}
+          - Step 2 (Fetch Metadata): ${{ steps.fetch_metadata.outputs.step2_success == 'true' && '✅' || '❌' }}
+          - Step 3 (Update CKAN): ${{ steps.update_catalog.outputs.step3_success == 'true' && '✅' || '❌' }}
+          
+          Please check the workflow logs for more details and take appropriate action.
+          
+          **Artifacts:** Download the artifacts from the failed run to investigate further.
+          `;
+          
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: title,
+            body: body,
+            labels: ['automation', 'bug', 'workflow-failure']
+          });
+    
+    - name: Send notification (optional)
+      if: always()
+      run: |
+        # You can add notification logic here
+        # For example, send to Slack, Discord, email, etc.
+        
+        if [ "${{ steps.update_catalog.outputs.step3_success }}" == "true" ]; then
+          echo "✅ Weekly CKAN metadata update completed successfully!"
+          echo "Updated ${{ steps.update_catalog.outputs.updated_count }} packages"
+        else
+          echo "❌ Weekly CKAN metadata update failed!"
+          echo "Check the workflow logs for details"
+        fi
