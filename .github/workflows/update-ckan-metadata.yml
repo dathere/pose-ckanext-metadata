@@ -77,13 +77,13 @@ jobs:
       id: fetch_metadata
       if: steps.extract_urls.outputs.step1_success == 'true'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_METADATA_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
       run: |
         echo "Starting metadata extraction..."
         
         # Verify GitHub token is available
         if [ -z "$GITHUB_TOKEN" ]; then
-          echo "Error: GITHUB_METADATA_TOKEN secret not set"
+          echo "Error: GH_METADATA_TOKEN secret not set"
           exit 1
         fi
         
