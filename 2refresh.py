@@ -243,7 +243,7 @@ class DynamicMetadataUpdater:
                 'stars',
                 'open_issues',
                 'contributors_count',
-                'discussions',
+                'discussion',
                 'last_update'
             ]
             
