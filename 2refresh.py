@@ -111,7 +111,7 @@ class DynamicMetadataUpdater:
                 'stars': repo.stargazers_count,
                 'open_issues': repo.open_issues_count,
                 'contributors_count': contributors_count,
-                'discussion': discussions_enabled,
+                'discussions': discussions_enabled,
                 'last_update': datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # Timestamp of when this data was collected
             }
             
@@ -243,7 +243,7 @@ class DynamicMetadataUpdater:
                 'stars',
                 'open_issues',
                 'contributors_count',
-                'discussion',
+                'discussions',
                 'last_update'
             ]
             
