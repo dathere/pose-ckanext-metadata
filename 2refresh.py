@@ -112,7 +112,7 @@ class DynamicMetadataUpdater:
                 'open_issues': repo.open_issues_count,
                 'contributors_count': contributors_count,
                 'discussions': discussions_enabled,
-                'last_update': datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # Timestamp of when this data was collected
+                'tstamp': datetime.utcnow().isoformat() + '+00:00'  # Timestamp of when this data was collected
             }
             
             return metadata
@@ -244,7 +244,7 @@ class DynamicMetadataUpdater:
                 'open_issues',
                 'contributors_count',
                 'discussions',
-                'last_update'
+                'tstamp'
             ]
             
             # Ensure all columns exist and reorder
