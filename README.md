@@ -8,6 +8,7 @@ This repository contains automation scripts for sourcing and cataloging metadata
 - `1get_URL.py` - Discovers CKAN extensions on GitHub
 - `2refresh.py` - Updates extension metadata 
 - `3update_catalog.py` - Synchronizes data with the catalog
+- `4uploadDataset.py` - Upload the file to datasets page
 
 ### CKAN Instance Data Collection (`sites-data-fetch/`)
 - `0.csv` - Base dataset of CKAN instances
