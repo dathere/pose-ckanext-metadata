@@ -12,7 +12,7 @@ from typing import Dict, Optional, List
 
 # Configuration
 REPO_LIMIT = 10000  # Adjust as needed
-GITHUB_TOKEN = os.getenv('GITHUB_TOKEN_METADATA', 'GH_METADATA_TOKEN')
+GITHUB_TOKEN = os.getenv('GITHUB_TOKEN', 'GH_METADATA_TOKEN')
 
 class DynamicMetadataUpdater:
     def __init__(self, github_token: str):
