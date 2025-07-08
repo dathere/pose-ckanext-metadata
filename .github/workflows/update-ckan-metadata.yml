@@ -33,7 +33,7 @@ jobs:
     - name: Step 1 - Extract GitHub URLs from CKAN
       run: |
         echo "=== STEP 1: Extracting GitHub URLs from CKAN ==="
-        python 1getURL.py
+        python 1get_URL.py
         echo "✓ URL extraction completed"
         
         # Check if output file was created
@@ -63,18 +63,18 @@ jobs:
     - name: Step 3 - Update CKAN Catalog with Metadata
       run: |
         echo "=== STEP 3: Updating CKAN catalog with metadata ==="
-        python 3updateCatalog.py
+        python 3update_catalog.py
         echo "✓ CKAN catalog update completed"
     
     - name: Step 4 - Upload CSV to CKAN Dataset
       run: |
         echo "=== STEP 4: Uploading CSV to CKAN dataset ==="
-        python 4uploadDataset.py
+        python 4uploadDatset.py
         echo "✓ CSV upload completed"
     
     - name: Upload artifacts on failure
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: debug-files
         path: |
@@ -84,7 +84,7 @@ jobs:
     
     - name: Upload generated CSV as artifact
       if: success()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: metadata-csv
         path: dynamic_metadata_update.csv
