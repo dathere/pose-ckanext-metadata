@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 CKAN_URL = 'https://catalog.civicdataecosystem.org'
-API_KEY = 'CKAN_API_KEY'
+API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 DATASET_ID = 'ckan-extensions-metadata'
 CSV_FILE_PATH = 'dynamic_metadata_update.csv'  # Your output CSV file
 
