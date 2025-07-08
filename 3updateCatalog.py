@@ -14,7 +14,7 @@ import os
 # Configuration
 CKAN_BASE_URL = "https://catalog.civicdataecosystem.org"
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
-CKAN_API_KEY = "CKAN_API_KEY"  # Replace with your actual API key
+CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 
 class CKANMetadataUpdater:
     def __init__(self, api_key: str, base_url: str = CKAN_BASE_URL):
