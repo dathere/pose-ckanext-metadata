@@ -379,11 +379,11 @@ def main():
         print()
         
         # Confirm before proceeding
-        response = input("Do you want to proceed with updating the metadata? (y/N): ")
-        if response.lower() not in ['y', 'yes']:
-            print("Update cancelled by user.")
-            return
-        
+        #response = input("Do you want to proceed with updating the metadata? (y/N): ")
+        #if response.lower() not in ['y', 'yes']:
+        #    print("Update cancelled by user.")
+        #    return
+        print("Starting metadata update process...")
         # Update packages
         updater.update_all_packages(url_list_file, metadata_file)
         
