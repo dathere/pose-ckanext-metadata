@@ -1,5 +1,4 @@
 name: Update CKAN Extensions Metadata
-
 on:
   schedule:
     # Runs every Sunday at 2:00 AM UTC
@@ -66,9 +65,46 @@ jobs:
         python 3updateCatalog.py
         echo "✓ CKAN catalog update completed"
     
-    - name: Step 4 - Upload CSV to CKAN Dataset
+    - name: Step 3.1 - Download Existing CSV from CKAN
       run: |
-        echo "=== STEP 4: Uploading CSV to CKAN dataset ==="
+        echo "=== STEP 3.1: Downloading existing CSV from CKAN ==="
+        python 31download.py existing_metadata.csv
+        echo "✓ CSV download completed"
+        
+        # Check if download was successful
+        if [ -f "existing_metadata.csv" ]; then
+          echo "✓ existing_metadata.csv downloaded successfully"
+          wc -l existing_metadata.csv
+        else
+          echo "✗ existing_metadata.csv not found"
+          exit 1
+        fi
+    
+    - name: Step 3.2 - Merge CSVs
+      run: |
+        echo "=== STEP 3.2: Merging existing and new CSV data ==="
+        python 32merger.py existing_metadata.csv dynamic_metadata_update.csv dynamic_metadata_update.csv
+        echo "✓ CSV merge completed"
+        
+        # Check if merge was successful (32merger.py overwrites dynamic_metadata_update.csv)
+        if [ -f "dynamic_metadata_update.csv" ]; then
+          echo "✓ dynamic_metadata_update.csv merged successfully"
+          wc -l dynamic_metadata_update.csv
+        else
+          echo "✗ dynamic_metadata_update.csv not found after merge"
+          exit 1
+        fi
+    
+    - name: Step 3.3 - Delete Old Resource from CKAN
+      run: |
+        echo "=== STEP 3.3: Deleting old resource from CKAN ==="
+        python 33delete.py
+        echo "✓ Old resource deletion completed"
+    
+    - name: Step 4 - Upload New CSV to CKAN Dataset
+      run: |
+        echo "=== STEP 4: Uploading merged CSV to CKAN dataset ==="
+        # The upload script will use dynamic_metadata_update.csv (which is now merged)
         python 4uploadDataset.py
         echo "✓ CSV upload completed"
     
@@ -82,12 +118,14 @@ jobs:
           *.log
         retention-days: 7
     
-    - name: Upload generated CSV as artifact
+    - name: Upload generated CSVs as artifacts
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: metadata-csv
-        path: dynamic_metadata_update.csv
+        name: metadata-csv-files
+        path: |
+          dynamic_metadata_update.csv
+          existing_metadata.csv
         retention-days: 30
     
     - name: Workflow Summary
@@ -98,7 +136,7 @@ jobs:
         echo "Timestamp: $(date -u)"
         
         # Show file sizes if they exist
-        for file in url_list.csv dynamic_metadata_update.csv; do
+        for file in url_list.csv dynamic_metadata_update.csv existing_metadata.csv; do
           if [ -f "$file" ]; then
             echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
           fi
