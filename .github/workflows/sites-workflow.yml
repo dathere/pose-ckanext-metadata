@@ -1,0 +1,89 @@
+name: CKAN Sites Workflow
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    # Allow manual trigger
+  push:
+    branches:
+      - main
+    paths:
+      - 'sites-workflow/**'
+      - '.github/workflows/sites-workflow.yml'
+
+jobs:
+  process-sites:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        cd sites-workflow
+        pip install -r requirements.txt
+        
+    - name: Step 1 - Get Sites URLs
+      run: |
+        cd sites-workflow
+        python 1getSitesURL.py
+        
+    - name: Step 2 - Collect CKAN Statistics
+      run: |
+        cd sites-workflow
+        python 2CKANActionAPI.py
+        
+    - name: Step 3.1 - Download Existing Dataset
+      run: |
+        cd sites-workflow
+        python 31downloadDataset.py
+        
+    - name: Step 3.2 - Merge Data
+      run: |
+        cd sites-workflow
+        python 32merger.py
+        
+    - name: Step 3.3 - Delete Old Resources
+      run: |
+        cd sites-workflow
+        python 33delete.py
+      env:
+        CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+        
+    - name: Step 3 - Update Sites Catalog
+      run: |
+        cd sites-workflow
+        python 3updateSitesCatalog.py
+      env:
+        CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+        
+    - name: Step 4 - Upload Dataset
+      run: |
+        cd sites-workflow
+        python 4uploadDataset.py
+      env:
+        CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+        
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: workflow-outputs
+        path: |
+          sites-workflow/*.csv
+          sites-workflow/*.json
+        retention-days: 30
+        
+    - name: Notify on failure
+      if: failure()
+      run: |
+        echo "Workflow failed. Check the logs for details."
+        # Add notification logic here (email, Slack, etc.)
