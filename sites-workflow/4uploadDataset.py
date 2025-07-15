@@ -19,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 CKAN_URL = 'https://catalog.civicdataecosystem.org'
-API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJKcnA1UGpMSTc3V2ozYXJZRklNRXNYb0RGWkI4eHQwZGlxSnl6ZW9CaG5tdmtGald3OG11ZmFrVlBUcENQLWI3Q3o1YlUwWlhSVzVyRDVMdyIsImlhdCI6MTc1MjQ4OTA3OX0.BYk9RulOH9xdOy2pDJ7ISZynKLnA9ftvF0hOFn2M6ww'
-#API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
+API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 DATASET_ID = 'ckan-sites-metadata'
 CSV_FILE_PATH = 'dynamic_metadata_update.csv'  # Your output CSV file
 
