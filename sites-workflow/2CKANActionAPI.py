@@ -3,6 +3,7 @@ import requests
 import time
 from pathlib import Path
 from urllib.parse import urljoin
+from datetime import datetime
 
 INPUT_CSV_FILE = "site_urls.csv"
 OUTPUT_CSV_FILE = "ckan_stats.csv"
@@ -60,13 +61,17 @@ class SimpleCKANExtractor:
         if org_data and isinstance(org_data.get('result'), list):
             stats['num_organizations'] = str(len(org_data['result']))
         
+        # Add timestamp
+        stats['tstamp'] = datetime.utcnow().isoformat() + '+00:00'
+        
         return stats
     
     def get_empty_stats(self):
         return {
             'num_datasets': '0',
             'num_groups': '0',
-            'num_organizations': '0'
+            'num_organizations': '0',
+            'tstamp': datetime.utcnow().isoformat() + '+00:00'
         }
     
     def process_csv(self, input_file: str, output_file: str):
@@ -93,7 +98,8 @@ class SimpleCKANExtractor:
         stats_columns = [
             'num_datasets', 
             'num_groups', 
-            'num_organizations'
+            'num_organizations',
+            'tstamp'
         ]
         
         # Create final fieldnames: original columns + new stats columns
