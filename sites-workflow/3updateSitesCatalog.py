@@ -14,8 +14,7 @@ import os
 # Configuration
 CKAN_BASE_URL = "https://catalog.civicdataecosystem.org"
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
-CKAN_API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJKcnA1UGpMSTc3V2ozYXJZRklNRXNYb0RGWkI4eHQwZGlxSnl6ZW9CaG5tdmtGald3OG11ZmFrVlBUcENQLWI3Q3o1YlUwWlhSVzVyRDVMdyIsImlhdCI6MTc1MjQ4OTA3OX0.BYk9RulOH9xdOy2pDJ7ISZynKLnA9ftvF0hOFn2M6ww'
-# CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
+CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 
 class CKANSiteStatsUpdater:
     def __init__(self, api_key: str, base_url: str = CKAN_BASE_URL):
