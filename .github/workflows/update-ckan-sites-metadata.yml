@@ -37,11 +37,11 @@ jobs:
         echo "✓ Sites URL extraction completed"
         
         # Check if output file was created
-        if [ -f "sites_url_list.csv" ]; then
-          echo "✓ sites_url_list.csv created successfully"
-          wc -l sites_url_list.csv
+        if [ -f "site_urls.csv" ]; then
+          echo "✓ site_urls.csv created successfully"
+          wc -l site_urls.csv
         else
-          echo "✗ sites_url_list.csv not found"
+          echo "✗ site_urls.csv not found"
           exit 1
         fi
     
@@ -53,11 +53,11 @@ jobs:
         echo "✓ Sites data extraction completed"
         
         # Check if output file was created
-        if [ -f "sites_metadata_update.csv" ]; then
-          echo "✓ sites_metadata_update.csv created successfully"
-          wc -l sites_metadata_update.csv
+        if [ -f "ckan_stats.csv" ]; then
+          echo "✓ ckan_stats.csv created successfully"
+          wc -l ckan_stats.csv
         else
-          echo "✗ sites_metadata_update.csv not found"
+          echo "✗ ckan_stats.csv not found"
           exit 1
         fi
     
@@ -88,15 +88,15 @@ jobs:
       run: |
         echo "=== STEP 3.2: Merging existing and new sites CSV data ==="
         cd sites-workflow
-        python 32merger.py existing_sites_metadata.csv sites_metadata_update.csv sites_metadata_update.csv
+        python 32merger.py existing_sites_metadata.csv ckan_stats.csv dynamic_metadata_update.csv
         echo "✓ Sites CSV merge completed"
         
         # Check if merge was successful
-        if [ -f "sites_metadata_update.csv" ]; then
-          echo "✓ sites_metadata_update.csv merged successfully"
-          wc -l sites_metadata_update.csv
+        if [ -f "dynamic_metadata_update.csv" ]; then
+          echo "✓ dynamic_metadata_update.csv merged successfully"
+          wc -l dynamic_metadata_update.csv
         else
-          echo "✗ sites_metadata_update.csv not found after merge"
+          echo "✗ dynamic_metadata_update.csv not found after merge"
           exit 1
         fi
     
@@ -130,7 +130,9 @@ jobs:
       with:
         name: sites-metadata-csv-files
         path: |
-          sites-workflow/sites_metadata_update.csv
+          sites-workflow/site_urls.csv
+          sites-workflow/ckan_stats.csv
+          sites-workflow/dynamic_metadata_update.csv
           sites-workflow/existing_sites_metadata.csv
         retention-days: 30
     
@@ -143,7 +145,7 @@ jobs:
         
         # Show file sizes if they exist
         cd sites-workflow
-        for file in sites_url_list.csv sites_metadata_update.csv existing_sites_metadata.csv; do
+        for file in site_urls.csv ckan_stats.csv dynamic_metadata_update.csv existing_sites_metadata.csv; do
           if [ -f "$file" ]; then
             echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
           fi
