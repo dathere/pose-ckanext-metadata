@@ -1,0 +1,158 @@
+name: Update CKAN Sites Metadata
+on:
+  schedule:
+    # Runs every Sunday at 3:00 AM UTC (1 hour after extensions workflow)
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+    # Allows manual triggering from GitHub UI
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
+  CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+
+jobs:
+  update-sites-metadata:
+    runs-on: self-hosted
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r sites-workflow/requirements.txt
+    
+    - name: Step 1 - Extract Sites URLs from CKAN
+      run: |
+        echo "=== STEP 1: Extracting Sites URLs from CKAN ==="
+        cd sites-workflow
+        python 1getSitesURL.py
+        echo "✓ Sites URL extraction completed"
+        
+        # Check if output file was created
+        if [ -f "site_urls.csv" ]; then
+          echo "✓ site_urls.csv created successfully"
+          wc -l site_urls.csv
+        else
+          echo "✗ site_urls.csv not found"
+          exit 1
+        fi
+    
+    - name: Step 2 - Fetch Sites Data via CKAN Action API
+      run: |
+        echo "=== STEP 2: Fetching sites data via CKAN Action API ==="
+        cd sites-workflow
+        python 2CKANActionAPI.py
+        echo "✓ Sites data extraction completed"
+        
+        # Check if output file was created
+        if [ -f "ckan_stats.csv" ]; then
+          echo "✓ ckan_stats.csv created successfully"
+          wc -l ckan_stats.csv
+        else
+          echo "✗ ckan_stats.csv not found"
+          exit 1
+        fi
+    
+    - name: Step 3 - Update CKAN Sites Catalog
+      run: |
+        echo "=== STEP 3: Updating CKAN sites catalog ==="
+        cd sites-workflow
+        python 3updateSitesCatalog.py
+        echo "✓ CKAN sites catalog update completed"
+    
+    - name: Step 3.1 - Download Existing Sites CSV from CKAN
+      run: |
+        echo "=== STEP 3.1: Downloading existing sites CSV from CKAN ==="
+        cd sites-workflow
+        python 31downloadDataset.py existing_sites_metadata.csv
+        echo "✓ Sites CSV download completed"
+        
+        # Check if download was successful
+        if [ -f "existing_sites_metadata.csv" ]; then
+          echo "✓ existing_sites_metadata.csv downloaded successfully"
+          wc -l existing_sites_metadata.csv
+        else
+          echo "✗ existing_sites_metadata.csv not found"
+          exit 1
+        fi
+    
+    - name: Step 3.2 - Merge Sites CSVs
+      run: |
+        echo "=== STEP 3.2: Merging existing and new sites CSV data ==="
+        cd sites-workflow
+        python 32merger.py existing_sites_metadata.csv ckan_stats.csv dynamic_metadata_update.csv
+        echo "✓ Sites CSV merge completed"
+        
+        # Check if merge was successful
+        if [ -f "dynamic_metadata_update.csv" ]; then
+          echo "✓ dynamic_metadata_update.csv merged successfully"
+          wc -l dynamic_metadata_update.csv
+        else
+          echo "✗ dynamic_metadata_update.csv not found after merge"
+          exit 1
+        fi
+    
+    - name: Step 3.3 - Delete Old Sites Resource from CKAN
+      run: |
+        echo "=== STEP 3.3: Deleting old sites resource from CKAN ==="
+        cd sites-workflow
+        python 33delete.py
+        echo "✓ Old sites resource deletion completed"
+    
+    - name: Step 4 - Upload New Sites CSV to CKAN Dataset
+      run: |
+        echo "=== STEP 4: Uploading merged sites CSV to CKAN dataset ==="
+        cd sites-workflow
+        python 4uploadDataset.py
+        echo "✓ Sites CSV upload completed"
+    
+    - name: Upload artifacts on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: sites-debug-files
+        path: |
+          sites-workflow/*.csv
+          sites-workflow/*.log
+        retention-days: 7
+    
+    - name: Upload generated Sites CSVs as artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: sites-metadata-csv-files
+        path: |
+          sites-workflow/site_urls.csv
+          sites-workflow/ckan_stats.csv
+          sites-workflow/dynamic_metadata_update.csv
+          sites-workflow/existing_sites_metadata.csv
+        retention-days: 30
+    
+    - name: Workflow Summary
+      if: always()
+      run: |
+        echo "=== SITES WORKFLOW SUMMARY ==="
+        echo "Status: ${{ job.status }}"
+        echo "Timestamp: $(date -u)"
+        
+        # Show file sizes if they exist
+        cd sites-workflow
+        for file in site_urls.csv ckan_stats.csv dynamic_metadata_update.csv existing_sites_metadata.csv; do
+          if [ -f "$file" ]; then
+            echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
+          fi
+        done
+        
+        # Show any log files
+        if ls *.log >/dev/null 2>&1; then
+          echo "Log files created:"
+          ls -la *.log
+        fi

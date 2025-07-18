@@ -23,6 +23,7 @@ This repository contains automation scripts for sourcing and cataloging metadata
 ## Automation
 
 The repository includes a GitHub Actions workflow (`.github/workflows/update-ckan-metadata.yml`) that automatically fetches and updates extension metadata on a scheduled basis.
+<img width="2749" height="3840" alt="Untitled diagram _ Mermaid Chart-2025-07-16-114648" src="https://github.com/user-attachments/assets/169fb3ee-4685-4051-9a5e-90f202b32988" />
 
 ## Setup
 
