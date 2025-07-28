@@ -112,7 +112,7 @@ class DynamicMetadataUpdater:
                 'open_issues': repo.open_issues_count,
                 'contributors_count': contributors_count,
                 'discussions': discussions_enabled,
-                'tstamp': datetime.utcnow().isoformat() + '+00:00'  # Timestamp of when this data was collected
+                'tstamp': datetime.utcnow().strftime('%Y-%m-%d')  # Timestamp of when this data was collected
             }
             
             return metadata
