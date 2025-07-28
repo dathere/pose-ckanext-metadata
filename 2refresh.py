@@ -234,6 +234,7 @@ class DynamicMetadataUpdater:
             
             # Define column order for better readability
             column_order = [
+                'tstamp',
                 'repository_name',
                 'url',
                 'forks_count',
@@ -243,8 +244,7 @@ class DynamicMetadataUpdater:
                 'stars',
                 'open_issues',
                 'contributors_count',
-                'discussions',
-                'tstamp'
+                'discussions'
             ]
             
             # Ensure all columns exist and reorder
