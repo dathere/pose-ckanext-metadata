@@ -27,11 +27,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r extensions-workflow/requirements.txt
     
     - name: Step 1 - Extract GitHub URLs from CKAN
       run: |
         echo "=== STEP 1: Extracting GitHub URLs from CKAN ==="
+        cd extensions-workflow
         python 1getURL.py
         echo "✓ URL extraction completed"
         
@@ -47,6 +48,7 @@ jobs:
     - name: Step 2 - Fetch Dynamic Metadata from GitHub
       run: |
         echo "=== STEP 2: Fetching dynamic metadata from GitHub ==="
+        cd extensions-workflow
         python 2refresh.py
         echo "✓ Metadata extraction completed"
         
@@ -62,12 +64,14 @@ jobs:
     - name: Step 3 - Update CKAN Catalog with Metadata
       run: |
         echo "=== STEP 3: Updating CKAN catalog with metadata ==="
+        cd extensions-workflow
         python 3updateCatalog.py
         echo "✓ CKAN catalog update completed"
     
     - name: Step 3.1 - Download Existing CSV from CKAN
       run: |
         echo "=== STEP 3.1: Downloading existing CSV from CKAN ==="
+        cd extensions-workflow
         python 31download.py existing_metadata.csv
         echo "✓ CSV download completed"
         
@@ -83,6 +87,7 @@ jobs:
     - name: Step 3.2 - Merge CSVs
       run: |
         echo "=== STEP 3.2: Merging existing and new CSV data ==="
+        cd extensions-workflow
         python 32merger.py existing_metadata.csv dynamic_metadata_update.csv dynamic_metadata_update.csv
         echo "✓ CSV merge completed"
         
@@ -98,34 +103,43 @@ jobs:
     - name: Step 3.3 - Delete Old Resource from CKAN
       run: |
         echo "=== STEP 3.3: Deleting old resource from CKAN ==="
+        cd extensions-workflow
         python 33delete.py
         echo "✓ Old resource deletion completed"
     
     - name: Step 4 - Upload New CSV to CKAN Dataset
       run: |
         echo "=== STEP 4: Uploading merged CSV to CKAN dataset ==="
+        cd extensions-workflow
         # The upload script will use dynamic_metadata_update.csv (which is now merged)
         python 4uploadDataset.py
         echo "✓ CSV upload completed"
+    
+    - name: Step 5 - Create Table View for Extensions Resource
+      run: |
+        echo "=== STEP 5: Creating table view for extensions resource ==="
+        cd extensions-workflow
+        python 5createView.py
+        echo "✓ Table view creation completed"
     
     - name: Upload artifacts on failure
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: debug-files
+        name: extensions-debug-files
         path: |
-          *.csv
-          *.log
+          extensions-workflow/*.csv
+          extensions-workflow/*.log
         retention-days: 7
     
     - name: Upload generated CSVs as artifacts
       if: success()
       uses: actions/upload-artifact@v4
       with:
-        name: metadata-csv-files
+        name: extensions-metadata-csv-files
         path: |
-          dynamic_metadata_update.csv
-          existing_metadata.csv
+          extensions-workflow/dynamic_metadata_update.csv
+          extensions-workflow/existing_metadata.csv
         retention-days: 30
     
     - name: Workflow Summary
@@ -136,6 +150,7 @@ jobs:
         echo "Timestamp: $(date -u)"
         
         # Show file sizes if they exist
+        cd extensions-workflow
         for file in url_list.csv dynamic_metadata_update.csv existing_metadata.csv; do
           if [ -f "$file" ]; then
             echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
@@ -147,4 +162,3 @@ jobs:
           echo "Log files created:"
           ls -la *.log
         fi
-
