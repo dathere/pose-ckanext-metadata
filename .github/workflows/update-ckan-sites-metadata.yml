@@ -114,6 +114,13 @@ jobs:
         python 4uploadDataset.py
         echo "✓ Sites CSV upload completed"
     
+    - name: Step 5 - Create Table View for Sites Resource
+      run: |
+        echo "=== STEP 5: Creating table view for sites resource ==="
+        cd sites-workflow
+        python 5createView.py
+        echo "✓ Table view creation completed"
+    
     - name: Upload artifacts on failure
       if: failure()
       uses: actions/upload-artifact@v4
