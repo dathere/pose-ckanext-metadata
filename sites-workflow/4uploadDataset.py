@@ -95,8 +95,8 @@ def upload_csv_resource(csv_path, dataset_id):
     
     resource_data = {
         'package_id': dataset_id,
-        'name': f'CKAN Extensions Dynamic Metadata',
-        'description': f'Dynamic metadata for CKAN extensions including forks, stars, releases, and contributor information. Last updated: {timestamp}',
+        'name': f'CKAN Sites Dynamic Metadata',
+        'description': f'Timeseries metadata for CKAN Sites. Last updated: {timestamp}',
         'format': 'CSV',
         'resource_type': 'file'
     }
