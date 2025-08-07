@@ -51,8 +51,8 @@ def merge_csv_files(existing_file, new_file, output_file):
         print(f"  Rows: {len(new_df)}")
         
         # Simply append new data to existing data
-        print("Appending new data...")
-        merged_df = pd.concat([existing_df, new_df], ignore_index=True)
+        print("Prepending new data... new data...")
+        merged_df = pd.concat([new_df, existing_df], ignore_index=True)
         
         # Save the merged file
         print("Saving merged file...")
