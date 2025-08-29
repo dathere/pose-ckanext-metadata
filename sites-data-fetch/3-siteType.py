@@ -451,7 +451,7 @@ class CKANSiteTypeDetector:
 def main():
     """Main function to run the site type detector."""
     # Configuration
-    INPUT_FILE = '1.csv'
+    INPUT_FILE = '2.csv'
     OUTPUT_FILE = '3.csv'
     URL_COLUMN = 'url'
     TYPE_COLUMN = 'site_type'

@@ -776,7 +776,7 @@ def main():
     print()
     
     # Get API key from environment variable or hardcoded value
-    api_key = os.getenv("OPENROUTER_API_KEY") 
+    api_key = os.getenv("OPEN_ROUTER_KEY") 
     
     # Check if input file exists
     if not os.path.exists(INPUT_FILE):

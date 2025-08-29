@@ -1,0 +1,24 @@
+# Core HTTP and web scraping
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+
+# Translation and language detection
+googletrans==4.0.0rc1
+langdetect>=1.0.9
+langcodes>=3.3.0
+
+# Text processing and utilities
+python-slugify>=8.0.0
+
+# Data processing
+pandas>=1.5.0
+
+# Progress bars and retries
+tqdm>=4.64.0
+backoff>=2.2.0
+
+# Geographic data
+pycountry>=22.3.0
+
+# Environment variables
+python-dotenv>=1.0.0

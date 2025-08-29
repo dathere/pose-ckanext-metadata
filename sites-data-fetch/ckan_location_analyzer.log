@@ -8,3 +8,22 @@
 2025-07-02 18:37:30,116 - MainThread - INFO - Region distribution:
 2025-07-02 18:37:30,116 - MainThread - INFO -   North America: 1 (100.0%)
 2025-07-02 18:37:30,116 - MainThread - INFO - Done!
+2025-08-29 16:32:50,118 - MainThread - INFO - Reading CSV from 4.csv
+2025-08-29 16:32:50,119 - MainThread - INFO - Processing all 1 rows
+2025-08-29 16:32:50,129 - ThreadPoolExecutor-0_0 - INFO - Thread 6202830848: Processing site: opendata-gov-nt-ca (https://opendata.gov.nt.ca/)
+2025-08-29 16:32:50,273 - ThreadPoolExecutor-0_0 - INFO - Thread 6202830848: Calling API with model: google/gemini-2.0-flash-001, max_tokens: 2000
+2025-08-29 16:32:50,444 - ThreadPoolExecutor-0_0 - ERROR - Giving up call_openrouter_api(...) after 1 tries (requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions)
+2025-08-29 16:32:50,444 - ThreadPoolExecutor-0_0 - WARNING - Attempt 1/3 failed: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions
+2025-08-29 16:32:51,453 - ThreadPoolExecutor-0_0 - INFO - Thread 6202830848: Calling API with model: google/gemini-2.0-flash-001, max_tokens: 2000
+2025-08-29 16:32:51,630 - ThreadPoolExecutor-0_0 - ERROR - Giving up call_openrouter_api(...) after 1 tries (requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions)
+2025-08-29 16:32:51,630 - ThreadPoolExecutor-0_0 - WARNING - Attempt 2/3 failed: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions
+2025-08-29 16:32:53,639 - ThreadPoolExecutor-0_0 - INFO - Thread 6202830848: Calling API with model: google/gemini-2.0-flash-001, max_tokens: 2000
+2025-08-29 16:32:53,823 - ThreadPoolExecutor-0_0 - ERROR - Giving up call_openrouter_api(...) after 1 tries (requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions)
+2025-08-29 16:32:53,823 - ThreadPoolExecutor-0_0 - WARNING - Attempt 3/3 failed: 401 Client Error: Unauthorized for url: https://openrouter.ai/api/v1/chat/completions
+2025-08-29 16:32:53,823 - ThreadPoolExecutor-0_0 - ERROR - All 3 attempts failed
+2025-08-29 16:32:53,933 - MainThread - INFO - Saving final results to 5.csv
+2025-08-29 16:32:53,940 - MainThread - INFO - Processing complete. Successfully processed: 0, Failed: 1
+2025-08-29 16:32:53,941 - MainThread - INFO - Countries identified: 0 (0.0%)
+2025-08-29 16:32:53,941 - MainThread - INFO - Region distribution:
+2025-08-29 16:32:53,941 - MainThread - INFO -   Global / Uncertain: 1 (100.0%)
+2025-08-29 16:32:53,941 - MainThread - INFO - Done!
