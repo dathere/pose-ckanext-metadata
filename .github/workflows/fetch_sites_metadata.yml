@@ -367,7 +367,7 @@ jobs:
           done
 
       - name: Upload Pipeline Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: ckan-pipeline-results
@@ -377,7 +377,7 @@ jobs:
           retention-days: 30
 
       - name: Upload Final Dataset
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: final-dataset
