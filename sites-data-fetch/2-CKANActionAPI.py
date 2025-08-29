@@ -155,7 +155,7 @@ class CKANMetadataExtractor:
                 processed_row.update(empty_metadata)
             
             processed_rows.append(processed_row)
-            time.sleep(1)
+            time.sleep(5)
         
         # Write output file with preserved structure + new metadata
         with open(output_file, 'w', encoding='utf-8', newline='') as f:
