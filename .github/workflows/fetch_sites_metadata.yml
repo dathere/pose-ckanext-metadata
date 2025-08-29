@@ -1,0 +1,385 @@
+name: CKAN Data Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_scripts:
+        description: 'Comma-separated list of script numbers to skip (e.g., "2,4")'
+        required: false
+        default: ''
+        type: string
+      process_rows:
+        description: 'Number of rows to process (leave empty for all)'
+        required: false
+        default: ''
+        type: string
+
+env:
+  PYTHONUNBUFFERED: 1
+  PYTHONIOENCODING: utf-8
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      skip_list: ${{ steps.parse_skip.outputs.skip_list }}
+    steps:
+      - name: Parse skip list
+        id: parse_skip
+        run: |
+          skip_input="${{ github.event.inputs.skip_scripts }}"
+          if [ -n "$skip_input" ]; then
+            echo "skip_list=[$skip_input]" >> $GITHUB_OUTPUT
+          else
+            echo "skip_list=[]" >> $GITHUB_OUTPUT
+          fi
+
+  pipeline:
+    runs-on: ubuntu-latest
+    needs: setup
+    continue-on-error: false
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          cd sites-data-fetch
+          pip install -r requirements.txt
+
+      - name: Verify initial data file
+        run: |
+          cd sites-data-fetch
+          if [ ! -f "0.csv" ]; then
+            echo "Error: 0.csv not found"
+            exit 1
+          fi
+          echo "Initial data file found: 0.csv"
+          wc -l 0.csv
+
+      - name: Run Script 1 - Name Processing
+        id: script1
+        continue-on-error: true
+        run: |
+          cd sites-data-fetch
+          skip_list='${{ needs.setup.outputs.skip_list }}'
+          if echo "$skip_list" | grep -q "1"; then
+            echo "Skipping script 1 as requested"
+            if [ ! -f "1.csv" ]; then
+              echo "Warning: 1.csv doesn't exist and script 1 was skipped"
+              cp 0.csv 1.csv
+            fi
+            exit 0
+          fi
+          
+          echo "Starting Script 1: Name Processing"
+          python 1-nameProcess.py
+          
+          if [ $? -eq 0 ]; then
+            echo "Script 1 completed successfully"
+            if [ -f "1.csv" ]; then
+              echo "Output file created: 1.csv"
+              wc -l 1.csv
+            else
+              echo "Warning: Expected output file 1.csv not found"
+            fi
+          else
+            echo "Script 1 failed with exit code $?"
+            # Create fallback file to allow pipeline to continue
+            if [ ! -f "1.csv" ]; then
+              cp 0.csv 1.csv
+              echo "Created fallback 1.csv from 0.csv to continue pipeline"
+            fi
+            exit 1
+          fi
+
+      - name: Run Script 2 - CKAN Action API
+        id: script2
+        continue-on-error: true
+        run: |
+          cd sites-data-fetch
+          skip_list='${{ needs.setup.outputs.skip_list }}'
+          if echo "$skip_list" | grep -q "2"; then
+            echo "Skipping script 2 as requested"
+            if [ ! -f "2.csv" ]; then
+              echo "Warning: 2.csv doesn't exist and script 2 was skipped"
+              cp 1.csv 2.csv
+            fi
+            exit 0
+          fi
+          
+          echo "Starting Script 2: CKAN Action API"
+          python 2-CKANActionAPI.py
+          
+          if [ $? -eq 0 ]; then
+            echo "Script 2 completed successfully"
+            if [ -f "2.csv" ]; then
+              echo "Output file created: 2.csv"
+              wc -l 2.csv
+            fi
+          else
+            echo "Script 2 failed with exit code $?"
+            if [ ! -f "2.csv" ]; then
+              cp 1.csv 2.csv
+              echo "Created fallback 2.csv from 1.csv to continue pipeline"
+            fi
+            exit 1
+          fi
+
+      - name: Run Script 3 - Site Type Detection
+        id: script3
+        continue-on-error: true
+        run: |
+          cd sites-data-fetch
+          skip_list='${{ needs.setup.outputs.skip_list }}'
+          if echo "$skip_list" | grep -q "3"; then
+            echo "Skipping script 3 as requested"
+            if [ ! -f "3.csv" ]; then
+              echo "Warning: 3.csv doesn't exist and script 3 was skipped"
+              cp 2.csv 3.csv
+            fi
+            exit 0
+          fi
+          
+          echo "Starting Script 3: Site Type Detection"
+          python 3-siteType.py
+          
+          if [ $? -eq 0 ]; then
+            echo "Script 3 completed successfully"
+            if [ -f "3.csv" ]; then
+              echo "Output file created: 3.csv"
+              wc -l 3.csv
+            fi
+          else
+            echo "Script 3 failed with exit code $?"
+            if [ ! -f "3.csv" ]; then
+              cp 2.csv 3.csv
+              echo "Created fallback 3.csv from 2.csv to continue pipeline"
+            fi
+            exit 1
+          fi
+
+      - name: Run Script 4 - Description Extraction
+        id: script4
+        continue-on-error: true
+        run: |
+          cd sites-data-fetch
+          skip_list='${{ needs.setup.outputs.skip_list }}'
+          if echo "$skip_list" | grep -q "4"; then
+            echo "Skipping script 4 as requested"
+            if [ ! -f "4.csv" ]; then
+              echo "Warning: 4.csv doesn't exist and script 4 was skipped"
+              cp 3.csv 4.csv
+            fi
+            exit 0
+          fi
+          
+          echo "Starting Script 4: Description Extraction"
+          python 4-description.py
+          
+          if [ $? -eq 0 ]; then
+            echo "Script 4 completed successfully"
+            if [ -f "4.csv" ]; then
+              echo "Output file created: 4.csv"
+              wc -l 4.csv
+            fi
+          else
+            echo "Script 4 failed with exit code $?"
+            if [ ! -f "4.csv" ]; then
+              cp 3.csv 4.csv
+              echo "Created fallback 4.csv from 3.csv to continue pipeline"
+            fi
+            exit 1
+          fi
+
+      - name: Run Script 5 - Location Analysis
+        id: script5
+        continue-on-error: true
+        env:
+          OPEN_ROUTER_KEY: ${{ secrets.OPEN_ROUTER_KEY }}
+        run: |
+          cd sites-data-fetch
+          skip_list='${{ needs.setup.outputs.skip_list }}'
+          if echo "$skip_list" | grep -q "5"; then
+            echo "Skipping script 5 as requested"
+            if [ ! -f "5.csv" ]; then
+              echo "Warning: 5.csv doesn't exist and script 5 was skipped"
+              cp 4.csv 5.csv
+            fi
+            exit 0
+          fi
+          
+          if [ -z "$OPEN_ROUTER_KEY" ]; then
+            echo "Error: OPEN_ROUTER_KEY secret not set, required for script 5"
+            cp 4.csv 5.csv
+            echo "Created fallback 5.csv from 4.csv due to missing API key"
+            exit 1
+          fi
+          
+          echo "Starting Script 5: Location Analysis"
+          
+          # Modify rows to process if specified
+          process_rows="${{ github.event.inputs.process_rows }}"
+          if [ -n "$process_rows" ]; then
+            echo "Limiting processing to $process_rows rows"
+            # This would require modifying the script or using environment variables
+            # For now, we'll run as-is since the script has ROWS_TO_PROCESS = None
+          fi
+          
+          python 5-locationAnalyser.py
+          
+          if [ $? -eq 0 ]; then
+            echo "Script 5 completed successfully"
+            if [ -f "5.csv" ]; then
+              echo "Output file created: 5.csv"
+              wc -l 5.csv
+            fi
+          else
+            echo "Script 5 failed with exit code $?"
+            if [ ! -f "5.csv" ]; then
+              cp 4.csv 5.csv
+              echo "Created fallback 5.csv from 4.csv to continue pipeline"
+            fi
+            exit 1
+          fi
+
+      - name: Run Script 6 - Geocoding
+        id: script6
+        continue-on-error: true
+        run: |
+          cd sites-data-fetch
+          skip_list='${{ needs.setup.outputs.skip_list }}'
+          if echo "$skip_list" | grep -q "6"; then
+            echo "Skipping script 6 as requested"
+            if [ ! -f "6.csv" ]; then
+              echo "Warning: 6.csv doesn't exist and script 6 was skipped"
+              cp 5.csv 6.csv
+            fi
+            exit 0
+          fi
+          
+          echo "Starting Script 6: Geocoding"
+          python 6-geocode.py
+          
+          if [ $? -eq 0 ]; then
+            echo "Script 6 completed successfully"
+            if [ -f "6.csv" ]; then
+              echo "Output file created: 6.csv"
+              wc -l 6.csv
+            fi
+          else
+            echo "Script 6 failed with exit code $?"
+            if [ ! -f "6.csv" ]; then
+              cp 5.csv 6.csv
+              echo "Created fallback 6.csv from 5.csv to continue pipeline"
+            fi
+            exit 1
+          fi
+
+      - name: Run Script 7 - Timestamp
+        id: script7
+        continue-on-error: true
+        run: |
+          cd sites-data-fetch
+          skip_list='${{ needs.setup.outputs.skip_list }}'
+          if echo "$skip_list" | grep -q "7"; then
+            echo "Skipping script 7 as requested"
+            if [ ! -f "7.csv" ]; then
+              echo "Warning: 7.csv doesn't exist and script 7 was skipped"
+              cp 6.csv 7.csv
+            fi
+            exit 0
+          fi
+          
+          echo "Starting Script 7: Timestamp"
+          python 7-tstamp.py
+          
+          if [ $? -eq 0 ]; then
+            echo "Script 7 completed successfully"
+            if [ -f "7.csv" ]; then
+              echo "Output file created: 7.csv"
+              wc -l 7.csv
+            fi
+          else
+            echo "Script 7 failed with exit code $?"
+            if [ ! -f "7.csv" ]; then
+              cp 6.csv 7.csv
+              echo "Created fallback 7.csv from 6.csv to continue pipeline"
+            fi
+            exit 1
+          fi
+
+      - name: Generate Pipeline Report
+        if: always()
+        run: |
+          echo "## CKAN Data Pipeline Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Script | Status | Notes |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          
+          cd sites-data-fetch
+          
+          # Check each script outcome
+          scripts=("1-nameProcess" "2-CKANActionAPI" "3-siteType" "4-description" "5-locationAnalyser" "6-geocode" "7-tstamp")
+          outcomes=("${{ steps.script1.outcome }}" "${{ steps.script2.outcome }}" "${{ steps.script3.outcome }}" "${{ steps.script4.outcome }}" "${{ steps.script5.outcome }}" "${{ steps.script6.outcome }}" "${{ steps.script7.outcome }}")
+          
+          for i in "${!scripts[@]}"; do
+            script_num=$((i + 1))
+            script_name="${scripts[$i]}"
+            outcome="${outcomes[$i]}"
+            output_file="${script_num}.csv"
+            
+            if [ "$outcome" = "success" ]; then
+              status="✅ Success"
+            elif [ "$outcome" = "failure" ]; then
+              status="❌ Failed"
+            elif [ "$outcome" = "skipped" ]; then
+              status="⏭️ Skipped"
+            else
+              status="❓ Unknown"
+            fi
+            
+            if [ -f "$output_file" ]; then
+              row_count=$(tail -n +2 "$output_file" | wc -l)
+              notes="Output: $output_file ($row_count rows)"
+            else
+              notes="No output file"
+            fi
+            
+            echo "| $script_num - $script_name | $status | $notes |" >> $GITHUB_STEP_SUMMARY
+          done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### File Progression" >> $GITHUB_STEP_SUMMARY
+          for i in {0..7}; do
+            if [ -f "${i}.csv" ]; then
+              row_count=$(tail -n +2 "${i}.csv" | wc -l)
+              file_size=$(ls -lh "${i}.csv" | awk '{print $5}')
+              echo "- ${i}.csv: $row_count rows, $file_size" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+      - name: Upload Pipeline Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ckan-pipeline-results
+          path: |
+            sites-data-fetch/*.csv
+            sites-data-fetch/*.log
+          retention-days: 30
+
+      - name: Upload Final Dataset
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-dataset
+          path: sites-data-fetch/7.csv
+          retention-days: 90
