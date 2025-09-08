@@ -13,7 +13,7 @@ from typing import Optional
 
 def add_timestamp_to_csv(input_file: str, output_file: Optional[str] = None, 
                         timestamp_column: str = 'tstamp', 
-                        timestamp_format: str = 'iso') -> None:
+                        timestamp_format: str = 'date') -> None:
     """
     Add UTC timestamp to all rows in a CSV file
     
@@ -21,14 +21,17 @@ def add_timestamp_to_csv(input_file: str, output_file: Optional[str] = None,
         input_file: Path to input CSV file
         output_file: Path to output CSV file (if None, overwrites input file)
         timestamp_column: Name of the timestamp column to add
-        timestamp_format: Format of timestamp ('iso', 'epoch', 'readable')
+        timestamp_format: Format of timestamp ('date', 'iso', 'epoch', 'readable')
     """
     
     # Generate timestamp
     now_utc = datetime.datetime.now(datetime.timezone.utc)
     
     # Format timestamp based on requested format
-    if timestamp_format == 'iso':
+    if timestamp_format == 'date':
+        # Date format: 2025-07-18
+        timestamp = now_utc.strftime('%Y-%m-%d')
+    elif timestamp_format == 'iso':
         # ISO 8601 format: 2025-07-02T17:45:30.123456+00:00
         timestamp = now_utc.isoformat()
     elif timestamp_format == 'epoch':
@@ -38,7 +41,7 @@ def add_timestamp_to_csv(input_file: str, output_file: Optional[str] = None,
         # Human readable format: 2025-07-02 17:45:30 UTC
         timestamp = now_utc.strftime('%Y-%m-%d %H:%M:%S UTC')
     else:
-        raise ValueError(f"Invalid timestamp format: {timestamp_format}. Use 'iso', 'epoch', or 'readable'")
+        raise ValueError(f"Invalid timestamp format: {timestamp_format}. Use 'date', 'iso', 'epoch', or 'readable'")
     
     # If no output file specified, create a timestamped version
     if output_file is None:
@@ -60,15 +63,18 @@ def add_timestamp_to_csv(input_file: str, output_file: Optional[str] = None,
             if reader.fieldnames is None:
                 raise ValueError(f"CSV file '{input_file}' appears to be empty or has no header row")
             
-            # Create new fieldnames with timestamp column
-            fieldnames = list(reader.fieldnames)
+            # Create new fieldnames with timestamp column first
+            original_fieldnames = list(reader.fieldnames)
             
-            # Add timestamp column if not already present
-            if timestamp_column not in fieldnames:
-                fieldnames.append(timestamp_column)
-                print(f"Adding new column: {timestamp_column}")
+            # Remove timestamp column if it already exists in original fieldnames
+            if timestamp_column in original_fieldnames:
+                original_fieldnames.remove(timestamp_column)
+                print(f"Column '{timestamp_column}' already exists, will be overwritten and moved to first position")
             else:
-                print(f"Column '{timestamp_column}' already exists, will be overwritten")
+                print(f"Adding new column: {timestamp_column} (as first column)")
+            
+            # Create fieldnames with timestamp column first
+            fieldnames = [timestamp_column] + original_fieldnames
             
             # Read all rows and add timestamp
             rows = []
@@ -101,7 +107,7 @@ def main():
     INPUT_FILE = '6.csv'  # Change this to your input file
     OUTPUT_FILE = '7.csv'    # None means auto-generate name
     TIMESTAMP_COLUMN = 'tstamp'
-    TIMESTAMP_FORMAT = 'iso'  # Options: 'iso', 'epoch', 'readable'
+    TIMESTAMP_FORMAT = 'date'  # Changed to 'date' for YYYY-MM-DD format
     
     # Simple command line argument handling
     if len(sys.argv) > 1:
@@ -142,6 +148,7 @@ def demo_timestamp_formats():
     
     print("Timestamp Format Examples:")
     print("=" * 40)
+    print(f"Date format:     {now_utc.strftime('%Y-%m-%d')}")
     print(f"ISO format:      {now_utc.isoformat()}")
     print(f"Epoch format:    {now_utc.timestamp()}")
     print(f"Readable format: {now_utc.strftime('%Y-%m-%d %H:%M:%S UTC')}")
