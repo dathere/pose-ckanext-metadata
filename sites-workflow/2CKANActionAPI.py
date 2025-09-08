@@ -61,8 +61,8 @@ class SimpleCKANExtractor:
         if org_data and isinstance(org_data.get('result'), list):
             stats['num_organizations'] = str(len(org_data['result']))
         
-        # Add timestamp
-        stats['tstamp'] = datetime.utcnow().isoformat() + '+00:00'
+        # Add timestamp in YYYY-MM-DD format
+        stats['tstamp'] = datetime.utcnow().strftime('%Y-%m-%d')
         
         return stats
     
@@ -71,7 +71,7 @@ class SimpleCKANExtractor:
             'num_datasets': '0',
             'num_groups': '0',
             'num_organizations': '0',
-            'tstamp': datetime.utcnow().isoformat() + '+00:00'
+            'tstamp': datetime.utcnow().strftime('%Y-%m-%d')
         }
     
     def process_csv(self, input_file: str, output_file: str):
@@ -96,16 +96,23 @@ class SimpleCKANExtractor:
         
         # Define the new stats columns that will be added
         stats_columns = [
+            'tstamp',  # Move tstamp to first position in stats columns
             'num_datasets', 
             'num_groups', 
-            'num_organizations',
-            'tstamp'
+            'num_organizations'
         ]
         
-        # Create final fieldnames: original columns + new stats columns
-        final_fieldnames = original_fieldnames.copy()
+        # Create final fieldnames: tstamp first, then original columns, then remaining stats columns
+        final_fieldnames = ['tstamp']  # Start with timestamp column
+        
+        # Add original columns (excluding tstamp if it exists)
+        for col in original_fieldnames:
+            if col != 'tstamp' and col not in final_fieldnames:
+                final_fieldnames.append(col)
+        
+        # Add remaining stats columns (excluding tstamp since it's already first)
         for col in stats_columns:
-            if col not in final_fieldnames:
+            if col != 'tstamp' and col not in final_fieldnames:
                 final_fieldnames.append(col)
         
         print(f"Final columns: {final_fieldnames}")
