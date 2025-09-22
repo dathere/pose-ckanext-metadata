@@ -13,6 +13,16 @@ on:
         required: false
         default: ''
         type: string
+      upload_screenshots:
+        description: 'Upload screenshots to CKAN datasets'
+        required: false
+        default: true
+        type: boolean
+      screenshot_test_mode:
+        description: 'Test mode: only upload first 3 screenshots'
+        required: false
+        default: false
+        type: boolean
 
 env:
   PYTHONUNBUFFERED: 1
@@ -316,6 +326,54 @@ jobs:
             exit 1
           fi
 
+      - name: Upload Screenshots to CKAN
+        id: screenshots
+        continue-on-error: true
+        if: ${{ github.event.inputs.upload_screenshots == 'true' }}
+        env:
+          CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+        run: |
+          cd sites-data-fetch
+          
+          echo "Starting Screenshot Upload to CKAN"
+          
+          # Check if screenshots directory exists
+          if [ ! -d "screenshots" ]; then
+            echo "Screenshots directory not found, skipping screenshot upload"
+            exit 0
+          fi
+          
+          # Check if we have any PNG files
+          png_count=$(find screenshots -name "*.png" | wc -l)
+          if [ "$png_count" -eq 0 ]; then
+            echo "No PNG files found in screenshots directory"
+            exit 0
+          fi
+          
+          echo "Found $png_count screenshot files to upload"
+          
+          # Check if CKAN API key is available
+          if [ -z "$CKAN_API_KEY" ]; then
+            echo "Warning: CKAN_API_KEY secret not set, using hardcoded key from script"
+          fi
+          
+          # Determine if we're running in test mode
+          test_mode_flag=""
+          if [ "${{ github.event.inputs.screenshot_test_mode }}" = "true" ]; then
+            echo "Running in test mode (first 3 files only)"
+            test_mode_flag="test"
+          fi
+          
+          # Run the screenshot uploader
+          python screener.py $test_mode_flag
+          
+          if [ $? -eq 0 ]; then
+            echo "Screenshot upload completed successfully"
+          else
+            echo "Screenshot upload completed with some failures (check logs)"
+            exit 1
+          fi
+
       - name: Generate Pipeline Report
         if: always()
         run: |
@@ -327,14 +385,21 @@ jobs:
           cd sites-data-fetch
           
           # Check each script outcome
-          scripts=("1-nameProcess" "2-CKANActionAPI" "3-siteType" "4-description" "5-locationAnalyser" "6-geocode" "7-tstamp")
-          outcomes=("${{ steps.script1.outcome }}" "${{ steps.script2.outcome }}" "${{ steps.script3.outcome }}" "${{ steps.script4.outcome }}" "${{ steps.script5.outcome }}" "${{ steps.script6.outcome }}" "${{ steps.script7.outcome }}")
+          scripts=("1-nameProcess" "2-CKANActionAPI" "3-siteType" "4-description" "5-locationAnalyser" "6-geocode" "7-tstamp" "screenshots")
+          outcomes=("${{ steps.script1.outcome }}" "${{ steps.script2.outcome }}" "${{ steps.script3.outcome }}" "${{ steps.script4.outcome }}" "${{ steps.script5.outcome }}" "${{ steps.script6.outcome }}" "${{ steps.script7.outcome }}" "${{ steps.screenshots.outcome }}")
           
           for i in "${!scripts[@]}"; do
-            script_num=$((i + 1))
-            script_name="${scripts[$i]}"
+            if [ $i -eq 7 ]; then
+              script_num="📷"
+              script_name="Screenshot Upload"
+              output_file="screenshots/"
+            else
+              script_num=$((i + 1))
+              script_name="${scripts[$i]}"
+              output_file="${script_num}.csv"
+            fi
+            
             outcome="${outcomes[$i]}"
-            output_file="${script_num}.csv"
             
             if [ "$outcome" = "success" ]; then
               status="✅ Success"
@@ -346,7 +411,15 @@ jobs:
               status="❓ Unknown"
             fi
             
-            if [ -f "$output_file" ]; then
+            if [ $i -eq 7 ]; then
+              # Screenshots step
+              if [ -d "screenshots" ]; then
+                png_count=$(find screenshots -name "*.png" | wc -l)
+                notes="Screenshots directory: $png_count PNG files"
+              else
+                notes="No screenshots directory"
+              fi
+            elif [ -f "$output_file" ]; then
               row_count=$(tail -n +2 "$output_file" | wc -l)
               notes="Output: $output_file ($row_count rows)"
             else
@@ -365,6 +438,19 @@ jobs:
               echo "- ${i}.csv: $row_count rows, $file_size" >> $GITHUB_STEP_SUMMARY
             fi
           done
+          
+          # Add screenshot summary
+          if [ -d "screenshots" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Screenshot Files" >> $GITHUB_STEP_SUMMARY
+            find screenshots -name "*.png" -exec ls -lh {} \; | head -10 | while read line; do
+              echo "- $(echo $line | awk '{print $9 ": " $5}')" >> $GITHUB_STEP_SUMMARY
+            done
+            total_screenshots=$(find screenshots -name "*.png" | wc -l)
+            if [ "$total_screenshots" -gt 10 ]; then
+              echo "- ... and $((total_screenshots - 10)) more files" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
 
       - name: Upload Pipeline Artifacts
         uses: actions/upload-artifact@v4
@@ -374,6 +460,7 @@ jobs:
           path: |
             sites-data-fetch/*.csv
             sites-data-fetch/*.log
+            sites-data-fetch/screenshots/*.png
           retention-days: 30
 
       - name: Upload Final Dataset
@@ -383,3 +470,11 @@ jobs:
           name: final-dataset
           path: sites-data-fetch/7.csv
           retention-days: 90
+
+      - name: Upload Screenshot Logs
+        uses: actions/upload-artifact@v4
+        if: always() && steps.screenshots.outcome != 'skipped'
+        with:
+          name: screenshot-upload-logs
+          path: sites-data-fetch/screenshot_upload.log
+          retention-days: 30
