@@ -326,51 +326,133 @@ jobs:
             exit 1
           fi
 
-      - name: Upload Screenshots to CKAN
+      - name: Install Chrome and Setup for Screenshots
+        id: chrome_setup
+        if: ${{ github.event.inputs.upload_screenshots == 'true' }}
+        run: |
+          # Install Chrome
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          
+          # Install ChromeDriver
+          CHROME_VERSION=$(google-chrome --version | cut -d " " -f3 | cut -d "." -f1)
+          wget -O /tmp/chromedriver.zip "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}/chromedriver_linux64.zip"
+          sudo unzip /tmp/chromedriver.zip -d /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+          
+          # Install additional Python packages for screenshots
+          pip install selenium pandas openpyxl
+
+      - name: Take Screenshots of CKAN Portals
         id: screenshots
         continue-on-error: true
         if: ${{ github.event.inputs.upload_screenshots == 'true' }}
-        env:
-          CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
         run: |
           cd sites-data-fetch
           
-          echo "Starting Screenshot Upload to CKAN"
+          echo "Starting CKAN Portal Screenshot Process"
           
-          # Check if screenshots directory exists
-          if [ ! -d "screenshots" ]; then
-            echo "Screenshots directory not found, skipping screenshot upload"
-            exit 0
+          # Check if we have the final CSV file (7.csv) to use as input
+          if [ ! -f "7.csv" ]; then
+            echo "Final CSV file (7.csv) not found, cannot take screenshots"
+            exit 1
           fi
           
-          # Check if we have any PNG files
-          png_count=$(find screenshots -name "*.png" | wc -l)
-          if [ "$png_count" -eq 0 ]; then
-            echo "No PNG files found in screenshots directory"
-            exit 0
+          # Convert CSV to Excel format that the screenshot script expects
+          python -c "
+          import pandas as pd
+          import sys
+          
+          try:
+              # Read the final CSV
+              df = pd.read_csv('7.csv')
+              
+              # Check if required columns exist (adapt based on your CSV structure)
+              if 'url' not in df.columns:
+                  # Try to find URL column with different names
+                  url_cols = [col for col in df.columns if 'url' in col.lower() or 'site' in col.lower()]
+                  if url_cols:
+                      df['url'] = df[url_cols[0]]
+                  else:
+                      print('No URL column found in CSV')
+                      sys.exit(1)
+              
+              if 'name' not in df.columns:
+                  # Try to find name column with different names
+                  name_cols = [col for col in df.columns if 'name' in col.lower() or 'title' in col.lower()]
+                  if name_cols:
+                      df['name'] = df[name_cols[0]]
+                  else:
+                      # Use URL as name if no name column found
+                      df['name'] = df['url']
+              
+              # Save as Excel file for the screenshot script
+              df[['name', 'url']].to_excel('output.xlsx', index=False)
+              print(f'Created output.xlsx with {len(df)} rows')
+              
+          except Exception as e:
+              print(f'Error preparing data for screenshots: {e}')
+              sys.exit(1)
+          "
+          
+          if [ $? -ne 0 ]; then
+            echo "Failed to prepare data for screenshots"
+            exit 1
           fi
           
-          echo "Found $png_count screenshot files to upload"
-          
-          # Check if CKAN API key is available
-          if [ -z "$CKAN_API_KEY" ]; then
-            echo "Warning: CKAN_API_KEY secret not set, using hardcoded key from script"
-          fi
-          
-          # Determine if we're running in test mode
-          test_mode_flag=""
+          # Modify the screenshot script if we're in test mode
           if [ "${{ github.event.inputs.screenshot_test_mode }}" = "true" ]; then
-            echo "Running in test mode (first 3 files only)"
-            test_mode_flag="test"
+            echo "Running in test mode - will limit screenshots"
+            # Create a modified version that processes only first 5 sites
+            python -c "
+            import pandas as pd
+            df = pd.read_excel('output.xlsx')
+            df.head(5).to_excel('output.xlsx', index=False)
+            print(f'Limited to first 5 sites for testing')
+            "
           fi
           
-          # Run the screenshot uploader
-          python screener.py $test_mode_flag
+          # Run the screenshot taker with headless mode for CI
+          python -c "
+          import sys
+          sys.path.append('.')
+          
+          # Read the screenshot script and modify it for headless mode
+          with open('8-snapshotter.py', 'r') as f:
+              script_content = f.read()
+          
+          # Enable headless mode for CI environment
+          script_content = script_content.replace('# chrome_options.add_argument(\"--headless\")', 'chrome_options.add_argument(\"--headless\")')
+          
+          # Write modified script
+          with open('8-snapshotter-ci.py', 'w') as f:
+              f.write(script_content)
+          
+          print('Modified screenshot script for CI environment')
+          "
+          
+          # Execute the screenshot script
+          python 8-snapshotter-ci.py
           
           if [ $? -eq 0 ]; then
-            echo "Screenshot upload completed successfully"
+            echo "Screenshot process completed successfully"
+            
+            # Check results
+            if [ -d "screenshots" ]; then
+              screenshot_count=$(find screenshots -name "*.png" | wc -l)
+              echo "Generated $screenshot_count screenshots"
+              
+              if [ -f "screenshots/screenshot_report.txt" ]; then
+                echo "Screenshot report:"
+                cat screenshots/screenshot_report.txt
+              fi
+            else
+              echo "No screenshots directory created"
+            fi
           else
-            echo "Screenshot upload completed with some failures (check logs)"
+            echo "Screenshot process completed with errors (check logs)"
             exit 1
           fi
 
@@ -385,14 +467,18 @@ jobs:
           cd sites-data-fetch
           
           # Check each script outcome
-          scripts=("1-nameProcess" "2-CKANActionAPI" "3-siteType" "4-description" "5-locationAnalyser" "6-geocode" "7-tstamp" "screenshots")
-          outcomes=("${{ steps.script1.outcome }}" "${{ steps.script2.outcome }}" "${{ steps.script3.outcome }}" "${{ steps.script4.outcome }}" "${{ steps.script5.outcome }}" "${{ steps.script6.outcome }}" "${{ steps.script7.outcome }}" "${{ steps.screenshots.outcome }}")
+          scripts=("1-nameProcess" "2-CKANActionAPI" "3-siteType" "4-description" "5-locationAnalyser" "6-geocode" "7-tstamp" "screenshots" "upload_screenshots")
+          outcomes=("${{ steps.script1.outcome }}" "${{ steps.script2.outcome }}" "${{ steps.script3.outcome }}" "${{ steps.script4.outcome }}" "${{ steps.script5.outcome }}" "${{ steps.script6.outcome }}" "${{ steps.script7.outcome }}" "${{ steps.screenshots.outcome }}" "${{ steps.upload_screenshots.outcome }}")
           
           for i in "${!scripts[@]}"; do
             if [ $i -eq 7 ]; then
               script_num="📷"
-              script_name="Screenshot Upload"
+              script_name="Take Screenshots"
               output_file="screenshots/"
+            elif [ $i -eq 8 ]; then
+              script_num="📤"
+              script_name="Upload Screenshots to CKAN"
+              output_file="screenshot_upload.log"
             else
               script_num=$((i + 1))
               script_name="${scripts[$i]}"
