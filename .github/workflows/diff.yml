@@ -1,5 +1,4 @@
-
-name: Update CKAN Extensions Metadata
+name: Weekly Report
 on:
   schedule:
     # Runs every Sunday at 2:00 AM UTC
@@ -11,7 +10,7 @@ env:
   CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
 jobs:
   update-metadata:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
@@ -26,30 +25,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install pandas requests pygithub
     
-    - name: Install qsv (musl static)
+    - name: Install qsv
       run: |
-        set -eu
-        echo "Attempting to download static qsv musl binary (best-effort)..."
-        QSV_VER="7.1.0"
-        QSV_ZIP="qsv-${QSV_VER}-x86_64-unknown-linux-musl.zip"
-        QSV_URL="https://github.com/dathere/qsv/releases/download/${QSV_VER}/${QSV_ZIP}"
-        mkdir -p /tmp/qsv && cd /tmp/qsv  
-        if wget -q --spider "$QSV_URL"; then
-          wget -q "$QSV_URL" -O "$QSV_ZIP"  
-          unzip -o "$QSV_ZIP"  
-          if [ -f qsv ]; then
-            sudo mv qsv /usr/local/bin/qsv  
-            sudo chmod +x /usr/local/bin/qsv  
-            echo "Installed qsv to /usr/local/bin/qsv"
-          else
-            echo "Downloaded archive but could not find qsv binary inside"
-          fi
-        else
-          echo "qsv release URL not reachable; skipping qsv install"
-        fi
-        /usr/local/bin/qsv --version || echo "qsv not installed or not runnable"
+        echo "Installing qsv..."
+        wget -q https://github.com/dathere/qsv/releases/download/7.1.0/qsv-7.1.0-x86_64-unknown-linux-gnu.zip
+        unzip -q qsv-7.1.0-x86_64-unknown-linux-gnu.zip
+        sudo mv qsv /usr/local/bin/
+        sudo chmod +x /usr/local/bin/qsv
+        echo "qsv version: $(qsv --version)"
     
     - name: Step 1 - Extract GitHub URLs from CKAN
       run: |
@@ -61,7 +46,7 @@ jobs:
         # Check if output file was created
         if [ -f "url_list.csv" ]; then
           echo "✓ url_list.csv created successfully"
-          wc -l url_list.csv
+          echo "Rows in url_list.csv: $(wc -l < url_list.csv)"
         else
           echo "✗ url_list.csv not found"
           exit 1
@@ -77,7 +62,7 @@ jobs:
         # Check if output file was created
         if [ -f "dynamic_metadata_update.csv" ]; then
           echo "✓ dynamic_metadata_update.csv created successfully"
-          wc -l dynamic_metadata_update.csv
+          echo "Rows in dynamic_metadata_update.csv: $(wc -l < dynamic_metadata_update.csv)"
         else
           echo "✗ dynamic_metadata_update.csv not found"
           exit 1
@@ -93,7 +78,7 @@ jobs:
         # Check if download was successful
         if [ -f "existing_metadata.csv" ]; then
           echo "✓ existing_metadata.csv downloaded successfully"
-          wc -l existing_metadata.csv
+          echo "Rows in existing_metadata.csv: $(wc -l < existing_metadata.csv)"
         else
           echo "✗ existing_metadata.csv not found"
           exit 1
