@@ -68,12 +68,62 @@ def get_resource_info(dataset_id, resource_name):
         print(f"Error finding resource: {e}")
         return None
 
-def create_datastore_for_resource(resource_id, df):
-    """Create datastore table for existing resource"""
+def check_datastore_structure(resource_id):
+    """Check if datastore exists and has primary key defined"""
     
-    print("Creating datastore for resource...")
+    datastore_info_url = f"{CKAN_URL}/api/3/action/datastore_info"
+    headers = {'Authorization': API_KEY}
     
-    # Determine field types from dataframe
+    try:
+        response = requests.post(
+            datastore_info_url,
+            json={'id': resource_id},
+            headers=headers
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            if result.get('success'):
+                info = result.get('result', {})
+                schema = info.get('schema', {})
+                
+                # Check if primary key exists
+                primary_keys = []
+                for field in schema.get('fields', []):
+                    if field.get('is_primary_key'):
+                        primary_keys.append(field['name'])
+                
+                return {
+                    'exists': True,
+                    'has_primary_key': len(primary_keys) > 0,
+                    'primary_keys': primary_keys,
+                    'fields': schema.get('fields', [])
+                }
+        return {'exists': False}
+        
+    except:
+        return {'exists': False}
+
+def recreate_datastore_with_primary_key(resource_id, df):
+    """Delete and recreate datastore with proper primary key"""
+    
+    print("Recreating datastore with primary key...")
+    
+    # First, try to delete existing datastore
+    delete_url = f"{CKAN_URL}/api/3/action/datastore_delete"
+    headers = {'Authorization': API_KEY}
+    
+    try:
+        response = requests.post(
+            delete_url,
+            json={'resource_id': resource_id, 'force': True},
+            headers=headers
+        )
+        print("  Deleted existing datastore")
+    except:
+        pass  # It's okay if delete fails
+    
+    # Now create new datastore with primary key
     fields = []
     for col in df.columns:
         dtype = str(df[col].dtype)
@@ -84,7 +134,7 @@ def create_datastore_for_resource(resource_id, df):
             field_type = 'float'
         elif 'bool' in dtype:
             field_type = 'boolean'
-        elif col in ['tstamp', 'release_date']:  # Date fields
+        elif col in ['tstamp', 'release_date']:
             field_type = 'timestamp'
         else:
             field_type = 'text'
@@ -94,12 +144,25 @@ def create_datastore_for_resource(resource_id, df):
             'type': field_type
         })
     
+    # Convert datetime columns to string
+    for col in ['tstamp', 'release_date']:
+        if col in df.columns:
+            df[col] = df[col].astype(str)
+    
+    # Convert dataframe to records and clean NaN values
+    records = df.to_dict(orient='records')
+    cleaned_records = []
+    for record in records:
+        cleaned_record = {k: v for k, v in record.items() if pd.notna(v)}
+        cleaned_records.append(cleaned_record)
+    
+    # Create datastore with primary key
     datastore_create_url = f"{CKAN_URL}/api/3/action/datastore_create"
-    headers = {'Authorization': API_KEY}
     
     data = {
         'resource_id': resource_id,
         'fields': fields,
+        'records': cleaned_records,
         'primary_key': PRIMARY_KEY,
         'indexes': ','.join(PRIMARY_KEY),
         'force': True
@@ -115,13 +178,91 @@ def create_datastore_for_resource(resource_id, df):
         if response.status_code == 200:
             result = response.json()
             if result.get('success'):
-                print("✓ Datastore created successfully")
+                print("✓ Datastore recreated with primary key and initial data")
                 return True
             else:
-                print(f"✗ Failed to create datastore: {result.get('error')}")
+                print(f"✗ Failed to recreate datastore: {result.get('error')}")
                 return False
     except Exception as e:
-        print(f"✗ Error creating datastore: {e}")
+        print(f"✗ Error recreating datastore: {e}")
+        return False
+
+def append_to_datastore(resource_id, df, force_recreate=False):
+    """Append data to existing datastore using upsert"""
+    
+    # Check datastore structure first
+    ds_info = check_datastore_structure(resource_id)
+    
+    if not ds_info['exists'] or not ds_info['has_primary_key'] or force_recreate:
+        print("Datastore needs to be recreated with primary key...")
+        return recreate_datastore_with_primary_key(resource_id, df)
+    
+    print(f"Appending {len(df)} records to datastore...")
+    
+    # Convert datetime columns to string for JSON serialization
+    for col in ['tstamp', 'release_date']:
+        if col in df.columns:
+            df[col] = df[col].astype(str)
+    
+    # Convert dataframe to records
+    records = df.to_dict(orient='records')
+    
+    # Clean records - remove NaN values
+    cleaned_records = []
+    for record in records:
+        cleaned_record = {k: v for k, v in record.items() 
+                         if pd.notna(v)}
+        cleaned_records.append(cleaned_record)
+    
+    # Use datastore_upsert to append/update
+    upsert_url = f"{CKAN_URL}/api/3/action/datastore_upsert"
+    headers = {'Authorization': API_KEY}
+    
+    data = {
+        'resource_id': resource_id,
+        'records': cleaned_records,
+        'method': 'upsert',
+        'force': True,
+        'calculate_record_count': True
+    }
+    
+    try:
+        response = requests.post(
+            upsert_url,
+            json=data,
+            headers=headers
+        )
+        
+        if response.status_code == 200:
+            result = response.json()
+            if result.get('success'):
+                print(f"✓ Successfully appended data to datastore")
+                logger.info(f"Appended {len(cleaned_records)} records to resource {resource_id}")
+                return True
+            else:
+                error = result.get('error')
+                print(f"✗ Failed to append data: {error}")
+                
+                # If error is about primary key, recreate datastore
+                if 'unique key must be passed' in str(error):
+                    print("Primary key issue detected, recreating datastore...")
+                    return recreate_datastore_with_primary_key(resource_id, df)
+                
+                logger.error(f"Upsert failed: {error}")
+                return False
+        else:
+            print(f"✗ HTTP Error {response.status_code}: {response.text}")
+            
+            # If 409 error about primary key, recreate
+            if response.status_code == 409:
+                print("Primary key conflict, recreating datastore...")
+                return recreate_datastore_with_primary_key(resource_id, df)
+            
+            return False
+            
+    except Exception as e:
+        print(f"✗ Error appending data: {e}")
+        logger.error(f"Exception during upsert: {e}")
         return False
 
 def create_resource_with_datastore(package_id, df):
@@ -150,8 +291,17 @@ def create_resource_with_datastore(package_id, df):
             'type': field_type
         })
     
+    # Convert datetime columns
+    for col in ['tstamp', 'release_date']:
+        if col in df.columns:
+            df[col] = df[col].astype(str)
+    
     # Convert dataframe to records
     records = df.to_dict(orient='records')
+    cleaned_records = []
+    for record in records:
+        cleaned_record = {k: v for k, v in record.items() if pd.notna(v)}
+        cleaned_records.append(cleaned_record)
     
     # Create resource with datastore in one call
     datastore_create_url = f"{CKAN_URL}/api/3/action/datastore_create"
@@ -169,7 +319,7 @@ def create_resource_with_datastore(package_id, df):
     data = {
         'resource': resource,
         'fields': fields,
-        'records': records,
+        'records': cleaned_records,
         'primary_key': PRIMARY_KEY,
         'indexes': ','.join(PRIMARY_KEY),
         'force': True
@@ -195,65 +345,6 @@ def create_resource_with_datastore(package_id, df):
         print(f"✗ Error creating resource: {e}")
         return None
 
-def append_to_datastore(resource_id, df):
-    """Append data to existing datastore using upsert"""
-    
-    print(f"Appending {len(df)} records to datastore...")
-    
-    # Convert datetime columns to string for JSON serialization
-    for col in ['tstamp', 'release_date']:
-        if col in df.columns:
-            df[col] = df[col].astype(str)
-    
-    # Convert dataframe to records
-    records = df.to_dict(orient='records')
-    
-    # Clean records - remove NaN values which cause issues
-    cleaned_records = []
-    for record in records:
-        cleaned_record = {k: v for k, v in record.items() 
-                         if pd.notna(v)}
-        cleaned_records.append(cleaned_record)
-    
-    # Use datastore_upsert to append/update
-    upsert_url = f"{CKAN_URL}/api/3/action/datastore_upsert"
-    headers = {'Authorization': API_KEY}
-    
-    data = {
-        'resource_id': resource_id,
-        'records': cleaned_records,
-        'method': 'upsert',  # This handles insert or update based on primary key
-        'force': True,
-        'calculate_record_count': True
-    }
-    
-    try:
-        response = requests.post(
-            upsert_url,
-            json=data,
-            headers=headers
-        )
-        
-        if response.status_code == 200:
-            result = response.json()
-            if result.get('success'):
-                print(f"✓ Successfully appended data to datastore")
-                logger.info(f"Appended {len(cleaned_records)} records to resource {resource_id}")
-                return True
-            else:
-                error = result.get('error')
-                print(f"✗ Failed to append data: {error}")
-                logger.error(f"Upsert failed: {error}")
-                return False
-        else:
-            print(f"✗ HTTP Error {response.status_code}: {response.text}")
-            return False
-            
-    except Exception as e:
-        print(f"✗ Error appending data: {e}")
-        logger.error(f"Exception during upsert: {e}")
-        return False
-
 def update_resource_metadata(resource_id):
     """Update resource description with timestamp"""
     
@@ -278,7 +369,7 @@ def update_resource_metadata(resource_id):
             print("✓ Resource metadata updated")
             return True
     except:
-        pass  # Non-critical operation
+        pass
     
     return False
 
@@ -316,15 +407,7 @@ def main():
     if resource_info:
         resource_id = resource_info['id']
         
-        # Check if resource has datastore
-        if not resource_info['has_datastore']:
-            print("Resource exists but has no datastore, creating...")
-            if not create_datastore_for_resource(resource_id, df):
-                print("Failed to create datastore")
-                return False
-        
-        # Append data using upsert
-        print()
+        # Append data using upsert (will handle primary key issues internally)
         success = append_to_datastore(resource_id, df)
         
         if success:
