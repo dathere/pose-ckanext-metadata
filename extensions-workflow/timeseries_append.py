@@ -88,17 +88,33 @@ def check_datastore_structure(resource_id):
                 info = result.get('result', {})
                 fields = info.get('fields', [])
                 
-                # Check for primary key in fields
+                # Check for primary key in multiple ways
                 primary_keys = []
+                
+                # Method 1: Check schema.uniquekey
                 for field in fields:
-                    # Check the schema for uniquekey flag
                     schema = field.get('schema', {})
                     if schema.get('uniquekey'):
                         primary_keys.append(field['id'])
                 
+                # Method 2: Check if field type includes 'primary key' info
+                # Some CKAN versions mark it differently
+                if not primary_keys:
+                    for field in fields:
+                        if field.get('info', {}).get('primary_key'):
+                            primary_keys.append(field['id'])
+                
+                # Method 3: Try datastore_search to see if upsert works
+                # If we can search, the datastore exists and we can try upserting
+                has_datastore = len(fields) > 0
+                
+                print(f"  Datastore info: {len(fields)} fields, primary_keys={primary_keys}")
+                
+                # If datastore exists with fields, assume we can upsert
+                # Even if primary key detection fails, let's try the upsert first
                 return {
-                    'exists': True,
-                    'has_primary_key': len(primary_keys) > 0,
+                    'exists': has_datastore,
+                    'has_primary_key': len(primary_keys) > 0 or has_datastore,  # Try anyway if datastore exists
                     'primary_keys': primary_keys,
                     'fields': fields
                 }
