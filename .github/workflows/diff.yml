@@ -1,0 +1,227 @@
+name: Weekly Report
+on:
+  schedule:
+    # Runs every Sunday at 2:00 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    # Allows manual triggering from GitHub UI
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
+  CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+jobs:
+  update-metadata:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas requests pygithub
+    
+    - name: Install qsv
+      run: |
+        echo "Installing qsv..."
+        wget -q https://github.com/dathere/qsv/releases/download/7.1.0/qsv-7.1.0-x86_64-unknown-linux-gnu.zip
+        unzip -q qsv-7.1.0-x86_64-unknown-linux-gnu.zip
+        sudo mv qsv /usr/local/bin/
+        sudo chmod +x /usr/local/bin/qsv
+        echo "qsv version: $(qsv --version)"
+    
+    - name: Step 1 - Extract GitHub URLs from CKAN
+      run: |
+        echo "=== STEP 1: Extracting GitHub URLs from CKAN ==="
+        cd extensions-workflow
+        python 1getURL.py
+        echo "✓ URL extraction completed"
+        
+        # Check if output file was created
+        if [ -f "url_list.csv" ]; then
+          echo "✓ url_list.csv created successfully"
+          echo "Rows in url_list.csv: $(wc -l < url_list.csv)"
+        else
+          echo "✗ url_list.csv not found"
+          exit 1
+        fi
+    
+    - name: Step 2 - Fetch Dynamic Metadata from GitHub
+      run: |
+        echo "=== STEP 2: Fetching dynamic metadata from GitHub ==="
+        cd extensions-workflow
+        python 2refresh.py
+        echo "✓ Metadata extraction completed"
+        
+        # Check if output file was created
+        if [ -f "dynamic_metadata_update.csv" ]; then
+          echo "✓ dynamic_metadata_update.csv created successfully"
+          echo "Rows in dynamic_metadata_update.csv: $(wc -l < dynamic_metadata_update.csv)"
+        else
+          echo "✗ dynamic_metadata_update.csv not found"
+          exit 1
+        fi
+
+    - name: Step 3.1 - Download Existing CSV from CKAN
+      run: |
+        echo "=== STEP 3.1: Downloading existing CSV from CKAN ==="
+        cd extensions-workflow
+        python 31download.py existing_metadata.csv
+        echo "✓ CSV download completed"
+        
+        # Check if download was successful
+        if [ -f "existing_metadata.csv" ]; then
+          echo "✓ existing_metadata.csv downloaded successfully"
+          echo "Rows in existing_metadata.csv: $(wc -l < existing_metadata.csv)"
+        else
+          echo "✗ existing_metadata.csv not found"
+          exit 1
+        fi
+
+    - name: Step 3.2 - Process CSVs with qsv
+      run: |
+        echo "=== STEP 3.2: Processing CSVs with qsv ==="
+        cd extensions-workflow
+        
+        # First, find the latest timestamp in existing_metadata.csv
+        echo "Finding latest timestamp in existing metadata..."
+        LATEST_TSTAMP=$(qsv select tstamp existing_metadata.csv | tail -n +2 | sort -r | head -1)
+        echo "Latest timestamp found: $LATEST_TSTAMP"
+        
+        # Filter existing_metadata.csv to only include rows with the latest timestamp
+        echo "Filtering existing metadata to latest timestamp only..."
+        qsv search --select tstamp "^${LATEST_TSTAMP}$" existing_metadata.csv > existing_latest.csv
+        
+        # Count rows after filtering
+        EXISTING_ROWS=$(qsv count existing_latest.csv)
+        echo "Rows in existing metadata with latest timestamp: $EXISTING_ROWS"
+        
+        # Drop the tstamp column from existing_latest.csv
+        echo "Dropping tstamp column from existing metadata..."
+        qsv select '!tstamp' existing_latest.csv > existing_processed.csv
+        
+        # Drop the tstamp column from dynamic_metadata_update.csv
+        echo "Dropping tstamp column from dynamic metadata..."
+        qsv select '!tstamp' dynamic_metadata_update.csv > dynamic_processed.csv
+        
+        # Display headers to verify they match
+        echo "Headers in existing_processed.csv:"
+        qsv headers existing_processed.csv
+        
+        echo "Headers in dynamic_processed.csv:"
+        qsv headers dynamic_processed.csv
+        
+        # Count rows in both processed files
+        echo "Rows in existing_processed.csv: $(qsv count existing_processed.csv)"
+        echo "Rows in dynamic_processed.csv: $(qsv count dynamic_processed.csv)"
+
+    - name: Step 3.3 - Compare CSVs using qsv diff
+      run: |
+        echo "=== STEP 3.3: Comparing CSVs with qsv diff ==="
+        cd extensions-workflow
+        
+        # Run qsv diff using repository_name as the key
+        # This will show what changed between existing and new dynamic metadata
+        echo "Running qsv diff with repository_name as key..."
+        qsv diff --key repository_name \
+                 --sort-columns repository_name \
+                 existing_processed.csv \
+                 dynamic_processed.csv \
+                 -o metadata_diff.csv
+        
+        # Check if diff was created
+        if [ -f "metadata_diff.csv" ]; then
+          echo "✓ metadata_diff.csv created successfully"
+          
+          # Display summary statistics
+          echo "Diff summary:"
+          echo "Total rows in diff: $(qsv count metadata_diff.csv)"
+          
+          # Count different types of changes if diff_type column exists
+          if qsv headers metadata_diff.csv | grep -q "diff_type"; then
+            echo "Changes by type:"
+            qsv frequency --select diff_type metadata_diff.csv | qsv table
+          fi
+          
+          # Show first few rows of the diff
+          echo "First 5 rows of diff:"
+          qsv slice -l 5 metadata_diff.csv | qsv table
+        else
+          echo "✗ metadata_diff.csv not found"
+          exit 1
+        fi
+        
+        # Also create a simplified diff without equal fields for easier review
+        echo "Creating simplified diff (dropping equal fields)..."
+        qsv diff --key repository_name \
+                 --sort-columns repository_name \
+                 --drop-equal-fields \
+                 existing_processed.csv \
+                 dynamic_processed.csv \
+                 -o metadata_diff_simplified.csv
+        
+        if [ -f "metadata_diff_simplified.csv" ]; then
+          echo "✓ metadata_diff_simplified.csv created successfully"
+          echo "Simplified diff rows: $(qsv count metadata_diff_simplified.csv)"
+        fi
+
+    - name: Step 3.4 - Generate Summary Report
+      run: |
+        echo "=== STEP 3.4: Generating Summary Report ==="
+        cd extensions-workflow
+        
+        # Create a summary report
+        echo "# CKAN Extensions Metadata Update Report" > summary_report.md
+        echo "Generated on: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> summary_report.md
+        echo "" >> summary_report.md
+        
+        echo "## Processing Summary" >> summary_report.md
+        echo "- Extensions in CKAN catalog: $(qsv count url_list.csv)" >> summary_report.md
+        echo "- GitHub URLs found: $(qsv search --select github_url '.+' url_list.csv | qsv count)" >> summary_report.md
+        echo "- Dynamic metadata fetched: $(qsv count dynamic_metadata_update.csv)" >> summary_report.md
+        echo "- Existing metadata rows (latest timestamp): $(qsv count existing_latest.csv)" >> summary_report.md
+        echo "- Changes detected: $(qsv count metadata_diff.csv)" >> summary_report.md
+        echo "" >> summary_report.md
+        
+        # Add change statistics if available
+        if [ -f "metadata_diff.csv" ] && qsv headers metadata_diff.csv | grep -q "diff_type"; then
+          echo "## Change Types" >> summary_report.md
+          echo '```' >> summary_report.md
+          qsv frequency --select diff_type metadata_diff.csv | qsv table >> summary_report.md
+          echo '```' >> summary_report.md
+        fi
+        
+        echo "✓ Summary report generated"
+        cat summary_report.md
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: metadata-update-results-${{ github.run_number }}
+        path: |
+          extensions-workflow/url_list.csv
+          extensions-workflow/dynamic_metadata_update.csv
+          extensions-workflow/existing_metadata.csv
+          extensions-workflow/existing_latest.csv
+          extensions-workflow/existing_processed.csv
+          extensions-workflow/dynamic_processed.csv
+          extensions-workflow/metadata_diff.csv
+          extensions-workflow/metadata_diff_simplified.csv
+          extensions-workflow/summary_report.md
+        retention-days: 30
+
+    - name: Upload Diff Results as Separate Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: diff-results-${{ github.run_number }}
+        path: |
+          extensions-workflow/metadata_diff.csv
+          extensions-workflow/metadata_diff_simplified.csv
+          extensions-workflow/summary_report.md
+        retention-days: 90

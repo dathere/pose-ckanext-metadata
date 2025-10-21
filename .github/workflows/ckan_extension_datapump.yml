@@ -1,0 +1,124 @@
+name: Datapump CKAN Extensions Timeseries Metadata
+on:
+  schedule:
+    # Runs every Sunday at 2:00 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    # Allows manual triggering from GitHub UI
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
+  CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+
+jobs:
+  update-metadata:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Step 1 - Extract GitHub URLs from CKAN
+      run: |
+        echo "=== STEP 1: Extracting GitHub URLs from CKAN ==="
+        cd extensions-workflow
+        python 1test.py
+        echo "✓ URL extraction completed"
+        
+        # Check if output file was created
+        if [ -f "url_list.csv" ]; then
+          echo "✓ url_list.csv created successfully"
+          wc -l url_list.csv
+        else
+          echo "✗ url_list.csv not found"
+          exit 1
+        fi
+    
+    - name: Step 2 - Fetch Dynamic Metadata from GitHub
+      run: |
+        echo "=== STEP 2: Fetching dynamic metadata from GitHub ==="
+        cd extensions-workflow
+        python 2refresh.py
+        echo "✓ Metadata extraction completed"
+        
+        # Check if output file was created
+        if [ -f "dynamic_metadata_update.csv" ]; then
+          echo "✓ dynamic_metadata_update.csv created successfully"
+          wc -l dynamic_metadata_update.csv
+        else
+          echo "✗ dynamic_metadata_update.csv not found"
+          exit 1
+        fi
+    
+    - name: Step 3 - Update CKAN Catalog with Metadata
+      run: |
+        echo "=== STEP 3: Updating CKAN catalog with metadata ==="
+        cd extensions-workflow
+        python 3updateCatalog.py
+        echo "✓ CKAN catalog update completed"
+    
+    - name: Step 4 - Append Time-Series Data to CKAN
+      run: |
+        echo "=== STEP 4: Appending time-series data to CKAN ==="
+        cd extensions-workflow
+        python timeseries_append.py dynamic_metadata_update.csv
+        echo "✓ Time-series data append completed"
+    
+    - name: Step 5 - Create Table View for Extensions Resource
+      run: |
+        echo "=== STEP 5: Creating table view for extensions resource ==="
+        cd extensions-workflow
+        python 5createView.py
+        echo "✓ Table view creation completed"
+    
+    - name: Upload artifacts on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: extensions-debug-files
+        path: |
+          extensions-workflow/*.csv
+          extensions-workflow/*.log
+        retention-days: 7
+    
+    - name: Upload generated CSVs as artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: extensions-metadata-csv-files
+        path: |
+          extensions-workflow/dynamic_metadata_update.csv
+          extensions-workflow/existing_metadata.csv
+        retention-days: 30
+    
+    - name: Workflow Summary
+      if: always()
+      run: |
+        echo "=== WORKFLOW SUMMARY ==="
+        echo "Status: ${{ job.status }}"
+        echo "Timestamp: $(date -u)"
+        
+        # Show file sizes if they exist
+        cd extensions-workflow
+        for file in url_list.csv dynamic_metadata_update.csv existing_metadata.csv; do
+          if [ -f "$file" ]; then
+            echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
+          fi
+        done
+        
+        # Show any log files
+        if ls *.log >/dev/null 2>&1; then
+          echo "Log files created:"
+          ls -la *.log
+        fi
