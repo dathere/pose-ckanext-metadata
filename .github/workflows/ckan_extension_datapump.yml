@@ -72,15 +72,15 @@ jobs:
       run: |
         echo "=== STEP 4: Appending time-series data to CKAN ==="
         cd extensions-workflow
-        python timeseries_append.py dynamic_metadata_update.csv
+        python datapump.py dynamic_metadata_update.csv
         echo "✓ Time-series data append completed"
     
-    - name: Step 5 - Create Table View for Extensions Resource
-      run: |
-        echo "=== STEP 5: Creating table view for extensions resource ==="
-        cd extensions-workflow
-        python 5createView.py
-        echo "✓ Table view creation completed"
+#    - name: Step 5 - Create Table View for Extensions Resource
+#      run: |
+#        echo "=== STEP 5: Creating table view for extensions resource ==="
+#        cd extensions-workflow
+#        python 5createView.py
+#        echo "✓ Table view creation completed"
     
     - name: Upload artifacts on failure
       if: failure()
