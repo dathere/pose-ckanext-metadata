@@ -33,7 +33,7 @@ jobs:
       run: |
         echo "=== STEP 1: Extracting GitHub URLs from CKAN ==="
         cd extensions-workflow
-        python 1test.py
+        python 1getSitesURL.py
         echo "✓ URL extraction completed"
         
         # Check if output file was created
