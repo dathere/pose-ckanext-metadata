@@ -34,7 +34,7 @@ class SimpleGitHubExtractor:
         
         all_packages = []
         start = 0
-        rows = 3
+        rows = 2000
         
         while True:
             print(f"Fetching batch starting at {start}...")

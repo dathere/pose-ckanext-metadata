@@ -154,7 +154,7 @@ def filter_duplicates(new_df, existing_df, unique_columns):
             if col in df.columns and df[col].dtype == 'object':
                 # Try to normalize timestamp format
                 try:
-                    df[col] = pd.to_datetime(df[col], errors='coerce')
+                    df[col] = pd.to_datetime(df[col], format='%Y-%m-%d', errors='coerce')
                     df[col] = df[col].dt.strftime('%Y-%m-%dT%H:%M:%S')
                 except:
                     pass
@@ -207,7 +207,7 @@ def append_to_datastore(resource_id, df):
     # Convert datetime columns to ISO format strings
     for col in ['tstamp', 'release_date']:
         if col in new_records_df.columns:
-            new_records_df[col] = pd.to_datetime(new_records_df[col], errors='coerce')
+            new_records_df[col] = pd.to_datetime(new_records_df[col], format='%Y-%m-%d', errors='coerce')
             new_records_df[col] = new_records_df[col].dt.strftime('%Y-%m-%dT%H:%M:%S')
     
     # Convert dataframe to records and clean
@@ -314,7 +314,7 @@ def create_datastore_without_primary_key(resource_id, df):
     # Convert datetime columns
     for col in ['tstamp', 'release_date']:
         if col in df.columns:
-            df[col] = pd.to_datetime(df[col], errors='coerce')
+            df[col] = pd.to_datetime(df[col], format='%Y-%m-%d', errors='coerce')
             df[col] = df[col].dt.strftime('%Y-%m-%dT%H:%M:%S')
     
     # Convert to records
@@ -393,7 +393,7 @@ def create_resource_with_datastore(package_id, df):
     # Convert datetime columns
     for col in ['tstamp', 'release_date']:
         if col in df.columns:
-            df[col] = pd.to_datetime(df[col], errors='coerce')
+            df[col] = pd.to_datetime(df[col], format='%Y-%m-%d', errors='coerce')
             df[col] = df[col].dt.strftime('%Y-%m-%dT%H:%M:%S')
     
     records = df.to_dict(orient='records')
