@@ -14,7 +14,7 @@ import logging
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-INPUT_CSV_FILE = "sites0.csv"
+INPUT_CSV_FILE = "site_urls.csv"
 OUTPUT_CSV_FILE = "ckan_stats.csv"
 MAX_WORKERS = 10  # Number of concurrent threads
 REQUEST_TIMEOUT = 15  # Reduced timeout for faster failures
