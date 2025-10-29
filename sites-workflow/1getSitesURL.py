@@ -81,7 +81,7 @@ class SimpleSiteURLExtractor:
         
         all_packages = []
         start = 0
-        rows = 1000
+        rows = 100
         
         while True:
             print(f"Fetching batch starting at {start}...")
@@ -112,6 +112,7 @@ class SimpleSiteURLExtractor:
             all_packages.extend(batch_packages)
             
             print(f"Fetched {len(all_packages)}/{total_count} sites")
+
             
             # Stop if we got fewer results than requested or reached the total
             if len(batch_packages) < rows or len(all_packages) >= total_count:

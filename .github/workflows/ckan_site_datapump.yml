@@ -1,4 +1,4 @@
-name: Update CKAN Sites Metadata
+name: Datapump CKAN Sites Timeseries Metadata
 on:
   schedule:
     # Runs every Sunday at 3:00 AM UTC (1 hour after extensions workflow)
@@ -12,7 +12,7 @@ env:
 
 jobs:
   update-sites-metadata:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
@@ -21,7 +21,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.11'
         cache: 'pip'
     
     - name: Install dependencies
@@ -67,59 +67,13 @@ jobs:
         cd sites-workflow
         python 3updateSitesCatalog.py
         echo "✓ CKAN sites catalog update completed"
-    
-    - name: Step 3.1 - Download Existing Sites CSV from CKAN
-      run: |
-        echo "=== STEP 3.1: Downloading existing sites CSV from CKAN ==="
-        cd sites-workflow
-        python 31downloadDataset.py existing_sites_metadata.csv
-        echo "✓ Sites CSV download completed"
         
-        # Check if download was successful
-        if [ -f "existing_sites_metadata.csv" ]; then
-          echo "✓ existing_sites_metadata.csv downloaded successfully"
-          wc -l existing_sites_metadata.csv
-        else
-          echo "✗ existing_sites_metadata.csv not found"
-          exit 1
-        fi
-    
-    - name: Step 3.2 - Merge Sites CSVs
+    - name: Step 4 - Append Time-Series Data to CKAN
       run: |
-        echo "=== STEP 3.2: Merging existing and new sites CSV data ==="
+        echo "=== STEP 4: Appending time-series data to CKAN ==="
         cd sites-workflow
-        python 32merger.py existing_sites_metadata.csv ckan_stats.csv dynamic_metadata_update.csv
-        echo "✓ Sites CSV merge completed"
-        
-        # Check if merge was successful
-        if [ -f "dynamic_metadata_update.csv" ]; then
-          echo "✓ dynamic_metadata_update.csv merged successfully"
-          wc -l dynamic_metadata_update.csv
-        else
-          echo "✗ dynamic_metadata_update.csv not found after merge"
-          exit 1
-        fi
-    
-    - name: Step 3.3 - Delete Old Sites Resource from CKAN
-      run: |
-        echo "=== STEP 3.3: Deleting old sites resource from CKAN ==="
-        cd sites-workflow
-        python 33delete.py
-        echo "✓ Old sites resource deletion completed"
-    
-    - name: Step 4 - Upload New Sites CSV to CKAN Dataset
-      run: |
-        echo "=== STEP 4: Uploading merged sites CSV to CKAN dataset ==="
-        cd sites-workflow
-        python 4uploadDataset.py
-        echo "✓ Sites CSV upload completed"
-    
-    - name: Step 5 - Create Table View for Sites Resource
-      run: |
-        echo "=== STEP 5: Creating table view for sites resource ==="
-        cd sites-workflow
-        python 5createView.py
-        echo "✓ Table view creation completed"
+        python datapump.py ckan_stats.csv
+        echo "✓ Time-series data append completed"    
     
     - name: Upload artifacts on failure
       if: failure()

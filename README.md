@@ -1,42 +1,128 @@
-# CKAN Ecosystem Metadata Collection
+[![Datapump CKAN Sites Timeseries Metadata](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_site_datapump.yml/badge.svg)](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_site_datapump.yml)
+[![Datapump CKAN Extensions Timeseries Metadata](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_extension_datapump.yml/badge.svg)](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_extension_datapump.yml)
+# CKAN Ecosystem Metadata Pipelines
 
-This repository contains automation scripts for sourcing and cataloging metadata from the CKAN ecosystem, including extensions and instances worldwide. The collected data powers the [CKAN Ecosystem Catalog](https://catalog.civicdataecosystem.org/) 
 
-## Repository Structure
+Data pipeline workflows for continuously cataloging metadata from CKAN instances and extensions worldwide. Powers the [CKAN Ecosystem Catalog](https://catalog.civicdataecosystem.org/) with real-time insights into the open data infrastructure landscape.
 
-### Extension Metadata Scripts
-- `1get_URL.py` - Discovers CKAN extensions on GitHub
-- `2refresh.py` - Updates extension metadata 
-- `3update_catalog.py` - Synchronizes data with the catalog
-- `4uploadDataset.py` - Upload the file to datasets page
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
+[![CKAN](https://img.shields.io/badge/CKAN-2.7%2B-orange.svg)](https://ckan.org/)
+
+---
+## Pipeline Details
+
+### Extensions Pipeline
+
+**Trigger:** Every Sunday at 02:00 UTC (or manual dispatch)
+
+**Stages:**
+
+1. **Discovery** (`1getURL.py`)
+   - Queries CKAN catalog for extension repositories
+   - Outputs: `url_list.csv` with GitHub URLs
+
+2. **Metadata Collection** (`2refresh.py`)
+   - Fetches GitHub metrics via REST API
+   - Metrics: stars, forks, releases, contributors, issues
+   - Outputs: `dynamic_metadata_update.csv`
+
+3. **Catalog Sync** (`3updateCatalog.py`)
+   - Updates CKAN package metadata
+   - Atomic updates with rollback on failure
+
+4. **Time-Series Storage** (`datapump.py`)
+   - Appends daily snapshots to datastore
+   - Enables historical trend analysis
+  
+
 
 ### CKAN Instance Data Collection (`sites-data-fetch/`)
-- `0.csv` - Base dataset of CKAN instances
-- `1-Name-Process.py` - Processes site names and converts titles to link-friendly identifiers.
-- `2-CKANActionAPI copy.py` - Fetches data of instances via CKAN Action API
-- `3-siteType.py` - Categorizes site types
-- `4-Description.py` - Extracts site descriptions
-- `5-Use AI To deduct Location copy.py` - Infers geographic locations
-- `6-Geocode using OpenStreetMap Nominatim API.py` - Geocodes locations
-- `7-tstamp.py` - Adds timestamps to metadata
+Work in Progress
+
+### Sites Pipeline
+
+**Trigger:** Every Sunday at 03:00 UTC (1 hour after extensions)
+
+**Stages:**
+
+1. **Site Discovery** (`1getSitesURL.py`)
+   - Extracts known CKAN instances from catalog
+   - Outputs: `site_urls.csv`
+
+2. **Instance Profiling** (`2CKANActionAPI.py`)
+   - Queries CKAN Action API (`/api/3/action/status_show`)
+   - Fetches: datasets, groups, organizations, version, extensions
+   - Concurrent processing: 10 workers, 15s timeout
+   - Outputs: `ckan_stats.csv`
+
+3. **Catalog Update** (`3updateSitesCatalog.py`)
+   - Syncs instance metadata to catalog
+
+4. **Time-Series Storage** (`datapump.py`)
+   - Appends instance snapshots to datastore
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.9+
+- CKAN API access with write permissions
+- GitHub Personal Access Token (for extensions pipeline)
+
+### Configuration
+
+Set up Github secret variables:
+
+```bash
+CKAN_API_KEY="your-ckan-api-key"
+GITHUB_TOKEN="your-github-token"  # For extensions pipeline
+```
 
 ## Automation
 
-The repository includes a GitHub Actions workflow (`.github/workflows/update-ckan-metadata.yml`) that automatically fetches and updates extension metadata on a scheduled basis.
-<img width="2749" height="3840" alt="Untitled diagram _ Mermaid Chart-2025-07-16-114648" src="https://github.com/user-attachments/assets/169fb3ee-4685-4051-9a5e-90f202b32988" />
+### GitHub Actions Workflows
 
-## Setup
+Both pipelines run automatically via GitHub Actions:
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+- **Extensions**: Sundays at 02:00 UTC
+- **Sites**: Sundays at 03:00 UTC (staggered to avoid resource contention)
 
-2. Configure CKAN API key 
+**Manual Triggering:**
+1. Navigate to Actions tab in GitHub
+2. Select workflow
+3. Click "Run workflow"
 
-3. Run the extension metadata collection:
-   ```bash
-   python 1get_URL.py
-   python 2refresh.py
-   python 3update_catalog.py
-   ```
+**Monitoring:**
+- Workflow status badges in README
+- Artifact uploads on success (CSV files, 30-day retention)
+- Debug artifact uploads on failure (logs, 7-day retention)
+- Detailed execution summaries with file metrics
+
+---
+
+## Data Access
+
+### Public Catalog
+
+Browse and download data via the [CKAN Ecosystem Catalog](https://catalog.civicdataecosystem.org/):
+
+- **Extensions Dataset**: `ckan-extensions-metadata`
+- **Sites Dataset**: `ckan-sites-metadata`
+
+
+---
+
+Project managed by
+
+<img width="330" height="60" alt="image" src="https://github.com/user-attachments/assets/43f0b89d-a203-4d87-95b4-b89c78c65f6c" />
+<img width="191" height="65" alt="image" src="https://github.com/user-attachments/assets/12b5e242-4ebc-4d39-b217-10a140e2ac15" />
+<img width="338" height="40" alt="image" src="https://github.com/user-attachments/assets/393e5560-0a2e-453d-82af-afc4b4351b08" />
+
+
+Funding provided through the National Science Foundation's Pathways to Enable Open Source Ecosystems (POSE) program.
+
+<img width="99" height="100" alt="image" src="https://github.com/user-attachments/assets/2180f5f7-ef1a-4182-b5a5-e4d35fc8b9a6" />
+
