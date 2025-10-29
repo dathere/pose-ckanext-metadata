@@ -61,12 +61,13 @@ jobs:
           exit 1
         fi
     
- #   - name: Step 3 - Update CKAN Sites Catalog
-  #    run: |
-   #     echo "=== STEP 3: Updating CKAN sites catalog ==="
-    #    cd sites-workflow
-     #   python 3updateSitesCatalog.py
-      #  echo "✓ CKAN sites catalog update completed"
+    - name: Step 3 - Update CKAN Sites Catalog
+      run: |
+        echo "=== STEP 3: Updating CKAN sites catalog ==="
+        cd sites-workflow
+        python 3updateSitesCatalog.py
+        echo "✓ CKAN sites catalog update completed"
+        
     - name: Step 4 - Append Time-Series Data to CKAN
       run: |
         echo "=== STEP 4: Appending time-series data to CKAN ==="
