@@ -81,7 +81,7 @@ class SimpleSiteURLExtractor:
         
         all_packages = []
         start = 0
-        rows = 1000
+        rows = 5
         
         while True:
             print(f"Fetching batch starting at {start}...")
