@@ -67,7 +67,12 @@ jobs:
     #    cd sites-workflow
      #   python 3updateSitesCatalog.py
       #  echo "✓ CKAN sites catalog update completed"
-    
+    - name: Step 4 - Append Time-Series Data to CKAN
+      run: |
+        echo "=== STEP 4: Appending time-series data to CKAN ==="
+        cd sites-workflow
+        python datapump.py ckan_stats.csv
+        echo "✓ Time-series data append completed"    
     
     - name: Upload artifacts on failure
       if: failure()
