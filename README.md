@@ -5,9 +5,7 @@
 
 Data pipeline workflows for continuously cataloging metadata from CKAN instances and extensions worldwide. Powers the [CKAN Ecosystem Catalog](https://catalog.civicdataecosystem.org/) with real-time insights into the open data infrastructure landscape.
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
-[![CKAN](https://img.shields.io/badge/CKAN-2.7%2B-orange.svg)](https://ckan.org/)
+[![CKAN](https://img.shields.io/badge/CKAN-2.10%2B-orange.svg)](https://ckan.org/)
 
 ---
 ## Pipeline Details
