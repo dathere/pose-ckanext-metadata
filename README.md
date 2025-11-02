@@ -1,5 +1,6 @@
-[![Datapump CKAN Sites Timeseries Metadata](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_site_datapump.yml/badge.svg)](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_site_datapump.yml)
-[![Datapump CKAN Extensions Timeseries Metadata](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_extension_datapump.yml/badge.svg)](https://github.com/a5dur/pose-ckanext-metadata/actions/workflows/ckan_extension_datapump.yml)
+[![Datapump CKAN Sites Timeseries Metadata](https://github.com/dathere/pose-ckanext-metadata/actions/workflows/ckan_site_datapump.yml/badge.svg)](https://github.com/dathere/pose-ckanext-metadata/actions/workflows/ckan_site_datapump.yml)
+[![Datapump CKAN Extensions Timeseries Metadata](https://github.com/dathere/pose-ckanext-metadata/actions/workflows/ckan_extension_datapump.yml/badge.svg)](https://github.com/dathere/pose-ckanext-metadata/actions/workflows/ckan_extension_datapump.yml)
+
 # CKAN Ecosystem Metadata Pipelines
 
 
