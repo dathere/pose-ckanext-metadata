@@ -49,8 +49,8 @@ jobs:
       with:
         name: ckan-stats-csv
         path: |
-          sites-workflow/1.csv
-          sites-workflow/2.csv
+          sites-workflow/site_urls.csv
+          sites-workflow/ckan_stats.csv
         retention-days: 30
     
     - name: Workflow Summary
