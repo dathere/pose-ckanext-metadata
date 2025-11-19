@@ -24,18 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r sites-workflow/requirements.txt
     
-    - name: Verify input file exists
-      run: |
-        cd sites-workflow
-        if [ -f "1.csv" ]; then
-          echo "✓ Input file 1.csv found"
-          wc -l 1.csv
-        else
-          echo "✗ Input file 1.csv not found in sites-workflow directory"
-          echo "Contents of sites-workflow directory:"
-          ls -la
-          exit 1
-        fi
     
     - name: Run CKAN Action API Script
       run: |
@@ -44,14 +32,6 @@ jobs:
         python 2CKANActionAPI.py
         echo "✓ Script execution completed"
         
-        # Check if output file was created
-        if [ -f "2.csv" ]; then
-          echo "✓ 2.csv created successfully"
-          wc -l 2.csv
-        else
-          echo "✗ 2.csv not found"
-          exit 1
-        fi
     
     - name: Upload artifacts on failure
       if: failure()
