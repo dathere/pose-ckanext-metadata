@@ -39,9 +39,9 @@ jobs:
     
     - name: Run CKAN Action API Script
       run: |
-        echo "=== Running 2-CKANActionAPI.py ==="
+        echo "=== Running 2CKANActionAPI.py ==="
         cd sites-workflow
-        python 2-CKANActionAPI.py
+        python 2CKANActionAPI.py
         echo "✓ Script execution completed"
         
         # Check if output file was created
