@@ -1,0 +1,96 @@
+name: CKAN Sites metadata via action api
+on:
+  workflow_dispatch:
+    # Allows manual triggering from GitHub UI
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
+  CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+jobs:
+  update-sites-metadata:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r sites-workflow/requirements.txt
+    
+    - name: Verify input file exists
+      run: |
+        cd sites-workflow
+        if [ -f "1.csv" ]; then
+          echo "✓ Input file 1.csv found"
+          wc -l 1.csv
+        else
+          echo "✗ Input file 1.csv not found in sites-workflow directory"
+          echo "Contents of sites-workflow directory:"
+          ls -la
+          exit 1
+        fi
+    
+    - name: Run CKAN Action API Script
+      run: |
+        echo "=== Running 2-CKANActionAPI.py ==="
+        cd sites-workflow
+        python 2-CKANActionAPI.py
+        echo "✓ Script execution completed"
+        
+        # Check if output file was created
+        if [ -f "2.csv" ]; then
+          echo "✓ 2.csv created successfully"
+          wc -l 2.csv
+        else
+          echo "✗ 2.csv not found"
+          exit 1
+        fi
+    
+    - name: Upload artifacts on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckan-api-debug-files
+        path: |
+          sites-workflow/*.csv
+          sites-workflow/*.log
+        retention-days: 7
+    
+    - name: Upload generated CSV as artifact
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ckan-stats-csv
+        path: |
+          sites-workflow/1.csv
+          sites-workflow/2.csv
+        retention-days: 30
+    
+    - name: Workflow Summary
+      if: always()
+      run: |
+        echo "=== WORKFLOW SUMMARY ==="
+        echo "Status: ${{ job.status }}"
+        echo "Timestamp: $(date -u)"
+        
+        # Show file info if it exists
+        cd sites-workflow
+        if [ -f "1.csv" ]; then
+          echo "Input (1.csv): $(wc -l < 1.csv) lines, $(du -h 1.csv | cut -f1)"
+        fi
+        if [ -f "2.csv" ]; then
+          echo "Output (2.csv): $(wc -l < 2.csv) lines, $(du -h 2.csv | cut -f1)"
+        fi
+        
+        # Show any log files
+        if ls *.log >/dev/null 2>&1; then
+          echo "Log files created:"
+          ls -la *.log
+        fi
