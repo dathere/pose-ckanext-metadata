@@ -31,6 +31,13 @@ jobs:
         cd sites-workflow
         python 2CKANActionAPI.py
         echo "✓ Script execution completed"
+
+    - name: Run CKAN Action API Script
+      run: |
+        echo "=== Running 2-CKANActionAPI.py ==="
+        cd sites-data-fetch
+        python 2-CKANActionAPI.py
+        echo "✓ Script execution completed"
         
     
     - name: Upload artifacts on failure
@@ -40,6 +47,7 @@ jobs:
         name: ckan-api-debug-files
         path: |
           sites-workflow/*.csv
+          sites-data-fetch/*.csv
           sites-workflow/*.log
         retention-days: 7
     
@@ -51,6 +59,8 @@ jobs:
         path: |
           sites-workflow/site_urls.csv
           sites-workflow/ckan_stats.csv
+          sites-data-fetch/1.csv
+          sites-data-fetch/2.csv
         retention-days: 30
     
     - name: Workflow Summary
