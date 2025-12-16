@@ -4,7 +4,7 @@
 # CKAN Ecosystem Metadata Pipelines
 
 
-Data pipeline workflows for continuously cataloging metadata from CKAN instances and extensions worldwide. Powers the [CKAN Ecosystem Catalog](https://catalog.civicdataecosystem.org/) with real-time insights into the open data infrastructure landscape.
+Data pipeline workflows for continuously cataloging metadata from CKAN instances and extensions worldwide. Powers the [CKAN Ecosystem Catalog](https://ecosystem.ckan.org/) with real-time insights into the open data infrastructure landscape.
 
 [![CKAN](https://img.shields.io/badge/CKAN-2.10%2B-orange.svg)](https://ckan.org/)
 
