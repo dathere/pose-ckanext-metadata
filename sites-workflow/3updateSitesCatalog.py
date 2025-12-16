@@ -12,7 +12,7 @@ import sys
 import os
 
 # Configuration
-CKAN_BASE_URL = "https://catalog.civicdataecosystem.org"
+CKAN_BASE_URL = "https://ecosystem.ckan.org"
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
 CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 
