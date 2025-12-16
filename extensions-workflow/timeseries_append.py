@@ -21,7 +21,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Configuration
-CKAN_URL = 'https://catalog.civicdataecosystem.org'
+CKAN_URL = 'https://ecosystem.ckan.org'
 API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 DATASET_ID = 'ckan-extensions-metadata'
 RESOURCE_NAME = 'CKAN Extensions Dynamic Metadata'

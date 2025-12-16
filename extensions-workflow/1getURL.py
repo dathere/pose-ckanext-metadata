@@ -7,7 +7,7 @@ import re
 
 class SimpleGitHubExtractor:
     def __init__(self):
-        self.base_url = "https://catalog.civicdataecosystem.org"
+        self.base_url = "https://ecosystem.ckan.org"
         self.api_base = f"{self.base_url}/api/3/action"
         
     def extract_github_url(self, text):
