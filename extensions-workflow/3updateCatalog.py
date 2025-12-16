@@ -12,7 +12,7 @@ import sys
 import os
 
 # Configuration
-CKAN_BASE_URL = "https://catalog.civicdataecosystem.org"
+CKAN_BASE_URL = "https://ecosystem.ckan.org"
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
 CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 
@@ -55,7 +55,7 @@ class CKANMetadataUpdater:
     def extract_package_name_from_url(self, catalog_url: str) -> Optional[str]:
         """Extract package name from catalog URL"""
         try:
-            # Expected format: https://catalog.civicdataecosystem.org/extension/package-name
+            # Expected format: https://ecosystem.ckan.org/extension/package-name
             if '/extension/' in catalog_url:
                 return catalog_url.split('/extension/')[-1].strip()
             return None
