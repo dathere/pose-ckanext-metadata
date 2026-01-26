@@ -15,9 +15,15 @@ class SimpleGitHubExtractor:
         self.base_url = CKAN_BASE_URL
         self.api_base = f"{self.base_url}/api/3/action"
         self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': USER_AGENT
-        })
+
+        headers = {'User-Agent': USER_AGENT}
+
+        # Add API key if available (required for some CKAN instances)
+        api_key = os.environ.get('CKAN_API_KEY')
+        if api_key:
+            headers['Authorization'] = api_key
+
+        self.session.headers.update(headers)
         
     def extract_github_url(self, text):
         """Extract first GitHub URL from text"""
