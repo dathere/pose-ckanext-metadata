@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pandas as pd
 import requests
 import json
@@ -8,11 +12,9 @@ from datetime import datetime
 import time
 import traceback
 from typing import Dict, Optional, List
-import sys
-import os
+from config import USER_AGENT, CKAN_BASE_URL
 
 # Configuration
-CKAN_BASE_URL = "https://ecosystem.ckan.org"
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
 CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 
@@ -25,7 +27,8 @@ class CKANMetadataUpdater:
         self.session = requests.Session()
         self.session.headers.update({
             'Authorization': api_key,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'User-Agent': USER_AGENT
         })
         self.processed_count = 0
         self.error_count = 0

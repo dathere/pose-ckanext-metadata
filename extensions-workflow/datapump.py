@@ -4,13 +4,16 @@ Simple CKAN Datastore Appender
 Just reads CSV and appends to existing datastore - no deduplication, no processing
 """
 
+import sys
 import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import requests
 import pandas as pd
-import sys
+from config import USER_AGENT, CKAN_BASE_URL
 
 # Configuration
-CKAN_URL = 'https://ecosystem.ckan.org'
+CKAN_URL = CKAN_BASE_URL
 API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 DATASET_ID = 'ckan-extensions-metadata'
 RESOURCE_NAME = 'CKAN Extensions Dynamic Metadata'
@@ -20,7 +23,7 @@ def get_resource_id(dataset_id, resource_name):
     """Find resource ID by name"""
     
     package_show_url = f"{CKAN_URL}/api/3/action/package_show"
-    headers = {'Authorization': API_KEY}
+    headers = {'Authorization': API_KEY, 'User-Agent': USER_AGENT}
     
     try:
         response = requests.get(
@@ -74,7 +77,7 @@ def append_to_datastore(resource_id, csv_file):
     
     # Append to datastore
     upsert_url = f"{CKAN_URL}/api/3/action/datastore_upsert"
-    headers = {'Authorization': API_KEY}
+    headers = {'Authorization': API_KEY, 'User-Agent': USER_AGENT}
     
     data = {
         'resource_id': resource_id,

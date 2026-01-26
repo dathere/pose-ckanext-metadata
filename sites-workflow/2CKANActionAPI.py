@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import csv
 import requests
 import json
@@ -10,6 +14,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from typing import Dict, List
 import logging
+from config import USER_AGENT
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -36,7 +41,7 @@ class SimpleCKANExtractor:
     def _create_session(self) -> requests.Session:
         """Create a session with connection pooling and retry logic"""
         session = requests.Session()
-        session.headers.update({'User-Agent': 'CKAN-Stats-Extractor/2.0'})
+        session.headers.update({'User-Agent': USER_AGENT})
         session.verify = False
         
         # Configure retry strategy

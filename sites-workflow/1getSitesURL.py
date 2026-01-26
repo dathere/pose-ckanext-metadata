@@ -1,15 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import requests
 import pandas as pd
 import re
 from urllib.parse import urlparse
+from config import USER_AGENT, CKAN_BASE_URL
 
 class SimpleSiteURLExtractor:
     def __init__(self):
-        self.base_url = "https://ecosystem.ckan.org"
+        self.base_url = CKAN_BASE_URL
         self.api_base = f"{self.base_url}/api/3/action"
+        self.session = requests.Session()
+        self.session.headers.update({
+            'User-Agent': USER_AGENT
+        })
         
     def clean_url(self, url):
         """Clean and validate URL"""
@@ -86,7 +95,7 @@ class SimpleSiteURLExtractor:
         while True:
             print(f"Fetching batch starting at {start}...")
             
-            response = requests.get(
+            response = self.session.get(
                 f"{self.api_base}/package_search",
                 params={
                     'q': 'type:site',
