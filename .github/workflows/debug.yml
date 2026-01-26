@@ -31,7 +31,7 @@ jobs:
       run: |
         echo "=== TESTING CKAN API WITH USER-AGENT ==="
         
-        CKAN_URL="https://your-ckan-instance.com/api/3/action/status_show"
+        CKAN_URL="https://ecosystem.ckan.org/api/3/action/status_show"
         
         curl -X GET "$CKAN_URL" \
           -H "Authorization: $CKAN_API_KEY" \
