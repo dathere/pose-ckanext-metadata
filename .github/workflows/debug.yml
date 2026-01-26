@@ -86,17 +86,16 @@ jobs:
         
         # Example: Testing package_list endpoint (adjust URL as needed)
         curl -H "Authorization: ${CKAN_API_KEY}" \
-              https://ecosystem.ckan.org/api/3/action/package_list
+              https://ecosystem.ckan.org/api/3/action/status_show
         
         echo "Note: Add your CKAN instance URL above to test connectivity"
     
-    - name: Run Step 1 with verbose logging
+    - name: Run Step 1 with logging
       run: |
-        echo "=== STEP 1: Extracting GitHub URLs from CKAN (VERBOSE MODE) ==="
+        echo "=== STEP 1: Extracting GitHub URLs from CKAN ==="
         cd extensions-workflow
         
-        # Run with Python verbose mode and unbuffered output
-        python -u -v 1getURL.py 2>&1 | tee step1_output.log
+        python 1getURL.py 2>&1 | tee step1_output.log
         
         EXIT_CODE=${PIPESTATUS[0]}
         echo "Exit code: $EXIT_CODE"
@@ -105,7 +104,6 @@ jobs:
           echo "✗ Script failed with exit code $EXIT_CODE"
           exit $EXIT_CODE
         fi
-    
     - name: Check output file
       if: always()
       run: |
