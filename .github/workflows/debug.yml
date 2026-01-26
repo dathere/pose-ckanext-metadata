@@ -32,9 +32,9 @@ jobs:
         echo "=== TESTING CKAN API DIRECTLY ==="
         
         # Replace with your actual CKAN URL
-        CKAN_URL="https://ecosystem.ckan.org/api/3/action/status_show"
+        CKAN_URL="https://your-ckan-instance.com/api/3/action/status_show"
         
-        curl -X GET "$CKAN_URL?rows=1" \
+        curl -X GET "$CKAN_URL" \
           -H "Authorization: $CKAN_API_KEY" \
           -H "Content-Type: application/json" \
           -w "\nHTTP Status: %{http_code}\n"
