@@ -6,7 +6,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pandas as pd
-import requests
+import cloudscraper
 import json
 from datetime import datetime
 import time
@@ -24,7 +24,7 @@ class CKANSiteStatsUpdater:
         self.api_key = api_key
         self.base_url = base_url
         self.api_base = f"{base_url}/api/3/action"
-        self.session = requests.Session()
+        self.session = cloudscraper.create_scraper()
         self.session.headers.update({
             'Authorization': api_key,
             'Content-Type': 'application/json',

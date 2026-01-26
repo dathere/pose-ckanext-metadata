@@ -3,15 +3,13 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import csv
-import requests
+import cloudscraper
 import json
 from pathlib import Path
 from urllib.parse import urljoin
 from datetime import datetime, UTC
 import urllib3
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 from typing import Dict, List
 import logging
 from config import USER_AGENT
@@ -37,30 +35,13 @@ logger = logging.getLogger(__name__)
 class SimpleCKANExtractor:
     def __init__(self):
         self.session = self._create_session()
-    
-    def _create_session(self) -> requests.Session:
-        """Create a session with connection pooling and retry logic"""
-        session = requests.Session()
+
+    def _create_session(self) -> cloudscraper.CloudScraper:
+        """Create a cloudscraper session to bypass Cloudflare"""
+        session = cloudscraper.create_scraper()
         session.headers.update({'User-Agent': USER_AGENT})
         session.verify = False
-        
-        # Configure retry strategy
-        retry_strategy = Retry(
-            total=RETRY_ATTEMPTS,
-            backoff_factor=0.3,
-            status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=["GET"]
-        )
-        
-        adapter = HTTPAdapter(
-            max_retries=retry_strategy,
-            pool_connections=MAX_WORKERS,
-            pool_maxsize=MAX_WORKERS * 2
-        )
-        
-        session.mount("http://", adapter)
-        session.mount("https://", adapter)
-        
+
         return session
     
     def normalize_url(self, url: str) -> str:

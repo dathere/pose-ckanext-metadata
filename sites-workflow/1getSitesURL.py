@@ -5,7 +5,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import requests
+import cloudscraper
 import pandas as pd
 import re
 from urllib.parse import urlparse
@@ -15,7 +15,7 @@ class SimpleSiteURLExtractor:
     def __init__(self):
         self.base_url = CKAN_BASE_URL
         self.api_base = f"{self.base_url}/api/3/action"
-        self.session = requests.Session()
+        self.session = cloudscraper.create_scraper()
         self.session.headers.update({
             'User-Agent': USER_AGENT
         })
