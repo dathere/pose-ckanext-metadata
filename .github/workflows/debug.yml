@@ -25,7 +25,19 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
+
+
+    - name: Test CKAN API directly
+      run: |
+        echo "=== TESTING CKAN API DIRECTLY ==="
+        
+        # Replace with your actual CKAN URL
+        CKAN_URL="https://ecosystem.ckan.org/api/3/action/status_show"
+        
+        curl -X GET "$CKAN_URL?rows=1" \
+          -H "Authorization: $CKAN_API_KEY" \
+          -H "Content-Type: application/json" \
+          -w "\nHTTP Status: %{http_code}\n"
     - name: Verify environment variables
       run: |
         echo "=== ENVIRONMENT VERIFICATION ==="
