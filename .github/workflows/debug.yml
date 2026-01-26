@@ -1,0 +1,179 @@
+name: Debug - CKAN API
+on:
+  workflow_dispatch:
+    # Allows manual triggering from GitHub UI
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
+  CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+
+jobs:
+  test-step1:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Verify environment variables
+      run: |
+        echo "=== ENVIRONMENT VERIFICATION ==="
+        echo "Python version: $(python --version)"
+        echo "Pip version: $(pip --version)"
+        echo "Working directory: $(pwd)"
+        echo "Directory contents:"
+        ls -la
+        
+        # Check if secrets are set (without exposing values)
+        if [ -z "$CKAN_API_KEY" ]; then
+          echo "⚠️  WARNING: CKAN_API_KEY is not set"
+        else
+          echo "✓ CKAN_API_KEY is set (length: ${#CKAN_API_KEY})"
+        fi
+        
+        if [ -z "$GITHUB_TOKEN" ]; then
+          echo "⚠️  WARNING: GITHUB_TOKEN is not set"
+        else
+          echo "✓ GITHUB_TOKEN is set (length: ${#GITHUB_TOKEN})"
+        fi
+    
+    - name: Check extensions-workflow directory
+      run: |
+        echo "=== CHECKING EXTENSIONS-WORKFLOW DIRECTORY ==="
+        if [ -d "extensions-workflow" ]; then
+          echo "✓ extensions-workflow directory exists"
+          echo "Contents:"
+          ls -la extensions-workflow/
+        else
+          echo "✗ extensions-workflow directory not found"
+          echo "Creating directory..."
+          mkdir -p extensions-workflow
+        fi
+        
+        if [ -f "extensions-workflow/1getURL.py" ]; then
+          echo "✓ 1getURL.py found"
+          echo "File size: $(du -h extensions-workflow/1getURL.py | cut -f1)"
+        else
+          echo "✗ 1getURL.py not found"
+          exit 1
+        fi
+    
+    - name: Display 1getURL.py script (for debugging)
+      run: |
+        echo "=== SCRIPT CONTENTS ==="
+        cat extensions-workflow/1getURL.py
+        echo ""
+        echo "=== END OF SCRIPT ==="
+    
+    - name: Test CKAN API connectivity
+      run: |
+        echo "=== TESTING CKAN API CONNECTIVITY ==="
+        
+        # Attempt a simple API call to verify connectivity
+        # Adjust the URL based on your CKAN instance
+        echo "Testing basic API endpoint..."
+        
+        # Example: Testing package_list endpoint (adjust URL as needed)
+        # curl -H "Authorization: ${CKAN_API_KEY}" \
+        #      https://your-ckan-instance.com/api/3/action/package_list
+        
+        echo "Note: Add your CKAN instance URL above to test connectivity"
+    
+    - name: Run Step 1 with verbose logging
+      run: |
+        echo "=== STEP 1: Extracting GitHub URLs from CKAN (VERBOSE MODE) ==="
+        cd extensions-workflow
+        
+        # Run with Python verbose mode and unbuffered output
+        python -u -v 1getURL.py 2>&1 | tee step1_output.log
+        
+        EXIT_CODE=${PIPESTATUS[0]}
+        echo "Exit code: $EXIT_CODE"
+        
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "✗ Script failed with exit code $EXIT_CODE"
+          exit $EXIT_CODE
+        fi
+    
+    - name: Check output file
+      if: always()
+      run: |
+        echo "=== CHECKING OUTPUT FILE ==="
+        cd extensions-workflow
+        
+        if [ -f "url_list.csv" ]; then
+          echo "✓ url_list.csv created successfully"
+          echo "File size: $(du -h url_list.csv | cut -f1)"
+          echo "Line count: $(wc -l url_list.csv)"
+          echo ""
+          echo "First 10 lines:"
+          head -n 10 url_list.csv
+          echo ""
+          echo "Last 10 lines:"
+          tail -n 10 url_list.csv
+        else
+          echo "✗ url_list.csv not found"
+          echo "Files in directory:"
+          ls -la
+        fi
+    
+    - name: Capture Python error details
+      if: failure()
+      run: |
+        echo "=== PYTHON ERROR DETAILS ==="
+        cd extensions-workflow
+        
+        # Check for any Python traceback in the log
+        if [ -f "step1_output.log" ]; then
+          echo "Full output log:"
+          cat step1_output.log
+        fi
+        
+        # List all files to see what was created
+        echo ""
+        echo "All files in extensions-workflow:"
+        ls -la
+    
+    - name: Upload all artifacts (success or failure)
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: step1-debug-output
+        path: |
+          extensions-workflow/*.csv
+          extensions-workflow/*.log
+          extensions-workflow/*.txt
+        retention-days: 7
+    
+    - name: Test Summary
+      if: always()
+      run: |
+        echo "=== TEST SUMMARY ==="
+        echo "Status: ${{ job.status }}"
+        echo "Timestamp: $(date -u)"
+        echo "Python version: $(python --version)"
+        
+        cd extensions-workflow
+        
+        if [ -f "url_list.csv" ]; then
+          echo "✓ Output file created"
+          echo "  Lines: $(wc -l < url_list.csv)"
+          echo "  Size: $(du -h url_list.csv | cut -f1)"
+        else
+          echo "✗ Output file not created"
+        fi
+        
+        if [ -f "step1_output.log" ]; then
+          echo "✓ Log file available for download in artifacts"
+        fi
