@@ -8,7 +8,7 @@ Data pipeline workflows for cataloging metadata from CKAN instances and extensio
 
 ## Architecture
 
-Two independent pipelines, each with 4-stage workflows:
+Three independent pipelines:
 
 ### Extensions Pipeline (`extensions-workflow/`)
 Collects GitHub metrics for CKAN extensions:
@@ -24,8 +24,20 @@ Collects statistics from live CKAN instances:
 3. `3updateSitesCatalog.py` - Update CKAN site metadata
 4. `datapump.py` - Append snapshots to datastore
 
+### YAML Metadata Pipeline (`yaml-workflow/`)
+Fetches `ckan_ecosystem.yaml` from extension repositories and updates catalog metadata:
+1. `update_from_yaml.py` - Interactive/CI script that:
+   - Accepts extension names, catalog URLs, or `all` to process every extension
+   - Fetches extension details from CKAN catalog to find the GitHub URL
+   - Downloads and parses `ckan_ecosystem.yaml` from the repo (tries `main` then `master` branch)
+   - Maps YAML fields (title, notes, tags, ckan_version, publisher, license, etc.) to CKAN package fields
+   - Updates the catalog via `package_patch` API
+   - Supports non-interactive mode via stdin for CI (reads piped input, auto-confirms)
+
 ### Data Flow
-Both pipelines follow: Discovery -> API Collection -> Catalog Sync -> Datastore Append
+Extensions and Sites pipelines follow: Discovery -> API Collection -> Catalog Sync -> Datastore Append
+
+YAML pipeline follows: Extension Lookup -> GitHub YAML Fetch -> Field Mapping -> Catalog Sync
 
 All scripts target `https://ecosystem.ckan.org` as the CKAN base URL.
 
@@ -40,6 +52,13 @@ GITHUB_TOKEN=your-token python 2refresh.py
 CKAN_API_KEY=your-key python 3updateCatalog.py
 CKAN_API_KEY=your-key python datapump.py
 
+# YAML metadata pipeline
+pip install -r requirements.txt
+cd yaml-workflow
+CKAN_API_KEY=your-key python update_from_yaml.py            # interactive mode
+echo "ckanext-spatial" | CKAN_API_KEY=your-key python update_from_yaml.py  # CI mode
+echo "all" | CKAN_API_KEY=your-key AUTO_CONFIRM=true python update_from_yaml.py  # all extensions
+
 # Sites pipeline
 pip install -r sites-workflow/requirements.txt
 cd sites-workflow
@@ -53,6 +72,7 @@ CKAN_API_KEY=your-key python datapump.py
 
 - `GITHUB_TOKEN` - GitHub Personal Access Token (extensions pipeline)
 - `CKAN_API_KEY` - CKAN API key with write permissions
+- `AUTO_CONFIRM` - Set to `true` to skip interactive confirmation prompts (yaml pipeline)
 
 ## GitHub Actions
 
@@ -64,5 +84,6 @@ Secrets required: `GH_METADATA_TOKEN`, `CKAN_API_KEY`
 ## Key Dependencies
 
 - `pandas` - CSV/DataFrame operations
-- `requests` - HTTP API calls
+- `cloudscraper` - HTTP API calls with Cloudflare bypass
 - `PyGithub` - GitHub API wrapper (extensions only)
+- `PyYAML` - YAML parsing (yaml pipeline)
