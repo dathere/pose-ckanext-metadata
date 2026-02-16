@@ -114,11 +114,8 @@ jobs:
           print(f"Generated stats.json: {stats}")
           SCRIPT
 
-      - name: Upload map data as artifact
-        uses: actions/upload-artifact@v4
+      - name: Commit updated map data
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          name: map-data
-          path: |
-            map-data/sites.geojson
-            map-data/stats.json
-          retention-days: 90
+          commit_message: 'chore: update map data [automated]'
+          file_pattern: 'map-data/*'
