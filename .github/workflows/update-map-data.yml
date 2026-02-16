@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/ckanext-pose-ecosystem-catalog
-          token: ${{ secrets.GH_PAT }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,7 +36,7 @@ jobs:
               sys.exit(1)
 
           API_URL = f"{CKAN_SITE_URL}/api/3/action/package_search"
-          OUTPUT_DIR = "ckanext/pose_theme/custom_themes/pose_theme/public/ckan_map/data"
+          OUTPUT_DIR = "map-data"
           os.makedirs(OUTPUT_DIR, exist_ok=True)
 
           # --- Build sites.geojson ---
@@ -115,8 +112,11 @@ jobs:
           print(f"Generated stats.json: {stats}")
           SCRIPT
 
-      - name: Commit updated map data
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Upload map data as artifact
+        uses: actions/upload-artifact@v4
         with:
-          commit_message: 'chore: update map data [automated]'
-          file_pattern: 'ckanext/pose_theme/custom_themes/pose_theme/public/ckan_map/data/*'
+          name: map-data
+          path: |
+            map-data/sites.geojson
+            map-data/stats.json
+          retention-days: 90
