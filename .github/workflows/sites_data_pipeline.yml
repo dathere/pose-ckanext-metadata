@@ -1,0 +1,226 @@
+name: Sites Data Pipeline (7-step)
+
+# ── Trigger ───────────────────────────────────────────────────────────────────
+on:
+  workflow_dispatch:
+    inputs:
+
+      input_csv_url:
+        description: >
+          URL to download the seed 0.csv (list of CKAN site URLs).
+          Leave empty if sites-data-fetch/0.csv is already committed to the repo.
+        required: false
+        type: string
+        default: ''
+
+      rows_to_process:
+        description: >
+          Maximum rows to process per step.
+          Leave empty to process all rows.
+        required: false
+        type: string
+        default: ''
+
+      start_from_step:
+        description: >
+          Resume the pipeline from this step (earlier steps are skipped).
+          The output CSV from the previous step must already exist in the repo.
+        required: false
+        type: choice
+        default: '1'
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+
+      openrouter_model:
+        description: >
+          OpenRouter model for step 5 (location analysis).
+        required: false
+        type: string
+        default: 'google/gemini-2.0-flash-001'
+
+# ── Job ───────────────────────────────────────────────────────────────────────
+jobs:
+  pipeline:
+    name: Run Sites Data Pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      contents: write
+
+    defaults:
+      run:
+        working-directory: sites-data-fetch
+
+    steps:
+
+      # ── Setup ──────────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: sites-data-fetch/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # ── Seed CSV ───────────────────────────────────────────────────────────
+      - name: Download seed 0.csv
+        if: ${{ inputs.input_csv_url != '' }}
+        run: |
+          echo "Downloading 0.csv from: ${{ inputs.input_csv_url }}"
+          curl -fsSL "${{ inputs.input_csv_url }}" -o 0.csv
+          echo "Downloaded $(wc -l < 0.csv) lines"
+
+      - name: Validate inputs
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          NEEDED=$((START - 1))
+          if [ "$NEEDED" -gt 0 ]; then
+            PREV="${NEEDED}.csv"
+            if [ ! -f "$PREV" ]; then
+              echo "❌ $PREV not found. Required to resume from step $START."
+              echo "   Commit $PREV to the repo or lower start_from_step."
+              exit 1
+            fi
+            echo "✅ Found $PREV — resuming from step $START"
+          else
+            if [ ! -f "0.csv" ]; then
+              echo "❌ 0.csv not found."
+              echo "   Either provide input_csv_url or commit sites-data-fetch/0.csv."
+              exit 1
+            fi
+            echo "✅ Found 0.csv — starting fresh"
+          fi
+
+      # ── Step 1: Name Processing ────────────────────────────────────────────
+      - name: "Step 1 — Name Processing"
+        env:
+          ROWS: ${{ inputs.rows_to_process }}
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          [ "$START" -le 1 ] || { echo "⏭  Skipping step 1 (start_from_step=$START)"; exit 0; }
+          echo "▶  Step 1: Extracting instance names from site URLs"
+          ROWS_ARG=${ROWS:+--rows $ROWS}
+          python 1-nameProcess.py $ROWS_ARG
+          echo "✅ Step 1 complete — $(wc -l < 1.csv) lines in 1.csv"
+
+      # ── Step 2: CKAN API Stats ─────────────────────────────────────────────
+      - name: "Step 2 — CKAN API Stats"
+        env:
+          ROWS: ${{ inputs.rows_to_process }}
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          [ "$START" -le 2 ] || { echo "⏭  Skipping step 2"; exit 0; }
+          echo "▶  Step 2: Fetching stats via CKAN Action API"
+          ROWS_ARG=${ROWS:+--rows $ROWS}
+          python 2-CKANActionAPI.py $ROWS_ARG
+          echo "✅ Step 2 complete — $(wc -l < 2.csv) lines in 2.csv"
+
+      # ── Step 3: Site Type Classification ──────────────────────────────────
+      - name: "Step 3 — Site Type Classification"
+        env:
+          ROWS: ${{ inputs.rows_to_process }}
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          [ "$START" -le 3 ] || { echo "⏭  Skipping step 3"; exit 0; }
+          echo "▶  Step 3: Classifying site types from domain patterns"
+          ROWS_ARG=${ROWS:+--rows $ROWS}
+          python 3-siteType.py $ROWS_ARG
+          echo "✅ Step 3 complete — $(wc -l < 3.csv) lines in 3.csv"
+
+      # ── Step 4: About Page Descriptions ───────────────────────────────────
+      - name: "Step 4 — About Page Descriptions"
+        env:
+          ROWS: ${{ inputs.rows_to_process }}
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          [ "$START" -le 4 ] || { echo "⏭  Skipping step 4"; exit 0; }
+          echo "▶  Step 4: Scraping About pages for detailed descriptions"
+          ROWS_ARG=${ROWS:+--rows $ROWS}
+          python 4-description.py $ROWS_ARG
+          echo "✅ Step 4 complete — $(wc -l < 4.csv) lines in 4.csv"
+
+      # ── Step 5: Location Analysis (LLM) ───────────────────────────────────
+      - name: "Step 5 — Location Analysis (LLM)"
+        env:
+          OPEN_ROUTER_KEY: ${{ secrets.OPEN_ROUTER_KEY }}
+          ROWS: ${{ inputs.rows_to_process }}
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          [ "$START" -le 5 ] || { echo "⏭  Skipping step 5"; exit 0; }
+          if [ -z "$OPEN_ROUTER_KEY" ]; then
+            echo "❌ OPEN_ROUTER_KEY secret is not set. Cannot run step 5."
+            exit 1
+          fi
+          echo "▶  Step 5: Inferring geographic locations via LLM"
+          ROWS_ARG=${ROWS:+--rows $ROWS}
+          MODEL="${{ inputs.openrouter_model || 'google/gemini-2.0-flash-001' }}"
+          python 5-locationAnalyser.py $ROWS_ARG --model "$MODEL"
+          echo "✅ Step 5 complete — $(wc -l < 5.csv) lines in 5.csv"
+
+      # ── Step 6: Geocoding ──────────────────────────────────────────────────
+      - name: "Step 6 — Geocoding"
+        env:
+          ROWS: ${{ inputs.rows_to_process }}
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          [ "$START" -le 6 ] || { echo "⏭  Skipping step 6"; exit 0; }
+          echo "▶  Step 6: Geocoding locations to lat/lon coordinates"
+          ROWS_ARG=${ROWS:+--rows $ROWS}
+          python 6-geocode.py $ROWS_ARG
+          echo "✅ Step 6 complete — $(wc -l < 6.csv) lines in 6.csv"
+
+      # ── Step 7: Timestamp ──────────────────────────────────────────────────
+      - name: "Step 7 — Add Timestamp"
+        run: |
+          START=${{ inputs.start_from_step || '1' }}
+          [ "$START" -le 7 ] || { echo "⏭  Skipping step 7"; exit 0; }
+          echo "▶  Step 7: Stamping output with UTC date"
+          python 7-tstamp.py 6.csv 7.csv
+          echo "✅ Step 7 complete — $(wc -l < 7.csv) lines in 7.csv"
+
+      # ── Upload all CSVs as artifacts (always, for debugging) ───────────────
+      - name: Upload pipeline CSVs as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sites-pipeline-${{ github.run_id }}
+          path: sites-data-fetch/*.csv
+          retention-days: 30
+
+      # ── Commit results to repo ─────────────────────────────────────────────
+      - name: Commit results to repository
+        working-directory: ${{ github.workspace }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sites-data-fetch/*.csv
+          git diff --staged --quiet \
+            && echo "No changes to commit" \
+            || (git commit -m "chore: update sites pipeline data [automated]" && git push)
+
+      # ── Summary ────────────────────────────────────────────────────────────
+      - name: Workflow summary
+        if: always()
+        run: |
+          echo "=== Pipeline Summary ==="
+          echo "Status:     ${{ job.status }}"
+          echo "Started at: step ${{ inputs.start_from_step || '1' }}"
+          echo "Timestamp:  $(date -u)"
+          echo ""
+          echo "Output files:"
+          for f in 1.csv 2.csv 3.csv 4.csv 5.csv 6.csv 7.csv; do
+            [ -f "$f" ] && echo "  $f — $(wc -l < $f) lines" || echo "  $f — not produced"
+          done

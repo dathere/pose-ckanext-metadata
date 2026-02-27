@@ -448,36 +448,62 @@ class CKANSiteTypeDetector:
                 print(f"  - {category}: {score:.1f}%")
 
 
+def parse_args():
+    import argparse
+    parser = argparse.ArgumentParser(description='CKAN Site Type Detector')
+    parser.add_argument('--rows', type=int, default=None,
+                        help='Maximum number of rows to process')
+    parser.add_argument('--input',  default='2.csv', help='Input CSV file')
+    parser.add_argument('--output', default='3.csv', help='Output CSV file')
+    return parser.parse_args()
+
+
 def main():
     """Main function to run the site type detector."""
-    # Configuration
-    INPUT_FILE = '2.csv'
-    OUTPUT_FILE = '3.csv'
-    URL_COLUMN = 'url'
-    TYPE_COLUMN = 'site_type'
+    import os
+    args = parse_args()
+
+    INPUT_FILE        = args.input
+    OUTPUT_FILE       = args.output
+    URL_COLUMN        = 'url'
+    TYPE_COLUMN       = 'site_type'
     CONFIDENCE_COLUMN = 'type_confidence'
-    
+
     print(f"Starting CKAN Site Type Detector...")
     print(f"Input file: {INPUT_FILE}")
     print(f"Output file: {OUTPUT_FILE}")
-    
-    # Check if input file exists
-    import os
+    if args.rows:
+        print(f"Row limit: {args.rows}")
+
     if not os.path.exists(INPUT_FILE):
         print(f"ERROR: Input file '{INPUT_FILE}' not found!")
         return
-    
+
     try:
-        # Create detector instance
         detector = CKANSiteTypeDetector()
-        
-        # Process the CSV file
-        detector.process_csv(INPUT_FILE, OUTPUT_FILE, URL_COLUMN, 
-                           TYPE_COLUMN, CONFIDENCE_COLUMN)
-        
+
+        # Apply row limit before processing
+        if args.rows:
+            import csv
+            with open(INPUT_FILE, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                fieldnames = list(reader.fieldnames)
+                rows = list(reader)[:args.rows]
+            import tempfile, os as _os
+            tmp = INPUT_FILE + '.tmp_limit'
+            with open(tmp, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
+            detector.process_csv(tmp, OUTPUT_FILE, URL_COLUMN, TYPE_COLUMN, CONFIDENCE_COLUMN)
+            _os.remove(tmp)
+        else:
+            detector.process_csv(INPUT_FILE, OUTPUT_FILE, URL_COLUMN,
+                                 TYPE_COLUMN, CONFIDENCE_COLUMN)
+
         print(f"\nProcessing completed successfully!")
         print(f"Results saved to: {OUTPUT_FILE}")
-        
+
     except Exception as e:
         print(f"\nERROR during processing: {str(e)}")
         import traceback

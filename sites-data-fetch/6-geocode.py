@@ -259,22 +259,33 @@ class LocationGeocoder:
         logger.info("="*50)
 
 
-# Usage example
+def parse_args():
+    import argparse
+    parser = argparse.ArgumentParser(description='Location Geocoder')
+    parser.add_argument('--rows',   type=int,   default=None, help='Max rows to process')
+    parser.add_argument('--input',  default='5.csv', help='Input CSV file')
+    parser.add_argument('--output', default='6.csv', help='Output CSV file')
+    parser.add_argument('--delay',  type=float, default=1.0,
+                        help='Delay (seconds) between geocoding requests')
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    # Initialize the geocoder
-    geocoder = LocationGeocoder(delay=1)  # 1 second delay between requests
-    
-    # Specify your input file path here
-    input_file = "5.csv"  # Change this to your actual file path
-    output_file = "6.csv"  # Optional: specify output file
-    
-    try:
-        # Process the CSV file
-        df = geocoder.process_csv(input_file, output_file, location_column='location')
-        print(f"\nGeocoding completed!")
-        print(f"Results saved to: {output_file}")
-        
-    except Exception as e:
-        print(f"Script failed: {str(e)}")
-        print("\nMake sure you have installed the required libraries:")
-        print("pip install pandas requests")
+    args = parse_args()
+
+    geocoder = LocationGeocoder(delay=args.delay)
+
+    if args.rows:
+        import pandas as _pd
+        df_tmp = _pd.read_csv(args.input).head(args.rows)
+        tmp_path = args.input + '.tmp_limit'
+        df_tmp.to_csv(tmp_path, index=False)
+        try:
+            df = geocoder.process_csv(tmp_path, args.output, location_column='location')
+        finally:
+            import os
+            os.remove(tmp_path)
+    else:
+        df = geocoder.process_csv(args.input, args.output, location_column='location')
+
+    print(f"\nGeocoding completed! Results saved to: {args.output}")

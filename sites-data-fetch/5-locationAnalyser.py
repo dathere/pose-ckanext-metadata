@@ -765,7 +765,28 @@ def process_site(api_key, row_data):
             'error': ""  # Clear any previous error
         }
 
+def parse_args():
+    import argparse
+    parser = argparse.ArgumentParser(description='CKAN Location Analyzer')
+    parser.add_argument('--rows',  type=int,   default=None, help='Max rows to process')
+    parser.add_argument('--model', type=str,   default=None, help='OpenRouter model name')
+    parser.add_argument('--input',  default=INPUT_FILE,  help='Input CSV file')
+    parser.add_argument('--output', default=OUTPUT_FILE, help='Output CSV file')
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+
+    # Allow CLI to override module-level config
+    global INPUT_FILE, OUTPUT_FILE, MODEL_NAME, ROWS_TO_PROCESS
+    INPUT_FILE       = args.input
+    OUTPUT_FILE      = args.output
+    if args.model:
+        MODEL_NAME   = args.model
+    if args.rows is not None:
+        ROWS_TO_PROCESS = args.rows
+
     print("CKAN Location Analyzer")
     print("=" * 50)
     print(f"Input file: {INPUT_FILE}")
@@ -773,9 +794,11 @@ def main():
     print(f"Model: {MODEL_NAME}")
     print(f"Threads: {NUM_THREADS}")
     print(f"Max retries: {MAX_RETRIES}")
+    if ROWS_TO_PROCESS:
+        print(f"Row limit: {ROWS_TO_PROCESS}")
     print()
-    
-    # Get API key from environment variable or hardcoded value
+
+    # Get API key from environment variable
     api_key = os.getenv("OPEN_ROUTER_KEY") 
     
     # Check if input file exists

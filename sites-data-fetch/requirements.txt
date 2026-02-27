@@ -1,6 +1,8 @@
 # Core HTTP and web scraping
+cloudscraper>=1.2.71
 requests>=2.28.0
 beautifulsoup4>=4.11.0
+lxml>=5.0.0
 
 # Translation and language detection
 googletrans==4.0.0rc1
