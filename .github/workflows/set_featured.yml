@@ -1,0 +1,41 @@
+name: Set Featured Dataset
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset_url:
+        description: "Dataset URL (e.g. https://ecosystem.ckan.org/site/cork-city-council-open-data)"
+        required: true
+        type: string
+      is_featured:
+        description: "Mark as featured?"
+        required: true
+        type: choice
+        default: "TRUE"
+        options:
+          - "TRUE"
+          - "FALSE"
+
+jobs:
+  update-featured:
+    name: Update is_featured
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run update script
+        env:
+          CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+          DATASET_URL:  ${{ inputs.dataset_url }}
+          IS_FEATURED:  ${{ inputs.is_featured }}
+        run: python yaml-workflow/update_is_featured.py
