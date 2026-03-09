@@ -12,7 +12,7 @@ from datetime import datetime
 import time
 import traceback
 from typing import Dict, Optional, List
-from config import USER_AGENT, CKAN_BASE_URL
+from config import USER_AGENT, CKAN_BASE_URL, SESSION_HEADERS
 
 # Configuration
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
@@ -26,9 +26,9 @@ class CKANMetadataUpdater:
         self.api_base = f"{base_url}/api/3/action"
         self.session = cloudscraper.create_scraper()
         self.session.headers.update({
+            **SESSION_HEADERS,
             'Authorization': api_key,
             'Content-Type': 'application/json',
-            'User-Agent': USER_AGENT
         })
         self.processed_count = 0
         self.error_count = 0
@@ -158,20 +158,14 @@ class CKANMetadataUpdater:
         """Update a single package with dynamic metadata"""
         try:
             print(f"Updating package: {package_name}")
-            
-            # Get current package info
-            current_package = self.get_package_info(package_name)
-            if not current_package:
-                print(f"Could not retrieve package info for {package_name}")
-                return False
-            
+
             # Prepare metadata update using schema fields
             update_data = self.prepare_metadata_update(metadata)
-            
+
             if not update_data:
                 print(f"No valid metadata to update for {package_name}")
                 return False
-            
+
             # Add package ID to update data
             update_data['id'] = package_name
             

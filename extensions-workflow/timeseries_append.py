@@ -6,11 +6,15 @@ Checks for duplicates before inserting to avoid duplicate data
 """
 
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import requests
 import pandas as pd
 import json
 import logging
 from datetime import datetime
+from config import SESSION_HEADERS
 
 # Set up logging
 logging.basicConfig(
@@ -30,9 +34,9 @@ UNIQUE_COLUMNS = ['repository_name', 'tstamp']  # Columns to check for duplicate
 
 def get_resource_info(dataset_id, resource_name):
     """Find resource by name and check if it has datastore"""
-    
+
     package_show_url = f"{CKAN_URL}/api/3/action/package_show"
-    headers = {'Authorization': API_KEY}
+    headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
     
     try:
         response = requests.get(
@@ -70,11 +74,11 @@ def get_resource_info(dataset_id, resource_name):
 
 def download_existing_data(resource_id, limit=100000):
     """Download all existing data from datastore to check for duplicates"""
-    
+
     print(f"  Downloading existing data to check for duplicates...")
-    
+
     search_url = f"{CKAN_URL}/api/3/action/datastore_search"
-    headers = {'Authorization': API_KEY}
+    headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
     
     all_records = []
     offset = 0
@@ -225,7 +229,7 @@ def append_to_datastore(resource_id, df):
     
     # Use datastore_upsert with 'insert' method (doesn't require primary key)
     upsert_url = f"{CKAN_URL}/api/3/action/datastore_upsert"
-    headers = {'Authorization': API_KEY}
+    headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
     
     data = {
         'resource_id': resource_id,
@@ -272,12 +276,12 @@ def append_to_datastore(resource_id, df):
 
 def create_datastore_without_primary_key(resource_id, df):
     """Create datastore without primary key (just for initial setup)"""
-    
+
     print("Creating datastore structure (without primary key)...")
-    
+
     # First, try to delete existing datastore
     delete_url = f"{CKAN_URL}/api/3/action/datastore_delete"
-    headers = {'Authorization': API_KEY}
+    headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
     
     try:
         response = requests.post(
@@ -331,7 +335,8 @@ def create_datastore_without_primary_key(resource_id, df):
     
     # Create datastore WITHOUT primary key
     datastore_create_url = f"{CKAN_URL}/api/3/action/datastore_create"
-    
+    headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
+
     data = {
         'resource_id': resource_id,
         'fields': fields,
@@ -408,8 +413,8 @@ def create_resource_with_datastore(package_id, df):
         cleaned_records.append(cleaned_record)
     
     datastore_create_url = f"{CKAN_URL}/api/3/action/datastore_create"
-    headers = {'Authorization': API_KEY}
-    
+    headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
+
     timestamp = datetime.utcnow().isoformat() + 'Z'
     
     resource = {
@@ -458,7 +463,7 @@ def update_resource_metadata(resource_id):
     timestamp = datetime.utcnow().isoformat() + 'Z'
     
     resource_patch_url = f"{CKAN_URL}/api/3/action/resource_patch"
-    headers = {'Authorization': API_KEY}
+    headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
     
     data = {
         'id': resource_id,
@@ -537,7 +542,7 @@ def main():
         
         try:
             package_show_url = f"{CKAN_URL}/api/3/action/package_show"
-            headers = {'Authorization': API_KEY}
+            headers = {**SESSION_HEADERS, 'Authorization': API_KEY}
             
             response = requests.get(
                 package_show_url,

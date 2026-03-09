@@ -42,36 +42,6 @@ class DynamicMetadataUpdater:
             f"Success: {self.processed_count} | " +
             f"Errors: {self.error_count}")
 
-    def check_discussions_enabled(self, repo) -> bool:
-        """
-        Check if GitHub Discussions are enabled for the repository
-        
-        Args:
-            repo: The GitHub repository object
-            
-        Returns:
-            bool: True if discussions are enabled, False otherwise
-        """
-        try:
-            # Try to access discussions - if it fails, discussions are likely disabled
-            discussions = list(repo.get_discussions())
-            return True
-        except Exception:
-            # If we can't access discussions, they're either disabled or we don't have permission
-            # Try alternative method using repository attributes
-            try:
-                # Check if the repository has discussions enabled via the API
-                # This is a more reliable method
-                return repo.has_discussions
-            except AttributeError:
-                # Fallback: try to make a request to the discussions API endpoint
-                try:
-                    url = f"https://api.github.com/repos/{repo.full_name}/discussions"
-                    response = self.github._Github__requester.requestJsonAndCheck("GET", url)
-                    return True
-                except Exception:
-                    return False
-
     def get_dynamic_metadata(self, repo) -> Optional[Dict]:
         """
         Extract only dynamic metadata from a GitHub repository
@@ -85,27 +55,37 @@ class DynamicMetadataUpdater:
         try:
             print(f"Extracting dynamic metadata for: {repo.full_name}")
             
-            # Get releases
-            releases = list(repo.get_releases())
-            latest_release = releases[0] if releases else None
-            
-            # Get contributors count
+            # Get releases — fetch only the first page to avoid paginating all releases
+            releases_iter = repo.get_releases()
+            first_release_page = releases_iter.get_page(0)
+            latest_release = first_release_page[0] if first_release_page else None
+            total_releases = releases_iter.totalCount
+            if total_releases is None:
+                total_releases = len(first_release_page)
+
+            # Get contributors count — use totalCount to avoid paginating all contributors
             try:
-                contributors = list(repo.get_contributors())
-                contributors_count = len(contributors)
+                contrib_iter = repo.get_contributors()
+                contrib_iter.get_page(0)  # trigger header parsing for totalCount
+                contributors_count = contrib_iter.totalCount
+                if contributors_count is None:
+                    contributors_count = sum(1 for _ in contrib_iter)
             except Exception as e:
                 print(f"Error getting contributors count: {str(e)}")
                 contributors_count = 0
-            
-            # Check if discussions are enabled
-            discussions_enabled = self.check_discussions_enabled(repo)
-            
+
+            # Check if discussions are enabled via the repo attribute (zero extra API calls)
+            try:
+                discussions_enabled = bool(repo.has_discussions)
+            except Exception:
+                discussions_enabled = False
+
             # Compile dynamic metadata
             metadata = {
                 'url': repo.html_url,
                 'repository_name': repo.full_name,
                 'forks_count': repo.forks_count,
-                'total_releases': len(releases),
+                'total_releases': total_releases,
                 'latest_release': latest_release.tag_name if latest_release else 'No releases',
                 'release_date': latest_release.created_at.strftime('%Y-%m-%d') if latest_release else 'No releases',
                 'stars': repo.stargazers_count,
@@ -198,16 +178,16 @@ class DynamicMetadataUpdater:
                 else:
                     self.error_count += 1
                 
-                # Rate limiting protection
+                # Rate limiting protection — check every 10 repos, sleep only when budget is low
                 if idx % 10 == 0:
                     rate_limit = self.github.get_rate_limit()
-                    if rate_limit.core.remaining < 100:
+                    remaining = rate_limit.core.remaining
+                    print(f"  GitHub API rate limit: {remaining} requests remaining")
+                    if remaining < 100:
                         reset_time = rate_limit.core.reset
                         sleep_time = (reset_time - datetime.now(reset_time.tzinfo)).total_seconds() + 60
-                        print(f"Rate limit low ({rate_limit.core.remaining}), sleeping for {sleep_time/60:.1f} minutes")
+                        print(f"Rate limit low ({remaining}), sleeping for {sleep_time/60:.1f} minutes")
                         time.sleep(sleep_time)
-                    else:
-                        time.sleep(1)  # Brief pause between requests
                 
             except RateLimitExceededException:
                 reset_time = self.github.get_rate_limit().core.reset

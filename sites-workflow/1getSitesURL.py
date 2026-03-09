@@ -9,16 +9,14 @@ import cloudscraper
 import pandas as pd
 import re
 from urllib.parse import urlparse
-from config import USER_AGENT, CKAN_BASE_URL
+from config import USER_AGENT, CKAN_BASE_URL, SESSION_HEADERS
 
 class SimpleSiteURLExtractor:
     def __init__(self):
         self.base_url = CKAN_BASE_URL
         self.api_base = f"{self.base_url}/api/3/action"
         self.session = cloudscraper.create_scraper()
-        self.session.headers.update({
-            'User-Agent': USER_AGENT
-        })
+        self.session.headers.update(SESSION_HEADERS)
         
     def clean_url(self, url):
         """Clean and validate URL"""

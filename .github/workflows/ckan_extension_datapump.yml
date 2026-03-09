@@ -13,7 +13,8 @@ env:
 jobs:
   update-metadata:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 120
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -21,7 +22,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.12'
         cache: 'pip'
     
     - name: Install dependencies
@@ -62,17 +63,31 @@ jobs:
         fi
     
     - name: Step 3 - Update CKAN Catalog with Metadata
+      continue-on-error: true
       run: |
         echo "=== STEP 3: Updating CKAN catalog with metadata ==="
         cd extensions-workflow
         python 3updateCatalog.py
         echo "✓ CKAN catalog update completed"
-    
+
     - name: Step 4 - Append Time-Series Data to CKAN
       run: |
         echo "=== STEP 4: Appending time-series data to CKAN ==="
         cd extensions-workflow
-        python datapump.py dynamic_metadata_update.csv
+
+        # Guard: ensure the metadata CSV has data before appending
+        if [ ! -f "dynamic_metadata_update.csv" ]; then
+          echo "✗ dynamic_metadata_update.csv not found, skipping append"
+          exit 1
+        fi
+        ROW_COUNT=$(wc -l < dynamic_metadata_update.csv)
+        if [ "$ROW_COUNT" -lt 2 ]; then
+          echo "✗ dynamic_metadata_update.csv has no data rows (only $ROW_COUNT lines), skipping append"
+          exit 1
+        fi
+        echo "✓ CSV validated: $ROW_COUNT lines"
+
+        python timeseries_append.py dynamic_metadata_update.csv
         echo "✓ Time-series data append completed"
     
 #    - name: Step 5 - Create Table View for Extensions Resource

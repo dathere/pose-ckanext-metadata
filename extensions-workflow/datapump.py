@@ -10,10 +10,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import cloudscraper
 import pandas as pd
-from config import USER_AGENT, CKAN_BASE_URL
+from config import USER_AGENT, CKAN_BASE_URL, SESSION_HEADERS
 
 # Create a cloudscraper session for all requests
 scraper = cloudscraper.create_scraper()
+scraper.headers.update(SESSION_HEADERS)
 
 # Configuration
 CKAN_URL = CKAN_BASE_URL
@@ -26,7 +27,7 @@ def get_resource_id(dataset_id, resource_name):
     """Find resource ID by name"""
     
     package_show_url = f"{CKAN_URL}/api/3/action/package_show"
-    headers = {'Authorization': API_KEY, 'User-Agent': USER_AGENT}
+    headers = {'Authorization': API_KEY}
     
     try:
         response = scraper.get(
@@ -80,7 +81,7 @@ def append_to_datastore(resource_id, csv_file):
     
     # Append to datastore
     upsert_url = f"{CKAN_URL}/api/3/action/datastore_upsert"
-    headers = {'Authorization': API_KEY, 'User-Agent': USER_AGENT}
+    headers = {'Authorization': API_KEY}
     
     data = {
         'resource_id': resource_id,

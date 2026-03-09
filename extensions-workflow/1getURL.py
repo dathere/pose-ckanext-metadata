@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import cloudscraper
 import pandas as pd
 import re
-from config import USER_AGENT, CKAN_BASE_URL
+from config import USER_AGENT, CKAN_BASE_URL, SESSION_HEADERS
 
 class SimpleGitHubExtractor:
     def __init__(self):
@@ -16,7 +16,7 @@ class SimpleGitHubExtractor:
         self.api_base = f"{self.base_url}/api/3/action"
         self.session = cloudscraper.create_scraper()
 
-        headers = {'User-Agent': USER_AGENT}
+        headers = {**SESSION_HEADERS}
 
         # Add API key if available (required for some CKAN instances)
         api_key = os.environ.get('CKAN_API_KEY')
@@ -38,6 +38,8 @@ class SimpleGitHubExtractor:
             url = match.group(0)
             # Clean URL
             url = url.rstrip('/')
+            if url.endswith('.git'):
+                url = url[:-4]
             url = url.replace('http://github.com', 'https://github.com')
             return url
         
@@ -98,10 +100,13 @@ class SimpleGitHubExtractor:
             github_url = ""
             
             # Check multiple fields for GitHub URL
+            extras_values = ' '.join(
+                e.get('value', '') for e in pkg.get('extras', []) if isinstance(e, dict)
+            )
             fields_to_check = [
                 pkg.get('url', ''),
                 pkg.get('notes', ''),
-                str(pkg.get('extras', []))
+                extras_values,
             ]
             
             # Check resources too

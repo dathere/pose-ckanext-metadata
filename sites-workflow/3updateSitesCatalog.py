@@ -12,7 +12,7 @@ from datetime import datetime
 import time
 import traceback
 from typing import Dict, Optional, List
-from config import USER_AGENT, CKAN_BASE_URL
+from config import USER_AGENT, CKAN_BASE_URL, SESSION_HEADERS
 
 # Configuration
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
@@ -26,9 +26,9 @@ class CKANSiteStatsUpdater:
         self.api_base = f"{base_url}/api/3/action"
         self.session = cloudscraper.create_scraper()
         self.session.headers.update({
+            **SESSION_HEADERS,
             'Authorization': api_key,
             'Content-Type': 'application/json',
-            'User-Agent': USER_AGENT
         })
         self.processed_count = 0
         self.error_count = 0
