@@ -2,9 +2,11 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import ssl
 import csv
 import cloudscraper
 import json
+import requests.adapters
 from pathlib import Path
 from urllib.parse import urljoin
 from datetime import datetime, UTC
@@ -16,6 +18,19 @@ from config import USER_AGENT, SESSION_HEADERS
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+class SSLIgnoreAdapter(requests.adapters.HTTPAdapter):
+    """HTTP adapter that disables SSL verification (Python 3.12 compatible).
+    session.verify=False alone raises ValueError on 3.12 because check_hostname
+    must be disabled before verify_mode can be set to CERT_NONE."""
+
+    def init_poolmanager(self, *args, **kwargs):
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        kwargs['ssl_context'] = ctx
+        super().init_poolmanager(*args, **kwargs)
 
 INPUT_CSV_FILE = "site_urls.csv"
 OUTPUT_CSV_FILE = "ckan_stats.csv"
@@ -40,7 +55,9 @@ class SimpleCKANExtractor:
         """Create a cloudscraper session to bypass Cloudflare"""
         session = cloudscraper.create_scraper()
         session.headers.update(SESSION_HEADERS)
-        session.verify = False
+        adapter = SSLIgnoreAdapter()
+        session.mount('https://', adapter)
+        session.mount('http://', adapter)
 
         return session
     
