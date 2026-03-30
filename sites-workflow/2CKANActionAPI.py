@@ -53,11 +53,11 @@ class SimpleCKANExtractor:
             url = 'https://' + url
         return url.rstrip('/')
     
-    def make_api_call(self, base_url: str, endpoint: str) -> Dict:
+    def make_api_call(self, base_url: str, endpoint: str, params: Dict = None) -> Dict:
         """Make API call with error handling"""
         try:
             api_url = urljoin(base_url + '/', f'api/3/action/{endpoint}')
-            response = self.session.get(api_url, timeout=REQUEST_TIMEOUT)
+            response = self.session.get(api_url, timeout=REQUEST_TIMEOUT, params=params)
             response.raise_for_status()
             data = response.json()
             if data.get('success', False):
@@ -65,25 +65,26 @@ class SimpleCKANExtractor:
         except Exception:
             pass
         return None
-    
+
     def get_ckan_stats(self, url: str) -> Dict:
         """Extract CKAN statistics from a single URL"""
         normalized_url = self.normalize_url(url)
         if not normalized_url:
             return self.get_empty_stats()
-        
+
         stats = self.get_empty_stats()
-        
-        # Get number of datasets
-        package_data = self.make_api_call(normalized_url, 'package_list')
-        if package_data and isinstance(package_data.get('result'), list):
-            stats['num_datasets'] = str(len(package_data['result']))
-        
+
+        # Get number of datasets using package_search?rows=0 (returns count without
+        # downloading all IDs — package_list times out on large sites with 10k+ datasets)
+        package_data = self.make_api_call(normalized_url, 'package_search', params={'rows': 0})
+        if package_data and isinstance(package_data.get('result'), dict):
+            stats['num_datasets'] = str(package_data['result'].get('count', 0))
+
         # Get number of groups
         group_data = self.make_api_call(normalized_url, 'group_list')
         if group_data and isinstance(group_data.get('result'), list):
             stats['num_groups'] = str(len(group_data['result']))
-        
+
         # Get number of organizations
         org_data = self.make_api_call(normalized_url, 'organization_list')
         if org_data and isinstance(org_data.get('result'), list):
