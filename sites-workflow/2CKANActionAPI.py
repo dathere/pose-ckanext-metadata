@@ -12,7 +12,7 @@ import urllib3
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List
 import logging
-from config import USER_AGENT, SESSION_HEADERS
+from config import USER_AGENT
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -20,8 +20,16 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 INPUT_CSV_FILE = "site_urls.csv"
 OUTPUT_CSV_FILE = "ckan_stats.csv"
 MAX_WORKERS = 10  # Number of concurrent threads
-REQUEST_TIMEOUT = 15  # Reduced timeout for faster failures
-RETRY_ATTEMPTS = 2  # Number of retries for failed requests
+REQUEST_TIMEOUT = 20  # Timeout per request (GitHub Actions has good bandwidth but some sites are slow)
+RETRY_ATTEMPTS = 2  # Number of retries for transient failures (common from cloud IPs)
+
+# Headers for querying external CKAN sites — browser-like UA only.
+# Do NOT include x-cf-bypass here; that header is only for ecosystem.ckan.org
+# and could trigger WAFs on government/enterprise CKAN instances.
+EXTERNAL_HEADERS = {
+    "User-Agent": USER_AGENT,
+    "Accept": "application/json, text/plain, */*",
+}
 
 # Setup logging
 logging.basicConfig(
@@ -37,9 +45,9 @@ class SimpleCKANExtractor:
         self.session = self._create_session()
 
     def _create_session(self) -> cloudscraper.CloudScraper:
-        """Create a cloudscraper session to bypass Cloudflare"""
+        """Create a cloudscraper session to bypass Cloudflare on external CKAN sites"""
         session = cloudscraper.create_scraper()
-        session.headers.update(SESSION_HEADERS)
+        session.headers.update(EXTERNAL_HEADERS)
         session.verify = False
 
         return session
@@ -54,16 +62,19 @@ class SimpleCKANExtractor:
         return url.rstrip('/')
     
     def make_api_call(self, base_url: str, endpoint: str, params: Dict = None) -> Dict:
-        """Make API call with error handling"""
-        try:
-            api_url = urljoin(base_url + '/', f'api/3/action/{endpoint}')
-            response = self.session.get(api_url, timeout=REQUEST_TIMEOUT, params=params)
-            response.raise_for_status()
-            data = response.json()
-            if data.get('success', False):
-                return data
-        except Exception:
-            pass
+        """Make API call with retry logic for transient failures (important on GitHub Actions IPs)"""
+        api_url = urljoin(base_url + '/', f'api/3/action/{endpoint}')
+        for attempt in range(1, RETRY_ATTEMPTS + 2):  # +2: initial try + RETRY_ATTEMPTS retries
+            try:
+                response = self.session.get(api_url, timeout=REQUEST_TIMEOUT, params=params)
+                response.raise_for_status()
+                data = response.json()
+                if data.get('success', False):
+                    return data
+                return None  # API responded but success=false — no point retrying
+            except Exception:
+                if attempt <= RETRY_ATTEMPTS:
+                    continue
         return None
 
     def get_ckan_stats(self, url: str) -> Dict:
