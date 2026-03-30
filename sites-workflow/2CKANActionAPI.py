@@ -25,7 +25,7 @@ RETRY_ATTEMPTS = 2  # Number of retries for transient failures (common from clou
 
 # Setup logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%H:%M:%S'
 )
@@ -54,19 +54,27 @@ class SimpleCKANExtractor:
         return url.rstrip('/')
     
     def make_api_call(self, base_url: str, endpoint: str, params: Dict = None) -> Dict:
-        """Make API call with retry logic for transient failures (important on GitHub Actions IPs)"""
-        api_url = urljoin(base_url + '/', f'api/3/action/{endpoint}')
-        for attempt in range(1, RETRY_ATTEMPTS + 2):  # +2: initial try + RETRY_ATTEMPTS retries
-            try:
-                response = self.session.get(api_url, timeout=REQUEST_TIMEOUT, params=params)
-                response.raise_for_status()
-                data = response.json()
-                if data.get('success', False):
-                    return data
-                return None  # API responded but success=false — no point retrying
-            except Exception:
-                if attempt <= RETRY_ATTEMPTS:
-                    continue
+        """Make API call with retry logic and http fallback"""
+        urls_to_try = [base_url]
+        # If https fails, also try http (some sites have broken SSL or redirect chains)
+        if base_url.startswith('https://'):
+            urls_to_try.append('http://' + base_url[len('https://'):])
+
+        for url in urls_to_try:
+            api_url = urljoin(url + '/', f'api/3/action/{endpoint}')
+            for attempt in range(1, RETRY_ATTEMPTS + 2):  # +2: initial try + RETRY_ATTEMPTS retries
+                try:
+                    response = self.session.get(api_url, timeout=REQUEST_TIMEOUT, params=params)
+                    response.raise_for_status()
+                    data = response.json()
+                    if data.get('success', False):
+                        return data
+                    logger.debug(f"API success=false for {api_url}: {data.get('error')}")
+                    return None  # success=false won't change on retry
+                except Exception as e:
+                    logger.debug(f"Attempt {attempt} failed for {api_url}: {type(e).__name__}: {e}")
+                    if attempt <= RETRY_ATTEMPTS:
+                        continue
         return None
 
     def get_ckan_stats(self, url: str) -> Dict:
