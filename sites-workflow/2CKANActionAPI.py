@@ -12,7 +12,7 @@ import urllib3
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List
 import logging
-from config import USER_AGENT
+from config import USER_AGENT, SESSION_HEADERS
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -39,7 +39,7 @@ class SimpleCKANExtractor:
     def _create_session(self) -> cloudscraper.CloudScraper:
         """Create a cloudscraper session to bypass Cloudflare"""
         session = cloudscraper.create_scraper()
-        session.headers.update({'User-Agent': USER_AGENT})
+        session.headers.update(SESSION_HEADERS)
         session.verify = False
 
         return session
