@@ -12,7 +12,7 @@ import urllib3
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List
 import logging
-from config import USER_AGENT
+from config import USER_AGENT, SESSION_HEADERS
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -22,14 +22,6 @@ OUTPUT_CSV_FILE = "ckan_stats.csv"
 MAX_WORKERS = 10  # Number of concurrent threads
 REQUEST_TIMEOUT = 20  # Timeout per request (GitHub Actions has good bandwidth but some sites are slow)
 RETRY_ATTEMPTS = 2  # Number of retries for transient failures (common from cloud IPs)
-
-# Headers for querying external CKAN sites — browser-like UA only.
-# Do NOT include x-cf-bypass here; that header is only for ecosystem.ckan.org
-# and could trigger WAFs on government/enterprise CKAN instances.
-EXTERNAL_HEADERS = {
-    "User-Agent": USER_AGENT,
-    "Accept": "application/json, text/plain, */*",
-}
 
 # Setup logging
 logging.basicConfig(
@@ -45,9 +37,9 @@ class SimpleCKANExtractor:
         self.session = self._create_session()
 
     def _create_session(self) -> cloudscraper.CloudScraper:
-        """Create a cloudscraper session to bypass Cloudflare on external CKAN sites"""
+        """Create a cloudscraper session to bypass Cloudflare"""
         session = cloudscraper.create_scraper()
-        session.headers.update(EXTERNAL_HEADERS)
+        session.headers.update(SESSION_HEADERS)
         session.verify = False
 
         return session
