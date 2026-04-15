@@ -249,15 +249,17 @@ def append_to_datastore(resource_id, df):
 
 
 def update_resource_metadata(resource_id):
-    """Update resource description with timestamp"""
+    """Update resource description and point download URL to live datastore dump"""
 
     timestamp = datetime.utcnow().isoformat() + 'Z'
+    dump_url = f"{CKAN_URL}/datastore/dump/{resource_id}?bom=True&format=csv"
 
     resource_patch_url = f"{CKAN_URL}/api/3/action/resource_patch"
     headers = {'Authorization': API_KEY}
 
     data = {
         'id': resource_id,
+        'url': dump_url,
         'description': f'Dynamic metadata for CKAN sites - time series data. Last updated: {timestamp}'
     }
 
@@ -271,7 +273,8 @@ def update_resource_metadata(resource_id):
         if response.status_code == 200:
             result = response.json()
             if result.get('success'):
-                print("✓ Resource metadata updated")
+                print("✓ Resource metadata and download URL updated")
+                print(f"  Download URL now points to: {dump_url}")
                 return True
     except Exception as e:
         logger.error(f"Error updating metadata: {e}")
