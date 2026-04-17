@@ -57,17 +57,24 @@ def get_resource_info() -> dict | None:
 
 def download_existing_csv(resource: dict) -> pd.DataFrame:
     """Download the CSV currently attached to the resource."""
-    download_url = resource.get('url', '')
-    if not download_url:
-        logger.warning("Resource has no URL — starting with empty dataset")
-        return pd.DataFrame()
+    # Use the canonical CKAN download URL (resource URL field after a file
+    # upload can point to an internal path — construct it explicitly instead)
+    download_url = f"{CKAN_URL}/dataset/{resource.get('package_id')}/resource/{resource['id']}/download/"
 
     logger.info(f"Downloading existing CSV from: {download_url}")
     try:
-        resp = scraper.get(download_url, headers=AUTH, timeout=60)
+        resp = scraper.get(download_url, headers=AUTH, timeout=60, allow_redirects=True)
+        logger.info(f"  HTTP {resp.status_code} | Content-Type: {resp.headers.get('Content-Type', 'unknown')}")
         resp.raise_for_status()
+
+        content_type = resp.headers.get('Content-Type', '')
+        if 'text/html' in content_type:
+            logger.error(f"  Got HTML instead of CSV — download URL may be blocked or requires login")
+            logger.error(f"  Response preview: {resp.text[:300]}")
+            return pd.DataFrame()
+
         df = pd.read_csv(io.StringIO(resp.text))
-        logger.info(f"  Downloaded {len(df)} existing rows")
+        logger.info(f"  Downloaded {len(df)} existing rows, columns: {list(df.columns)}")
         return df
     except Exception as e:
         logger.error(f"Failed to download existing CSV: {e}")
