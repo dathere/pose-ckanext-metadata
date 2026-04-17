@@ -29,6 +29,7 @@ CKAN_URL = CKAN_BASE_URL
 API_KEY = os.getenv('CKAN_API_KEY', '')
 DATASET_ID = 'ckan-time-series-dataset-experimental'
 RESOURCE_ID = '6d217f9e-8efa-48cf-86f3-8b4fdbc7083d'
+RESOURCE_NAME = 'ckan-extensions-dynamic-metadata.csv'
 NEW_STATS_FILE = 'ckan_stats.csv'
 UNIQUE_COLUMNS = ['name', 'tstamp']
 
@@ -40,10 +41,13 @@ AUTH = {'Authorization': API_KEY}
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def find_resource():
-    """Fetch resource metadata directly by UUID."""
+    """Fetch resource metadata directly by UUID. Returns None if not found."""
     url = f"{CKAN_URL}/api/3/action/resource_show"
     try:
         resp = scraper.get(url, params={'id': RESOURCE_ID}, headers=AUTH, timeout=30)
+        if resp.status_code == 404:
+            logger.info(f"Resource {RESOURCE_ID} not found (404) — will upload fresh")
+            return None
         resp.raise_for_status()
         result = resp.json()
         if not result.get('success'):
