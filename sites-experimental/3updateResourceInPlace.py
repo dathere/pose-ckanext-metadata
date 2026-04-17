@@ -57,9 +57,12 @@ def get_resource_info() -> dict | None:
 
 def download_existing_csv(resource: dict) -> pd.DataFrame:
     """Download the CSV currently attached to the resource."""
-    # Use the canonical CKAN download URL (resource URL field after a file
-    # upload can point to an internal path — construct it explicitly instead)
-    download_url = f"{CKAN_URL}/dataset/{resource.get('package_id')}/resource/{resource['id']}/download/"
+    # CKAN sets the url field to the full download URL after a file upload
+    download_url = resource.get('url', '')
+
+    if not download_url:
+        logger.warning("Resource has no URL — starting with empty dataset")
+        return pd.DataFrame()
 
     logger.info(f"Downloading existing CSV from: {download_url}")
     try:
