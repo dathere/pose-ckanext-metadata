@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 CKAN_URL = CKAN_BASE_URL
 API_KEY = os.getenv('CKAN_API_KEY', '')
 DATASET_ID = 'ckan-time-series-dataset-experimental'
-RESOURCE_NAME = 'ckan-extensions-dynamic-metadata.csv'
+RESOURCE_ID = '6d217f9e-8efa-48cf-86f3-8b4fdbc7083d'
 NEW_STATS_FILE = 'ckan_stats.csv'
 UNIQUE_COLUMNS = ['name', 'tstamp']
 
@@ -40,23 +40,20 @@ AUTH = {'Authorization': API_KEY}
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def find_resource():
-    """Return resource dict matching RESOURCE_NAME inside DATASET_ID, or None."""
-    url = f"{CKAN_URL}/api/3/action/package_show"
+    """Fetch resource metadata directly by UUID."""
+    url = f"{CKAN_URL}/api/3/action/resource_show"
     try:
-        resp = scraper.get(url, params={'id': DATASET_ID}, headers=AUTH, timeout=30)
+        resp = scraper.get(url, params={'id': RESOURCE_ID}, headers=AUTH, timeout=30)
         resp.raise_for_status()
         result = resp.json()
         if not result.get('success'):
-            logger.error(f"package_show failed: {result.get('error')}")
+            logger.error(f"resource_show failed: {result.get('error')}")
             return None
-        for r in result['result'].get('resources', []):
-            if r.get('name', '').strip() == RESOURCE_NAME:
-                logger.info(f"Found resource '{RESOURCE_NAME}' — id: {r['id']}")
-                return r
-        logger.warning(f"No resource named '{RESOURCE_NAME}' found in dataset '{DATASET_ID}'")
-        return None
+        resource = result['result']
+        logger.info(f"Found resource '{resource.get('name')}' — id: {resource['id']}")
+        return resource
     except Exception as e:
-        logger.error(f"Error looking up resource: {e}")
+        logger.error(f"Error looking up resource {RESOURCE_ID}: {e}")
         return None
 
 
@@ -151,9 +148,9 @@ def upload_resource(merged: pd.DataFrame) -> str | None:
 
 def main():
     print("=== CKAN RESOURCE UPDATER (experimental) ===")
-    print(f"Dataset : {DATASET_ID}")
-    print(f"Resource: {RESOURCE_NAME}")
-    print(f"New data: {NEW_STATS_FILE}\n")
+    print(f"Dataset  : {DATASET_ID}")
+    print(f"Resource : {RESOURCE_ID}")
+    print(f"New data : {NEW_STATS_FILE}\n")
 
     if not API_KEY:
         logger.error("CKAN_API_KEY is not set")
