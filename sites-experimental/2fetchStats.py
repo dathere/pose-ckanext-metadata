@@ -96,7 +96,7 @@ class CKANStatsExtractor:
             'num_organizations': '0',
             'ckan_version': '',
             'extensions': '',
-            'tstamp': datetime.now(UTC).strftime('%Y-%m-%d')
+            'tstamp': datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S')
         }
 
     def get_stats(self, url: str) -> Dict:
@@ -126,7 +126,7 @@ class CKANStatsExtractor:
             if extensions:
                 stats['extensions'] = json.dumps(extensions)
 
-        stats['tstamp'] = datetime.now(UTC).strftime('%Y-%m-%d')
+        stats['tstamp'] = datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S')
         return stats
 
     def process_row(self, row: Dict, index: int, total: int) -> Dict:

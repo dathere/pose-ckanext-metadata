@@ -28,7 +28,6 @@ CKAN_URL = CKAN_BASE_URL
 API_KEY = os.getenv('CKAN_API_KEY', '')
 RESOURCE_ID = 'efa7d10b-4259-4dc7-bf40-36a9172b268e'
 NEW_STATS_FILE = 'ckan_stats.csv'
-UNIQUE_COLUMNS = ['name', 'tstamp']
 
 scraper = cloudscraper.create_scraper()
 scraper.headers.update(SESSION_HEADERS)
@@ -85,20 +84,13 @@ def download_existing_csv(resource: dict) -> pd.DataFrame:
 
 
 def merge_data(existing: pd.DataFrame, new: pd.DataFrame) -> pd.DataFrame:
-    """Append new rows to existing, deduplicate on UNIQUE_COLUMNS."""
+    """Append new rows to existing — no deduplication, every run is a new snapshot."""
     if existing.empty:
         logger.info(f"No existing data — using all {len(new)} new rows")
         return new.copy()
 
     combined = pd.concat([existing, new], ignore_index=True)
-    before = len(combined)
-    combined.drop_duplicates(subset=UNIQUE_COLUMNS, keep='last', inplace=True)
-    combined.reset_index(drop=True, inplace=True)
-    dupes = before - len(combined)
-    logger.info(
-        f"Merged: {len(existing)} existing + {len(new)} new "
-        f"= {before} rows, {dupes} duplicates removed → {len(combined)} total"
-    )
+    logger.info(f"Appended: {len(existing)} existing + {len(new)} new = {len(combined)} total rows")
     return combined
 
 
