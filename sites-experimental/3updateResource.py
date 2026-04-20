@@ -7,8 +7,7 @@ Merge new ckan_stats.csv into the CKAN datastore resource, then replace it:
   4. Delete old resource views, then delete the old resource
   5. Create a new resource (JSON, no file upload)
   6. Push merged data to datastore via datastore_create
-  7. Update resource download URL to point to datastore dump
-  8. Create a new resource view
+  7. Create a new resource view
 """
 
 import sys
@@ -215,25 +214,6 @@ def push_to_datastore(resource_id: str, df: pd.DataFrame) -> bool:
         return False
 
 
-def update_download_url(resource_id: str) -> bool:
-    """Point the resource download URL to the live datastore dump."""
-    dump_url = f"{CKAN_URL}/datastore/dump/{resource_id}?bom=True&format=csv"
-    url = f"{CKAN_URL}/api/3/action/resource_patch"
-    data = {'id': resource_id, 'url': dump_url}
-    try:
-        resp = scraper.post(url, json=data, headers=AUTH, timeout=30)
-        resp.raise_for_status()
-        result = resp.json()
-        if result.get('success'):
-            logger.info(f"✓ Download URL set to: {dump_url}")
-            return True
-        logger.error(f"resource_patch failed: {result.get('error')}")
-        return False
-    except Exception as e:
-        logger.error(f"Error updating download URL: {e}")
-        return False
-
-
 def create_resource_view(resource_id: str) -> bool:
     """Create a DataExplorer view for the new resource."""
     url = f"{CKAN_URL}/api/3/action/resource_view_create"
@@ -314,10 +294,7 @@ def main():
         logger.error("Datastore push failed")
         sys.exit(1)
 
-    # 8. Update download URL to datastore dump
-    update_download_url(new_id)
-
-    # 9. Create resource view
+    # 8. Create resource view
     logger.info("Creating resource view...")
     create_resource_view(new_id)
 
