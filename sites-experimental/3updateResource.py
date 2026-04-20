@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 CKAN_URL = CKAN_BASE_URL
 API_KEY = os.getenv('CKAN_API_KEY', '')
 DATASET_ID = 'ckan-time-series-dataset-experimental'
-RESOURCE_NAME = 'CKAN Sites Dynamic Metadata'
+RESOURCE_NAME = 'ckan sites timeseries data 10'
 NEW_STATS_FILE = 'ckan_stats.csv'
 
 scraper = cloudscraper.create_scraper()
