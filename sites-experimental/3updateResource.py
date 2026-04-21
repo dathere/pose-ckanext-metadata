@@ -157,6 +157,7 @@ def create_resource() -> str | None:
         'package_id': DATASET_ID,
         'name': RESOURCE_NAME,
         'format': 'CSV',
+        'url_type': 'datastore',
         'description': (
             f'Time series stats for CKAN sites (experimental, 10-site test run). '
             f'Last updated: {timestamp}'
@@ -224,6 +225,9 @@ def create_resource_view(resource_id: str) -> bool:
     }
     try:
         resp = scraper.post(url, json=data, headers=AUTH, timeout=30)
+        if resp.status_code == 409:
+            logger.info("Resource view already exists (auto-created by CKAN) — skipping")
+            return True
         resp.raise_for_status()
         result = resp.json()
         if result.get('success'):
