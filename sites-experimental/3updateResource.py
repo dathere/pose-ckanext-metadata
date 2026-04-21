@@ -220,14 +220,11 @@ def create_resource_view(resource_id: str) -> bool:
     url = f"{CKAN_URL}/api/3/action/resource_view_create"
     data = {
         'resource_id': resource_id,
-        'title': 'Data Explorer',
-        'view_type': 'recline_view',
+        'title': 'Data Table',
+        'view_type': 'datatables_view',
     }
     try:
         resp = scraper.post(url, json=data, headers=AUTH, timeout=30)
-        if resp.status_code == 409:
-            logger.info("Resource view already exists (auto-created by CKAN) — skipping")
-            return True
         resp.raise_for_status()
         result = resp.json()
         if result.get('success'):
