@@ -90,6 +90,21 @@ jobs:
         python datapump.py ckan_stats.csv
         echo "✓ Time-series data append completed"
     
+    - name: Step 5 - Update Experimental Timeseries Datastore Resource
+      continue-on-error: true
+      run: |
+        echo "=== STEP 5: Updating experimental timeseries datastore resource ==="
+
+        if [ ! -f "sites-workflow/ckan_stats.csv" ]; then
+          echo "✗ ckan_stats.csv not found, skipping experimental update"
+          exit 0
+        fi
+
+        cp sites-workflow/ckan_stats.csv sites-experimental/ckan_stats.csv
+        cd sites-experimental
+        python 3updateResource.py
+        echo "✓ Experimental timeseries resource update completed"
+
     - name: Upload artifacts on failure
       if: failure()
       uses: actions/upload-artifact@v4
@@ -99,7 +114,7 @@ jobs:
           sites-workflow/*.csv
           sites-workflow/*.log
         retention-days: 7
-    
+
     - name: Upload generated Sites CSVs as artifacts
       if: success()
       uses: actions/upload-artifact@v4
@@ -111,14 +126,14 @@ jobs:
           sites-workflow/dynamic_metadata_update.csv
           sites-workflow/existing_sites_metadata.csv
         retention-days: 30
-    
+
     - name: Workflow Summary
       if: always()
       run: |
         echo "=== SITES WORKFLOW SUMMARY ==="
         echo "Status: ${{ job.status }}"
         echo "Timestamp: $(date -u)"
-        
+
         # Show file sizes if they exist
         cd sites-workflow
         for file in site_urls.csv ckan_stats.csv dynamic_metadata_update.csv existing_sites_metadata.csv; do
@@ -126,7 +141,7 @@ jobs:
             echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
           fi
         done
-        
+
         # Show any log files
         if ls *.log >/dev/null 2>&1; then
           echo "Log files created:"
