@@ -1,21 +1,27 @@
 #!/usr/bin/env python3
 """
-CKAN Sites Datastore Appender
-Reads CSV and appends to existing datastore with duplicate checking.
+CKAN Sites Datastore Updater
+Replaces the existing resource in-place:
+  1. Find the existing resource by name within the dataset
+  2. Download existing datastore records
+  3. Append new rows
+  4. Delete old resource views, then delete the old resource
+  5. Create a new resource (datastore-type, no file upload)
+  6. Push merged data to datastore via datastore_create
+  7. Create a datatables_view for the new resource
 """
 
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import json
+import time
 import logging
 import cloudscraper
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, UTC
 from config import CKAN_BASE_URL, SESSION_HEADERS
 
-# Set up logging
 logging.basicConfig(
     filename='datapump.log',
     level=logging.INFO,
@@ -23,272 +29,214 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Configuration
 CKAN_URL = CKAN_BASE_URL
 API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 DATASET_ID = 'ckan-sites-metadata'
 RESOURCE_NAME = 'CKAN Sites Dynamic Metadata'
 CSV_FILE_PATH = 'ckan_stats.csv'
-UNIQUE_COLUMNS = ['name', 'tstamp']  # Columns to check for duplicates
 
-# Create a cloudscraper session for all requests
 scraper = cloudscraper.create_scraper()
 scraper.headers.update(SESSION_HEADERS)
+AUTH = {'Authorization': API_KEY}
 
 
-def get_resource_id(dataset_id, resource_name):
-    """Find resource ID by name"""
-
-    package_show_url = f"{CKAN_URL}/api/3/action/package_show"
-    headers = {'Authorization': API_KEY}
-
+def find_resource() -> dict | None:
+    """Find resource by name within the dataset. Returns resource dict or None."""
+    url = f"{CKAN_URL}/api/3/action/package_show"
     try:
-        response = scraper.get(
-            package_show_url,
-            params={'id': dataset_id},
-            headers=headers
-        )
-
-        if response.status_code == 200:
-            result = response.json()
-            if result.get('success'):
-                resources = result['result'].get('resources', [])
-
-                for resource in resources:
-                    if resource.get('name', '').startswith(resource_name):
-                        resource_id = resource['id']
-                        has_datastore = resource.get('datastore_active', False)
-                        print(f"✓ Found resource: {resource['name']}")
-                        print(f"  Resource ID: {resource_id}")
-                        return {'id': resource_id, 'has_datastore': has_datastore}
-
-                print(f"✗ No resource found matching '{resource_name}'")
-                return None
-
+        resp = scraper.get(url, params={'id': DATASET_ID}, headers=AUTH, timeout=30)
+        resp.raise_for_status()
+        result = resp.json()
+        if not result.get('success'):
+            logger.error(f"package_show failed: {result.get('error')}")
+            return None
+        for resource in result['result'].get('resources', []):
+            if resource.get('name', '').startswith(RESOURCE_NAME):
+                print(f"✓ Found resource: {resource['name']}")
+                print(f"  Resource ID: {resource['id']}")
+                logger.info(f"Found resource '{resource['name']}' — id: {resource['id']}")
+                return resource
+        print(f"✗ No resource found matching '{RESOURCE_NAME}'")
+        logger.info(f"No resource named '{RESOURCE_NAME}' in dataset — will create fresh")
+        return None
     except Exception as e:
-        print(f"✗ Error finding resource: {e}")
-        logger.error(f"Error finding resource: {e}")
+        logger.error(f"Error looking up resource in dataset: {e}")
         return None
 
 
-def download_existing_data(resource_id, limit=100000):
-    """Download all existing data from datastore to check for duplicates"""
-
-    print(f"  Downloading existing data to check for duplicates...")
-
-    search_url = f"{CKAN_URL}/api/3/action/datastore_search"
-    headers = {'Authorization': API_KEY}
-
+def download_existing_datastore(resource_id: str) -> pd.DataFrame:
+    """Download all existing records from the datastore."""
+    url = f"{CKAN_URL}/api/3/action/datastore_search"
     all_records = []
     offset = 0
     batch_size = 1000
 
+    print(f"  Downloading existing data to check for duplicates...")
+    logger.info(f"Downloading existing datastore records from {resource_id}...")
     try:
-        while offset < limit:
-            params = {
-                'resource_id': resource_id,
-                'limit': batch_size,
-                'offset': offset
-            }
-
-            response = scraper.post(
-                search_url,
-                json=params,
-                headers=headers,
-                timeout=30
-            )
-
-            if response.status_code == 200:
-                result = response.json()
-                if result.get('success'):
-                    records = result['result']['records']
-
-                    if not records:
-                        break
-
-                    for record in records:
-                        record.pop('_id', None)
-
-                    all_records.extend(records)
-                    offset += batch_size
-
-                    total = result['result'].get('total', 0)
-                    if len(all_records) >= total:
-                        break
-                else:
-                    break
-            else:
+        while True:
+            params = {'resource_id': resource_id, 'limit': batch_size, 'offset': offset}
+            resp = scraper.post(url, json=params, headers=AUTH, timeout=30)
+            resp.raise_for_status()
+            result = resp.json()
+            if not result.get('success'):
+                logger.warning(f"datastore_search failed: {result.get('error')}")
                 break
-
+            records = result['result']['records']
+            if not records:
+                break
+            for r in records:
+                r.pop('_id', None)
+            all_records.extend(records)
+            total = result['result'].get('total', 0)
+            offset += batch_size
+            if len(all_records) >= total:
+                break
+        print(f"  Downloaded {len(all_records)} existing records")
+        logger.info(f"Downloaded {len(all_records)} existing records")
     except Exception as e:
-        logger.error(f"Error downloading existing data: {e}")
+        logger.error(f"Error downloading datastore records: {e}")
+
+    return pd.DataFrame(all_records) if all_records else pd.DataFrame()
+
+
+def get_resource_views(resource_id: str) -> list:
+    url = f"{CKAN_URL}/api/3/action/resource_view_list"
+    try:
+        resp = scraper.get(url, params={'id': resource_id}, headers=AUTH, timeout=30)
+        resp.raise_for_status()
+        result = resp.json()
+        if result.get('success'):
+            return result['result']
+        return []
+    except Exception as e:
+        logger.error(f"Error listing resource views: {e}")
+        return []
+
+
+def delete_resource_views(resource_id: str) -> None:
+    views = get_resource_views(resource_id)
+    if not views:
+        return
+    url = f"{CKAN_URL}/api/3/action/resource_view_delete"
+    for view in views:
+        try:
+            resp = scraper.post(url, json={'id': view['id']}, headers=AUTH, timeout=30)
+            resp.raise_for_status()
+        except Exception as e:
+            logger.error(f"Error deleting view {view['id']}: {e}")
+
+
+def delete_resource(resource_id: str) -> bool:
+    url = f"{CKAN_URL}/api/3/action/resource_delete"
+    try:
+        resp = scraper.post(url, json={'id': resource_id}, headers=AUTH, timeout=30)
+        resp.raise_for_status()
+        if resp.json().get('success'):
+            logger.info(f"Deleted resource {resource_id}")
+            return True
+        logger.error(f"resource_delete failed: {resp.json().get('error')}")
+        return False
+    except Exception as e:
+        logger.error(f"Error deleting resource: {e}")
+        return False
+
+
+def create_resource() -> str | None:
+    """Create a new datastore-type resource (no file upload). Returns new resource id."""
+    timestamp = datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S UTC')
+    url = f"{CKAN_URL}/api/3/action/resource_create"
+    data = {
+        'package_id': DATASET_ID,
+        'name': RESOURCE_NAME,
+        'format': 'CSV',
+        'url_type': 'datastore',
+        'description': f'Dynamic metadata for CKAN sites - time series data. Last updated: {timestamp}',
+    }
+    try:
+        resp = scraper.post(url, json=data, headers=AUTH, timeout=30)
+        if not resp.ok:
+            logger.error(f"resource_create HTTP {resp.status_code}: {resp.text[:500]}")
+            resp.raise_for_status()
+        result = resp.json()
+        if result.get('success'):
+            new_id = result['result']['id']
+            print(f"✓ Created new resource — id: {new_id}")
+            logger.info(f"Created new resource {new_id}")
+            return new_id
+        logger.error(f"resource_create failed: {result.get('error')}")
+        return None
+    except Exception as e:
+        logger.error(f"Error creating resource: {e}")
         return None
 
-    print(f"  Downloaded {len(all_records)} existing records")
 
-    if all_records:
-        return pd.DataFrame(all_records)
-    else:
-        return pd.DataFrame()
-
-
-def filter_duplicates(new_df, existing_df, unique_columns):
-    """Remove records from new_df that already exist in existing_df"""
-
-    if existing_df.empty:
-        print(f"  No existing data, all {len(new_df)} records are new")
-        return new_df, new_df.copy()
-
-    print(f"  Checking for duplicates based on: {', '.join(unique_columns)}")
-
-    for col in unique_columns:
-        if col not in new_df.columns:
-            print(f"  Warning: Column '{col}' not in new data")
-            return new_df, new_df.copy()
-        if col not in existing_df.columns:
-            print(f"  Warning: Column '{col}' not in existing data")
-            return new_df, new_df.copy()
-
-    new_df['_composite_key'] = new_df[unique_columns].astype(str).agg('-'.join, axis=1)
-    existing_df['_composite_key'] = existing_df[unique_columns].astype(str).agg('-'.join, axis=1)
-
-    existing_keys = set(existing_df['_composite_key'])
-    mask = ~new_df['_composite_key'].isin(existing_keys)
-
-    truly_new = new_df[mask].copy()
-    duplicates = new_df[~mask].copy()
-
-    truly_new.drop('_composite_key', axis=1, inplace=True)
-    if not new_df.empty:
-        new_df.drop('_composite_key', axis=1, inplace=True)
-    if not existing_df.empty:
-        existing_df.drop('_composite_key', axis=1, inplace=True)
-    if not duplicates.empty:
-        duplicates.drop('_composite_key', axis=1, inplace=True)
-
-    print(f"  Found {len(truly_new)} new records, {len(duplicates)} duplicates")
-
-    return truly_new, duplicates
-
-
-def append_to_datastore(resource_id, df):
-    """Append CSV data to datastore with duplicate checking"""
-
-    print(f"\nChecking datastore for existing data...")
-
-    existing_df = download_existing_data(resource_id)
-
-    if existing_df is None:
-        print("  ✗ Could not download existing data")
-        return False
-
-    new_records_df, duplicates_df = filter_duplicates(df, existing_df, UNIQUE_COLUMNS)
-
-    if len(new_records_df) == 0:
-        print(f"\n  No new records to insert (all {len(df)} records already exist)")
-        return True
-
-    print(f"\nInserting {len(new_records_df)} new records...")
-
-    records = new_records_df.to_dict(orient='records')
-    cleaned_records = []
-    for record in records:
-        cleaned_record = {}
-        for k, v in record.items():
+def push_to_datastore(resource_id: str, df: pd.DataFrame) -> bool:
+    """Push full dataframe to CKAN datastore via datastore_create."""
+    records = df.to_dict(orient='records')
+    cleaned = []
+    for r in records:
+        cleaned_r = {}
+        for k, v in r.items():
             if pd.notna(v) and v is not None:
-                if hasattr(v, 'item'):
-                    v = v.item()
-                cleaned_record[k] = v
-        cleaned_records.append(cleaned_record)
+                cleaned_r[k] = v.item() if hasattr(v, 'item') else v
+        cleaned.append(cleaned_r)
 
-    upsert_url = f"{CKAN_URL}/api/3/action/datastore_upsert"
-    headers = {'Authorization': API_KEY}
-
+    print(f"\nInserting {len(cleaned)} records...")
+    logger.info(f"Pushing {len(cleaned)} records to datastore...")
+    url = f"{CKAN_URL}/api/3/action/datastore_create"
     data = {
         'resource_id': resource_id,
-        'records': cleaned_records,
-        'method': 'insert',
+        'records': cleaned,
         'force': True,
-        'calculate_record_count': True
+        'calculate_record_count': True,
     }
-
     try:
-        response = scraper.post(
-            upsert_url,
-            json=data,
-            headers=headers,
-            timeout=60
-        )
-
-        if response.status_code == 200:
-            result = response.json()
-            if result.get('success'):
-                print(f"✓ Successfully inserted {len(cleaned_records)} new records")
-                logger.info(f"Inserted {len(cleaned_records)} records to resource {resource_id}")
-
-                if len(duplicates_df) > 0:
-                    print(f"  (Skipped {len(duplicates_df)} duplicate records)")
-
-                return True
-            else:
-                error = result.get('error', {})
-                print(f"✗ Failed to insert data:")
-                print(f"  Error: {json.dumps(error, indent=2)}")
-                logger.error(f"Insert failed: {error}")
-                return False
-        else:
-            print(f"✗ HTTP Error {response.status_code}")
-            print(f"  {response.text[:500]}")
-            logger.error(f"HTTP {response.status_code}: {response.text}")
-            return False
-
+        resp = scraper.post(url, json=data, headers=AUTH, timeout=60)
+        if not resp.ok:
+            logger.error(f"datastore_create HTTP {resp.status_code}: {resp.text[:500]}")
+            resp.raise_for_status()
+        result = resp.json()
+        if result.get('success'):
+            print(f"✓ Successfully inserted {len(cleaned)} records")
+            logger.info(f"Inserted {len(cleaned)} records to resource {resource_id}")
+            return True
+        logger.error(f"datastore_create failed: {result.get('error')}")
+        return False
     except Exception as e:
-        print(f"✗ Error: {e}")
-        logger.error(f"Exception during insert: {e}", exc_info=True)
+        logger.error(f"Error pushing to datastore: {e}")
         return False
 
 
-def update_resource_metadata(resource_id):
-    """Update resource description and point download URL to live datastore dump"""
-
-    timestamp = datetime.utcnow().isoformat() + 'Z'
-    dump_url = f"{CKAN_URL}/datastore/dump/{resource_id}?bom=True&format=csv"
-
-    resource_patch_url = f"{CKAN_URL}/api/3/action/resource_patch"
-    headers = {'Authorization': API_KEY}
-
+def create_resource_view(resource_id: str) -> bool:
+    url = f"{CKAN_URL}/api/3/action/resource_view_create"
     data = {
-        'id': resource_id,
-        'url': dump_url,
-        'description': f'Dynamic metadata for CKAN sites - time series data. Last updated: {timestamp}'
+        'resource_id': resource_id,
+        'title': 'Data Table',
+        'view_type': 'datatables_view',
     }
-
     try:
-        response = scraper.post(
-            resource_patch_url,
-            json=data,
-            headers=headers
-        )
-
-        if response.status_code == 200:
-            result = response.json()
-            if result.get('success'):
-                print("✓ Resource metadata and download URL updated")
-                print(f"  Download URL now points to: {dump_url}")
-                return True
+        resp = scraper.post(url, json=data, headers=AUTH, timeout=30)
+        if resp.status_code == 409:
+            logger.info("Resource view already exists (auto-created by CKAN) — skipping")
+            return True
+        resp.raise_for_status()
+        result = resp.json()
+        if result.get('success'):
+            print("✓ Resource metadata and download URL updated")
+            logger.info(f"Created datatables_view for resource {resource_id}")
+            return True
+        logger.warning(f"resource_view_create failed: {result.get('error')}")
+        return False
     except Exception as e:
-        logger.error(f"Error updating metadata: {e}")
-
-    return False
+        logger.error(f"Error creating resource view: {e}")
+        return False
 
 
 def main():
-    """Main function"""
-
     print("=== CKAN SITES DATASTORE APPENDER ===")
     print(f"Dataset: {DATASET_ID}")
     print(f"CSV file: {CSV_FILE_PATH}")
-    print(f"Duplicate check columns: {', '.join(UNIQUE_COLUMNS)}\n")
 
     if not os.path.exists(CSV_FILE_PATH):
         print(f"✗ CSV file '{CSV_FILE_PATH}' not found!")
@@ -296,35 +244,48 @@ def main():
 
     print("Reading CSV file...")
     try:
-        df = pd.read_csv(CSV_FILE_PATH)
-        print(f"  Rows: {len(df)}")
-        print(f"  Columns: {', '.join(df.columns)}")
+        new_df = pd.read_csv(CSV_FILE_PATH)
+        print(f"  Rows: {len(new_df)}")
+        print(f"  Columns: {', '.join(new_df.columns)}")
     except Exception as e:
         print(f"✗ Error reading CSV: {e}")
+        logger.error(f"Cannot read {CSV_FILE_PATH}: {e}")
         return False
 
-    for col in UNIQUE_COLUMNS:
-        if col not in df.columns:
-            print(f"✗ ERROR: Unique column '{col}' not found in CSV!")
-            return False
+    resource = find_resource()
 
-    print()
+    existing_df = download_existing_datastore(resource['id']) if resource else pd.DataFrame()
 
-    resource_info = get_resource_id(DATASET_ID, RESOURCE_NAME)
-    if not resource_info:
-        return False
-
-    resource_id = resource_info['id']
-    success = append_to_datastore(resource_id, df)
-
-    if success:
-        update_resource_metadata(resource_id)
-        print(f"\n✓ Data successfully appended!")
-        print(f"View dataset: {CKAN_URL}/dataset/{DATASET_ID}")
-        return True
+    if existing_df.empty:
+        merged_df = new_df.copy()
+        print(f"  No existing data, all {len(merged_df)} records are new")
     else:
-        print(f"\n✗ Failed to append data")
+        merged_df = pd.concat([existing_df, new_df], ignore_index=True)
+        print(f"  Appended: {len(existing_df)} existing + {len(new_df)} new = {len(merged_df)} total rows")
+
+    if resource:
+        delete_resource_views(resource['id'])
+        if not delete_resource(resource['id']):
+            print("✗ Failed to delete old resource — aborting to avoid data loss")
+            logger.error("Failed to delete old resource")
+            return False
+        time.sleep(2)
+
+    new_id = create_resource()
+    if not new_id:
+        print("✗ Resource creation failed")
         return False
+
+    success = push_to_datastore(new_id, merged_df)
+    if not success:
+        print("✗ Failed to push data to datastore")
+        return False
+
+    create_resource_view(new_id)
+
+    print(f"\n✓ Data successfully appended!")
+    print(f"View dataset: {CKAN_URL}/dataset/{DATASET_ID}")
+    return True
 
 
 if __name__ == '__main__':
