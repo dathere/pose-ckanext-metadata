@@ -73,37 +73,22 @@ jobs:
     - name: Step 4 - Append Time-Series Data to CKAN
       run: |
         echo "=== STEP 4: Appending time-series data to CKAN ==="
-        cd sites-workflow
 
-        # Guard: ensure the stats CSV has data before appending
-        if [ ! -f "ckan_stats.csv" ]; then
+        if [ ! -f "sites-workflow/ckan_stats.csv" ]; then
           echo "✗ ckan_stats.csv not found, skipping append"
           exit 1
         fi
-        ROW_COUNT=$(wc -l < ckan_stats.csv)
+        ROW_COUNT=$(wc -l < sites-workflow/ckan_stats.csv)
         if [ "$ROW_COUNT" -lt 2 ]; then
           echo "✗ ckan_stats.csv has no data rows (only $ROW_COUNT lines), skipping append"
           exit 1
         fi
         echo "✓ CSV validated: $ROW_COUNT lines"
 
-        python datapump.py ckan_stats.csv
-        echo "✓ Time-series data append completed"
-    
-    - name: Step 5 - Update Experimental Timeseries Datastore Resource
-      continue-on-error: true
-      run: |
-        echo "=== STEP 5: Updating experimental timeseries datastore resource ==="
-
-        if [ ! -f "sites-workflow/ckan_stats.csv" ]; then
-          echo "✗ ckan_stats.csv not found, skipping experimental update"
-          exit 0
-        fi
-
         cp sites-workflow/ckan_stats.csv sites-experimental/ckan_stats.csv
         cd sites-experimental
         python 3updateResource.py
-        echo "✓ Experimental timeseries resource update completed"
+        echo "✓ Time-series data append completed"
 
     - name: Upload artifacts on failure
       if: failure()
