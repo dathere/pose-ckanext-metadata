@@ -134,7 +134,15 @@ jobs:
 
         ls -la derived
 
-    - name: Step 6 - Commit archived crawl
+    - name: Step 6 - Upload derived CSVs to CKAN
+      if: ${{ !cancelled() }}
+      continue-on-error: true
+      run: |
+        echo "=== STEP 6: Uploading derived CSVs as CKAN resources ==="
+        cd sites-workflow
+        python upload_derived.py derived
+
+    - name: Step 7 - Commit archived crawl
       if: ${{ !cancelled() }}
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
