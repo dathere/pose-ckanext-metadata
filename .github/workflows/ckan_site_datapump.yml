@@ -142,7 +142,15 @@ jobs:
         cd sites-workflow
         python upload_derived.py derived
 
-    - name: Step 7 - Commit archived crawl
+    - name: Step 7 - Patch extension install counts
+      if: ${{ !cancelled() }}
+      continue-on-error: true
+      run: |
+        echo "=== STEP 7: Patching instances_count on extension packages ==="
+        cd sites-workflow
+        python patch_instance_counts.py derived
+
+    - name: Step 8 - Commit archived crawl
       if: ${{ !cancelled() }}
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
