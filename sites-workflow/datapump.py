@@ -3,11 +3,11 @@
 CKAN Sites Datastore Updater
 Replaces the existing resource in-place:
   1. Find the existing resource by name within the dataset
-  2. Download existing datastore records
+  2. Download existing datastore records (and their field schema)
   3. Append new rows
-  4. Delete old resource views, then delete the old resource
-  5. Create a new resource (datastore-type, no file upload)
-  6. Push merged data to datastore via datastore_create
+  4. Create a new resource (datastore-type, no file upload)
+  5. Push merged data to datastore via datastore_create, with an explicit schema
+  6. Only once the push succeeded: delete the old resource views and resource
   7. Create a datatables_view for the new resource
 """
 
@@ -15,7 +15,6 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import time
 import logging
 import cloudscraper
 import pandas as pd
@@ -50,12 +49,17 @@ def find_resource() -> dict | None:
         if not result.get('success'):
             logger.error(f"package_show failed: {result.get('error')}")
             return None
-        for resource in result['result'].get('resources', []):
-            if resource.get('name', '').startswith(RESOURCE_NAME):
-                print(f"✓ Found resource: {resource['name']}")
-                print(f"  Resource ID: {resource['id']}")
-                logger.info(f"Found resource '{resource['name']}' — id: {resource['id']}")
-                return resource
+        matches = [r for r in result['result'].get('resources', [])
+                   if r.get('name', '').startswith(RESOURCE_NAME)]
+        if matches:
+            # A failed cleanup can leave two same-named resources; the newest holds the data.
+            resource = max(matches, key=lambda r: r.get('created') or '')
+            print(f"✓ Found resource: {resource['name']}")
+            print(f"  Resource ID: {resource['id']}")
+            logger.info(f"Found resource '{resource['name']}' — id: {resource['id']}")
+            if len(matches) > 1:
+                logger.warning(f"{len(matches)} resources named '{RESOURCE_NAME}' — using newest")
+            return resource
         print(f"✗ No resource found matching '{RESOURCE_NAME}'")
         logger.info(f"No resource named '{RESOURCE_NAME}' in dataset — will create fresh")
         return None
@@ -64,10 +68,11 @@ def find_resource() -> dict | None:
         return None
 
 
-def download_existing_datastore(resource_id: str) -> pd.DataFrame:
-    """Download all existing records from the datastore."""
+def download_existing_datastore(resource_id: str) -> tuple[pd.DataFrame, list]:
+    """Download all existing records from the datastore. Returns (dataframe, field defs)."""
     url = f"{CKAN_URL}/api/3/action/datastore_search"
     all_records = []
+    existing_fields = []
     offset = 0
     batch_size = 1000
 
@@ -75,13 +80,19 @@ def download_existing_datastore(resource_id: str) -> pd.DataFrame:
     logger.info(f"Downloading existing datastore records from {resource_id}...")
     try:
         while True:
-            params = {'resource_id': resource_id, 'limit': batch_size, 'offset': offset}
+            # sort by _id: without an ORDER BY, paged reads can skip or repeat rows
+            params = {'resource_id': resource_id, 'limit': batch_size, 'offset': offset, 'sort': '_id'}
             resp = scraper.post(url, json=params, headers=AUTH, timeout=30)
             resp.raise_for_status()
             result = resp.json()
             if not result.get('success'):
                 logger.warning(f"datastore_search failed: {result.get('error')}")
                 break
+            if not existing_fields:
+                existing_fields = [
+                    {'id': f['id'], 'type': f['type']}
+                    for f in result['result'].get('fields', []) if f['id'] != '_id'
+                ]
             records = result['result']['records']
             if not records:
                 break
@@ -97,7 +108,7 @@ def download_existing_datastore(resource_id: str) -> pd.DataFrame:
     except Exception as e:
         logger.error(f"Error downloading datastore records: {e}")
 
-    return pd.DataFrame(all_records) if all_records else pd.DataFrame()
+    return (pd.DataFrame(all_records) if all_records else pd.DataFrame()), existing_fields
 
 
 def get_resource_views(resource_id: str) -> list:
@@ -171,7 +182,32 @@ def create_resource() -> str | None:
         return None
 
 
-def push_to_datastore(resource_id: str, df: pd.DataFrame) -> bool:
+def build_fields(df: pd.DataFrame, existing_fields: list) -> list:
+    """Declare a field for every column: keep the old resource's types, infer new columns.
+
+    Without an explicit schema CKAN infers one from records[0] alone. Records drop
+    their null keys below, so a first row with a null column yields a table missing
+    that column and every later row carrying it fails with 'extra keys' (HTTP 409).
+    """
+    fields = [f for f in existing_fields if f['id'] in set(df.columns)]
+    known = {f['id'] for f in fields}
+    for col in df.columns:
+        if col in known:
+            continue
+        dtype = str(df[col].dtype)
+        if 'int' in dtype:
+            field_type = 'int'
+        elif 'float' in dtype:
+            field_type = 'numeric'
+        elif 'bool' in dtype:
+            field_type = 'bool'
+        else:
+            field_type = 'text'
+        fields.append({'id': col, 'type': field_type})
+    return fields
+
+
+def push_to_datastore(resource_id: str, df: pd.DataFrame, fields: list) -> bool:
     """Push full dataframe to CKAN datastore via datastore_create."""
     records = df.to_dict(orient='records')
     cleaned = []
@@ -187,6 +223,7 @@ def push_to_datastore(resource_id: str, df: pd.DataFrame) -> bool:
     url = f"{CKAN_URL}/api/3/action/datastore_create"
     data = {
         'resource_id': resource_id,
+        'fields': fields,
         'records': cleaned,
         'force': True,
         'calculate_record_count': True,
@@ -254,7 +291,9 @@ def main():
 
     resource = find_resource()
 
-    existing_df = download_existing_datastore(resource['id']) if resource else pd.DataFrame()
+    existing_df, existing_fields = (
+        download_existing_datastore(resource['id']) if resource else (pd.DataFrame(), [])
+    )
 
     if existing_df.empty:
         merged_df = new_df.copy()
@@ -263,23 +302,22 @@ def main():
         merged_df = pd.concat([existing_df, new_df], ignore_index=True)
         print(f"  Appended: {len(existing_df)} existing + {len(new_df)} new = {len(merged_df)} total rows")
 
-    if resource:
-        delete_resource_views(resource['id'])
-        if not delete_resource(resource['id']):
-            print("✗ Failed to delete old resource — aborting to avoid data loss")
-            logger.error("Failed to delete old resource")
-            return False
-        time.sleep(2)
-
     new_id = create_resource()
     if not new_id:
         print("✗ Resource creation failed")
         return False
 
-    success = push_to_datastore(new_id, merged_df)
-    if not success:
-        print("✗ Failed to push data to datastore")
+    if not push_to_datastore(new_id, merged_df, build_fields(merged_df, existing_fields)):
+        print("✗ Failed to push data to datastore — old resource left intact")
+        logger.error(f"Push failed; discarding new resource {new_id}, keeping old data")
+        delete_resource(new_id)
         return False
+
+    if resource:
+        delete_resource_views(resource['id'])
+        if not delete_resource(resource['id']):
+            print(f"⚠ New data is live but old resource {resource['id']} was not deleted — remove it manually")
+            logger.error(f"Old resource {resource['id']} delete failed after a successful push")
 
     create_resource_view(new_id)
 
