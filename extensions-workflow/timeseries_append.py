@@ -89,7 +89,8 @@ def download_existing_data(resource_id, limit=100000):
             params = {
                 'resource_id': resource_id,
                 'limit': batch_size,
-                'offset': offset
+                'offset': offset,
+                'sort': '_id'
             }
             
             response = requests.post(
@@ -134,6 +135,26 @@ def download_existing_data(resource_id, limit=100000):
     else:
         return pd.DataFrame()
 
+TIMESTAMP_COLUMNS = ['tstamp', 'release_date']
+
+
+def composite_key(df, unique_columns):
+    """Build the duplicate-check key for each row.
+
+    Timestamp columns are normalised to a plain date because the CSV writes
+    '2026-08-23' while the datastore returns '2026-08-23 0:00:00'. Nulls become
+    '': pandas 3 keeps NaN through .astype(str), so '-'.join used to raise
+    "expected str instance, float found" on rows with a null repository_name.
+    """
+    parts = []
+    for col in unique_columns:
+        series = df[col]
+        if col in TIMESTAMP_COLUMNS:
+            series = pd.to_datetime(series, errors='coerce', format='mixed').dt.strftime('%Y-%m-%d')
+        parts.append(series.fillna('').astype(str))
+    return pd.Series(['-'.join(values) for values in zip(*parts)], index=df.index)
+
+
 def filter_duplicates(new_df, existing_df, unique_columns):
     """Remove records from new_df that already exist in existing_df"""
     
@@ -152,20 +173,9 @@ def filter_duplicates(new_df, existing_df, unique_columns):
             print(f"  Warning: Column '{col}' not in existing data")
             return new_df, new_df.copy()
     
-    # Convert timestamps to strings for comparison if they exist
-    for df in [new_df, existing_df]:
-        for col in unique_columns:
-            if col in df.columns and df[col].dtype == 'object':
-                # Try to normalize timestamp format
-                try:
-                    df[col] = pd.to_datetime(df[col], format='%Y-%m-%d', errors='coerce')
-                    df[col] = df[col].dt.strftime('%Y-%m-%dT%H:%M:%S')
-                except:
-                    pass
-    
     # Create composite key for comparison
-    new_df['_composite_key'] = new_df[unique_columns].astype(str).agg('-'.join, axis=1)
-    existing_df['_composite_key'] = existing_df[unique_columns].astype(str).agg('-'.join, axis=1)
+    new_df['_composite_key'] = composite_key(new_df, unique_columns)
+    existing_df['_composite_key'] = composite_key(existing_df, unique_columns)
     
     # Find records that don't exist
     existing_keys = set(existing_df['_composite_key'])
