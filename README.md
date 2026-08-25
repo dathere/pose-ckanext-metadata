@@ -43,6 +43,10 @@ Work in Progress
 
 **Trigger:** Every Sunday at 03:00 UTC (1 hour after extensions)
 
+![Sites pipeline](docs/sites-workflow.svg)
+
+> The diagram is also available as [`docs/sites-workflow.excalidraw`](docs/sites-workflow.excalidraw) — open it at [excalidraw.com](https://excalidraw.com) to edit.
+
 **Stages:**
 
 1. **Site Discovery** (`1getSitesURL.py`)
@@ -59,7 +63,44 @@ Work in Progress
    - Syncs instance metadata to catalog
 
 4. **Time-Series Storage** (`datapump.py`)
-   - Appends instance snapshots to datastore
+   - Appends instance snapshots to the datastore resource
+   - Creates the new resource and pushes to it *before* deleting the old one, so a
+     failed push cannot destroy the time series
+
+5. **Archive and Derive** (`derive_csvs.sh`)
+   - Archives the crawl as `sites-history/<crawl-date>.csv`
+   - Builds the derived CSVs with [qsv](https://github.com/dathere/qsv): `luau` for
+     row enrichment, `explode` for plugin rows, `sqlp` for aggregations and window
+     functions, `pivotp` for the weekly series, `cat rows` for stacking the archive
+   - From one crawl: `ckan_instances_clean.csv`, `ckan_extension_ranking.csv`
+   - From the archive: `ckan_weekly_long.csv`, `ckan_version_changes.csv`,
+     `ckan_extension_changes.csv`, `ckan_extension_trends.csv`,
+     `ckan_extension_series.csv`, `ckan_extension_cohort_series.csv`
+
+6. **Publish Resources** (`upload_derived.py`)
+   - Uploads the eight derived CSVs to `ckan-sites-metadata`
+   - Updates existing resources in place, so UUIDs, links and views survive
+
+7. **Extension Install Counts** (`patch_instance_counts.py`)
+   - Maps the plugins each instance reports back to catalog extension packages
+   - Patches `instances_count` with the number of **distinct** instances running it
+   - Extensions with no observed install are left untouched, not set to 0
+
+8. **Commit Archive**
+   - Commits `sites-history/<crawl-date>.csv` to `main`
+
+Steps 5-8 run under `!cancelled()` and are `continue-on-error`, so a datastore
+failure still leaves the crawl archived and the derived CSVs uploaded.
+
+#### Crawl archive (`sites-history/`)
+
+One CSV per crawl, written once and never rewritten. Seeded from the datastore
+with 43 crawls covering 2025-07-18 to 2026-08-23. `qsv cat rows sites-history/*.csv`
+reconstructs the full history, which is exactly what weekly mode consumes, and the
+archive doubles as an off-datastore backup of the time series.
+
+Crawls before 2025-10-29 recorded only dataset, group and organization counts —
+`ckan_version` and `extensions` were not collected yet.
 
 ---
 
@@ -68,6 +109,7 @@ Work in Progress
 ### Prerequisites
 
 - Python 3.9+
+- [qsv](https://github.com/dathere/qsv) (sites pipeline, derive step — CI installs a pinned release binary)
 - CKAN API access with write permissions
 - GitHub Personal Access Token (for extensions pipeline)
 
@@ -100,16 +142,22 @@ Both pipelines run automatically via GitHub Actions:
 - Debug artifact uploads on failure (logs, 7-day retention)
 - Detailed execution summaries with file metrics
 
+Each workflow runs independently; no `concurrency` group is set, so two different
+workflows can run at the same time.
+
 ---
 
 ## Data Access
 
 ### Public Catalog
 
-Browse and download data via the [CKAN Ecosystem Catalog](https://catalog.civicdataecosystem.org/):
+Browse and download data via the [CKAN Ecosystem Catalog](https://ecosystem.ckan.org/):
 
-- **Extensions Dataset**: `ckan-extensions-metadata`
-- **Sites Dataset**: `ckan-sites-metadata`
+- **Extensions Dataset**: [`ckan-extensions-metadata`](https://ecosystem.ckan.org/dataset/ckan-extensions-metadata) — time series of GitHub metrics per extension
+- **Sites Dataset**: [`ckan-sites-metadata`](https://ecosystem.ckan.org/dataset/ckan-sites-metadata) — instance time series plus the eight derived analysis CSVs
+
+Extension packages also carry `instances_count`: how many catalogued CKAN
+instances were observed running that extension in the most recent crawl.
 
 
 ---
