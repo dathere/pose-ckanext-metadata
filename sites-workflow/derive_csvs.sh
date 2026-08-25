@@ -33,6 +33,14 @@ qsv search -s ext '.' "$TMP/enriched.csv" \
 FIRST_WEEK=$(qsv sqlp "$TMP/enriched.csv" "SELECT MIN(week) FROM _t_1" | qsv behead)
 LAST_WEEK=$(qsv sqlp "$TMP/enriched.csv" "SELECT MAX(week) FROM _t_1" | qsv behead)
 NWEEKS=$(qsv sqlp "$TMP/enriched.csv" "SELECT COUNT(DISTINCT week) FROM _t_1" | qsv behead)
+
+# The cohort is measured over a trailing window, not the whole archive: no portal
+# answers 43 weeks running, so a whole-history cohort is empty and every delta
+# reads 0. Eight weeks keeps ~370 of ~490 reporting instances.
+COHORT_WEEKS=${COHORT_WEEKS:-8}
+WINDOW_WEEKS=$(( NWEEKS < COHORT_WEEKS ? NWEEKS : COHORT_WEEKS ))
+WINDOW_START=$(qsv sqlp "$TMP/enriched.csv" \
+    "SELECT DISTINCT week FROM _t_1 ORDER BY week DESC LIMIT $WINDOW_WEEKS" | qsv behead | tail -1)
 # Denominator for pct: instances that reported a plugin list in the last week,
 # not all instances. "Of portals that told us, how many run this."
 REPORTING=$(qsv sqlp "$TMP/enriched.csv" \
@@ -107,13 +115,13 @@ GROUP BY week, instance ORDER BY week, name" > "$OUT/ckan_extension_changes.csv"
 # the cohort — instances that reported a plugin list in EVERY week — which makes
 # a change in the number a real install or uninstall.
 qsv sqlp "$TMP/plugins.csv" "$TMP/enriched.csv" "
-WITH cohort AS (SELECT name FROM _t_2 WHERE ext <> '' GROUP BY name
-                HAVING COUNT(DISTINCT week) = $NWEEKS)
+WITH cohort AS (SELECT name FROM _t_2 WHERE ext <> '' AND week >= '$WINDOW_START'
+                GROUP BY name HAVING COUNT(DISTINCT week) = $WINDOW_WEEKS)
 SELECT p.name,
        SUM(CASE WHEN p.week = '$LAST_WEEK' THEN 1 ELSE 0 END) AS count,
        ROUND(100.0 * SUM(CASE WHEN p.week = '$LAST_WEEK' THEN 1 ELSE 0 END) / $REPORTING, 1) AS pct,
        SUM(CASE WHEN p.week = '$LAST_WEEK' AND c.name IS NOT NULL THEN 1 ELSE 0 END)
-     - SUM(CASE WHEN p.week = '$FIRST_WEEK' AND c.name IS NOT NULL THEN 1 ELSE 0 END) AS delta
+     - SUM(CASE WHEN p.week = '$WINDOW_START' AND c.name IS NOT NULL THEN 1 ELSE 0 END) AS delta
 FROM _t_1 p LEFT JOIN cohort c ON c.name = p.instance
 GROUP BY p.name ORDER BY count DESC, name" \
   | qsv luau map core,family "$HERE/qsv/plugin_meta.luau" > "$OUT/ckan_extension_trends.csv"
@@ -124,13 +132,14 @@ qsv pivotp week --index name --values instance --agg len "$TMP/plugins.csv" \
     > "$OUT/ckan_extension_series.csv"
 
 qsv sqlp "$TMP/plugins.csv" "$TMP/enriched.csv" "
-WITH cohort AS (SELECT name FROM _t_2 WHERE ext <> '' GROUP BY name
-                HAVING COUNT(DISTINCT week) = $NWEEKS)
+WITH cohort AS (SELECT name FROM _t_2 WHERE ext <> '' AND week >= '$WINDOW_START'
+                GROUP BY name HAVING COUNT(DISTINCT week) = $WINDOW_WEEKS)
 SELECT p.week, p.instance, p.name
-FROM _t_1 p JOIN cohort c ON c.name = p.instance" > "$TMP/cohort_plugins.csv"
+FROM _t_1 p JOIN cohort c ON c.name = p.instance WHERE p.week >= '$WINDOW_START'" > "$TMP/cohort_plugins.csv"
 
 qsv pivotp week --index name --values instance --agg len "$TMP/cohort_plugins.csv" \
     > "$OUT/ckan_extension_cohort_series.csv"
 
 echo "weekly: $NWEEKS crawls $FIRST_WEEK..$LAST_WEEK, $(qsv sqlp "$TMP/enriched.csv" "SELECT COUNT(DISTINCT name) FROM _t_1" | qsv behead) instances"
+echo "  cohort window: $WINDOW_WEEKS weeks from $WINDOW_START"
 echo "  $(qsv count "$OUT/ckan_version_changes.csv") version changes, $(qsv count "$OUT/ckan_extension_changes.csv") plugin change events, $(qsv count "$OUT/ckan_extension_trends.csv") distinct plugins"
