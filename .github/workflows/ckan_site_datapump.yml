@@ -33,6 +33,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r sites-workflow/requirements.txt
     
+    - name: Install qsv
+      run: |
+        QSV_VERSION=22.0.1
+        curl -sSLo "$RUNNER_TEMP/qsv.zip" \
+          "https://github.com/dathere/qsv/releases/download/$QSV_VERSION/qsv-$QSV_VERSION-x86_64-unknown-linux-gnu.zip"
+        unzip -q -o "$RUNNER_TEMP/qsv.zip" -d "$RUNNER_TEMP/qsv"
+        sudo install "$RUNNER_TEMP/qsv/qsv" /usr/local/bin/qsv
+        qsv --version
+
     - name: Step 1 - Extract Sites URLs from CKAN
       run: |
         echo "=== STEP 1: Extracting Sites URLs from CKAN ==="
@@ -106,19 +115,19 @@ jobs:
         fi
 
         # Name the archive after the crawl's own timestamp, not the run date
-        STAMP=$(python -c "import pandas as pd; print(str(pd.read_csv('ckan_stats.csv').tstamp.iloc[0])[:10])")
+        STAMP=$(qsv sqlp ckan_stats.csv "SELECT MIN(tstamp) FROM _t_1" | qsv behead | cut -c1-10)
         mkdir -p ../sites-history
         cp ckan_stats.csv "../sites-history/$STAMP.csv"
         echo "✓ Archived crawl as sites-history/$STAMP.csv"
 
         mkdir -p derived
-        python build_ckan_csvs.py snapshot ckan_stats.csv -o derived
+        ./derive_csvs.sh snapshot ckan_stats.csv derived
 
-        # Weekly mode needs two or more crawls; stack the archive, dropping repeated headers
+        # Weekly mode needs two or more crawls
         CRAWLS=$(ls -1 ../sites-history/*.csv | wc -l | tr -d " ")
         if [ "$CRAWLS" -ge 2 ]; then
-          awk 'FNR==1 && NR!=1 {next} {print}' ../sites-history/*.csv > "$RUNNER_TEMP/history.csv"
-          python build_ckan_csvs.py weekly "$RUNNER_TEMP/history.csv" -o derived
+          qsv cat rows ../sites-history/*.csv > "$RUNNER_TEMP/history.csv"
+          ./derive_csvs.sh weekly "$RUNNER_TEMP/history.csv" derived
         else
           echo "Only $CRAWLS crawl archived, skipping weekly mode"
         fi
