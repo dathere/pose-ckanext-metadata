@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1496" viewBox="0 0 1560 1496" font-family="Helvetica, Arial, sans-serif">
+<rect width="1560" height="1496" fill="#ffffff"/>
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#5c5f66"/></marker></defs>
+<line x1="900" y1="155.0" x2="850" y2="155.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="190" x2="660.0" y2="230" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="280" x2="660.0" y2="320" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="400" y1="155.0" x2="470" y2="363.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="406" x2="660.0" y2="446" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="512" x2="660.0" y2="552" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="850" y1="585.0" x2="1080.0" y2="190" stroke="#5c5f66" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<line x1="660.0" y1="618" x2="660.0" y2="658" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="850" y1="691.0" x2="900" y2="691.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="724" x2="660.0" y2="764" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="400" y1="814.0" x2="470" y2="814.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="864" x2="660.0" y2="904" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="470" y1="996.0" x2="400" y2="993.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="1088" x2="660.0" y2="1128" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="850" y1="1161.0" x2="900" y2="1161.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="1194" x2="660.0" y2="1234" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="850" y1="1275.0" x2="900" y2="1275.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="660.0" y1="1316" x2="660.0" y2="1356" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="850" y1="1389.0" x2="900" y2="1389.0" stroke="#5c5f66" stroke-width="2" marker-end="url(#a)"/>
+<line x1="470" y1="479.0" x2="400" y2="814.0" stroke="#5c5f66" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#a)"/>
+<rect x="430" y="16" width="460" height="62" rx="10" fill="none" stroke="#5c5f66" stroke-width="2"/>
+<rect x="40" y="120" width="360" height="70" rx="10" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2"/>
+<rect x="470" y="120" width="380" height="70" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="900" y="120" width="360" height="70" rx="10" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2"/>
+<rect x="470" y="230" width="380" height="50" rx="10" fill="#ffec99" stroke="#f08c00" stroke-width="2"/>
+<rect x="470" y="320" width="380" height="86" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="470" y="446" width="380" height="66" rx="10" fill="#ffec99" stroke="#f08c00" stroke-width="2"/>
+<rect x="470" y="552" width="380" height="66" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="470" y="658" width="380" height="66" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="900" y="658" width="360" height="66" rx="10" fill="#ffc9c9" stroke="#e03131" stroke-width="2"/>
+<rect x="470" y="764" width="380" height="100" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="40" y="764" width="360" height="100" rx="10" fill="#ffec99" stroke="#f08c00" stroke-width="2"/>
+<rect x="470" y="904" width="380" height="184" rx="10" fill="#ffec99" stroke="#f08c00" stroke-width="2"/>
+<rect x="40" y="960" width="360" height="66" rx="10" fill="#ffc9c9" stroke="#e03131" stroke-width="2"/>
+<rect x="470" y="1128" width="380" height="66" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="900" y="1128" width="360" height="66" rx="10" fill="#ffc9c9" stroke="#e03131" stroke-width="2"/>
+<rect x="470" y="1234" width="380" height="82" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="900" y="1234" width="360" height="82" rx="10" fill="#ffc9c9" stroke="#e03131" stroke-width="2"/>
+<rect x="470" y="1356" width="380" height="66" rx="10" fill="#a5d8ff" stroke="#1971c2" stroke-width="2"/>
+<rect x="900" y="1356" width="360" height="66" rx="10" fill="#ffc9c9" stroke="#e03131" stroke-width="2"/>
+<text x="660.0" y="36" font-size="18" text-anchor="middle" font-weight="bold" fill="#1e1e1e">CKAN Sites Pipeline</text>
+<text x="660.0" y="59" font-size="18" text-anchor="middle" font-weight="normal" fill="#1e1e1e">.github/workflows/ckan_site_datapump.yml</text>
+<text x="40" y="48" font-size="14" text-anchor="start" font-weight="normal" fill="#5c5f66">Trigger</text>
+<text x="40" y="66" font-size="14" text-anchor="start" font-weight="normal" fill="#5c5f66">Sundays 03:00 UTC</text>
+<text x="40" y="84" font-size="14" text-anchor="start" font-weight="normal" fill="#5c5f66">or manual dispatch</text>
+<text x="940" y="38" font-size="14" text-anchor="start" font-weight="normal" fill="#5c5f66">blue   pipeline step</text>
+<text x="940" y="56" font-size="14" text-anchor="start" font-weight="normal" fill="#5c5f66">yellow  file</text>
+<text x="940" y="74" font-size="14" text-anchor="start" font-weight="normal" fill="#5c5f66">green   external system</text>
+<text x="940" y="92" font-size="14" text-anchor="start" font-weight="normal" fill="#5c5f66">red    published output</text>
+<text x="220.0" y="145" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">Catalogued CKAN instances</text>
+<text x="220.0" y="166" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">733 live portals worldwide</text>
+<text x="660.0" y="145" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 1  1getSitesURL.py</text>
+<text x="660.0" y="166" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">read site packages from catalog</text>
+<text x="1080.0" y="145" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">CKAN Ecosystem Catalog</text>
+<text x="1080.0" y="166" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ecosystem.ckan.org</text>
+<text x="660.0" y="255" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">site_urls.csv</text>
+<text x="660.0" y="343" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 2  2CKANActionAPI.py</text>
+<text x="660.0" y="364" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">status_show, package_search, group_list</text>
+<text x="660.0" y="384" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">10 workers, 15s timeout, 3 retries</text>
+<text x="660.0" y="463" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_stats.csv</text>
+<text x="660.0" y="480" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">tstamp, name, url, datasets, groups, orgs,</text>
+<text x="660.0" y="496" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_version, extensions</text>
+<text x="660.0" y="575" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 3  3updateSitesCatalog.py</text>
+<text x="660.0" y="596" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">package_patch on each site package</text>
+<text x="660.0" y="681" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 4  datapump.py</text>
+<text x="660.0" y="702" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">merge history, push to datastore</text>
+<text x="1080.0" y="681" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">Datastore resource</text>
+<text x="1080.0" y="702" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">CKAN Sites Dynamic Metadata</text>
+<text x="660.0" y="794" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 5  derive_csvs.sh   (qsv)</text>
+<text x="660.0" y="815" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">luau enrich, explode, sqlp windows,</text>
+<text x="660.0" y="835" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">pivotp series, cat rows stacking</text>
+<text x="220.0" y="784" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">sites-history/*.csv</text>
+<text x="220.0" y="805" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">43 archived crawls</text>
+<text x="220.0" y="825" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">2025-07-18 .. 2026-08-23</text>
+<text x="220.0" y="846" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">30,426 rows</text>
+<text x="660.0" y="932" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">derived/  (8 CSVs)</text>
+<text x="660.0" y="948" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_instances_clean.csv</text>
+<text x="660.0" y="965" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_extension_ranking.csv</text>
+<text x="660.0" y="981" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_weekly_long.csv</text>
+<text x="660.0" y="998" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_version_changes.csv</text>
+<text x="660.0" y="1015" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_extension_changes.csv</text>
+<text x="660.0" y="1031" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_extension_trends.csv</text>
+<text x="660.0" y="1048" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_extension_series.csv</text>
+<text x="660.0" y="1065" font-size="13" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan_extension_cohort_series.csv</text>
+<text x="220.0" y="983" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">GitHub artifacts</text>
+<text x="220.0" y="1004" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">sites-metadata-csv-files, 30 days</text>
+<text x="660.0" y="1151" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 6  upload_derived.py</text>
+<text x="660.0" y="1172" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">resource_update, else resource_create</text>
+<text x="1080.0" y="1151" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">8 CSV resources on</text>
+<text x="1080.0" y="1172" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">ckan-sites-metadata</text>
+<text x="660.0" y="1255" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 7  patch_instance_counts.py</text>
+<text x="660.0" y="1276" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">plugins -> packages, distinct instances</text>
+<text x="660.0" y="1296" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">package_patch instances_count</text>
+<text x="1080.0" y="1255" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">instances_count on</text>
+<text x="1080.0" y="1276" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">extension packages</text>
+<text x="1080.0" y="1296" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">336 of 1,480 observed</text>
+<text x="660.0" y="1379" font-size="16" text-anchor="middle" font-weight="bold" fill="#1e1e1e">Step 8  git-auto-commit-action</text>
+<text x="660.0" y="1400" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">commit the archived crawl</text>
+<text x="1080.0" y="1379" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">sites-history/&lt;crawl-date>.csv</text>
+<text x="1080.0" y="1400" font-size="16" text-anchor="middle" font-weight="normal" fill="#1e1e1e">committed to main</text>
+</svg>
