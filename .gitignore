@@ -192,3 +192,5 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+# Derived CSVs are rebuilt from ckan_stats.csv on every run
+sites-workflow/derived/
