@@ -43,9 +43,7 @@ Work in Progress
 
 **Trigger:** Every Sunday at 03:00 UTC (1 hour after extensions)
 
-![Sites pipeline](docs/sites-workflow.svg)
-
-> The diagram is also available as [`docs/sites-workflow.excalidraw`](docs/sites-workflow.excalidraw) — open it at [excalidraw.com](https://excalidraw.com) to edit.
+<img width="2649" height="2860" alt="image" src="https://github.com/user-attachments/assets/e2232218-8f0f-494e-9b94-a7a3c28bf3b9" />
 
 **Stages:**
 
