@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
     # Allows manual triggering from GitHub UI
 
+permissions:
+  contents: write
+
 env:
   GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
   CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
@@ -90,6 +93,45 @@ jobs:
         python datapump.py ckan_stats.csv
         echo "✓ Time-series data append completed"
 
+    - name: Step 5 - Archive crawl and build derived CSVs
+      if: ${{ !cancelled() }}
+      continue-on-error: true
+      run: |
+        echo "=== STEP 5: Archiving crawl and building derived CSVs ==="
+        cd sites-workflow
+
+        if [ ! -f "ckan_stats.csv" ]; then
+          echo "✗ ckan_stats.csv not found, nothing to archive"
+          exit 1
+        fi
+
+        # Name the archive after the crawl's own timestamp, not the run date
+        STAMP=$(python -c "import pandas as pd; print(str(pd.read_csv('ckan_stats.csv').tstamp.iloc[0])[:10])")
+        mkdir -p ../sites-history
+        cp ckan_stats.csv "../sites-history/$STAMP.csv"
+        echo "✓ Archived crawl as sites-history/$STAMP.csv"
+
+        mkdir -p derived
+        python build_ckan_csvs.py snapshot ckan_stats.csv -o derived
+
+        # Weekly mode needs two or more crawls; stack the archive, dropping repeated headers
+        CRAWLS=$(ls -1 ../sites-history/*.csv | wc -l | tr -d " ")
+        if [ "$CRAWLS" -ge 2 ]; then
+          awk 'FNR==1 && NR!=1 {next} {print}' ../sites-history/*.csv > "$RUNNER_TEMP/history.csv"
+          python build_ckan_csvs.py weekly "$RUNNER_TEMP/history.csv" -o derived
+        else
+          echo "Only $CRAWLS crawl archived, skipping weekly mode"
+        fi
+
+        ls -la derived
+
+    - name: Step 6 - Commit archived crawl
+      if: ${{ !cancelled() }}
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: 'chore: archive weekly CKAN sites crawl [automated]'
+        file_pattern: 'sites-history/*.csv'
+
     - name: Upload artifacts on failure
       if: failure()
       uses: actions/upload-artifact@v4
@@ -98,6 +140,7 @@ jobs:
         path: |
           sites-workflow/*.csv
           sites-workflow/*.log
+          sites-workflow/derived/*.csv
         retention-days: 7
 
     - name: Upload generated Sites CSVs as artifacts
@@ -110,6 +153,7 @@ jobs:
           sites-workflow/ckan_stats.csv
           sites-workflow/dynamic_metadata_update.csv
           sites-workflow/existing_sites_metadata.csv
+          sites-workflow/derived/*.csv
         retention-days: 30
 
     - name: Workflow Summary
@@ -126,6 +170,14 @@ jobs:
             echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
           fi
         done
+
+        # Show derived CSVs if the build ran
+        if [ -d derived ]; then
+          echo "Derived CSVs:"
+          for file in derived/*.csv; do
+            [ -f "$file" ] && echo "$file: $(wc -l < "$file") lines, $(du -h "$file" | cut -f1)"
+          done
+        fi
 
         # Show any log files
         if ls *.log >/dev/null 2>&1; then
