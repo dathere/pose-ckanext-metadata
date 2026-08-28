@@ -6,13 +6,13 @@
 <title>What portals actually install</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;600&display=swap">
 <script src="https://cdn.plot.ly/plotly-4.0.0.min.js" charset="utf-8"></script>
 <style>
   html, body { height: 100%; }
   body {
-    margin: 0; background: #fffdf8; color: #1c1b19;
-    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    margin: 0; background: #ffffff; color: #161616;
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   .fig {
@@ -20,24 +20,23 @@
     padding: 26px 28px 18px; display: flex; flex-direction: column;
   }
   .fig h1 {
-    margin: 0; font-size: 21px; line-height: 1.25; font-weight: 600;
-    letter-spacing: -0.005em;
+    margin: 0; font-size: 20px; line-height: 1.3; font-weight: 600;
+    letter-spacing: -0.01em;
   }
   .fig .sub {
-    margin: 6px 0 0; font-size: 14.5px; font-style: italic;
-    line-height: 1.4; color: #56534d;
+    margin: 6px 0 0; font-size: 14px; line-height: 1.45; color: #525252;
   }
   .fig hr {
-    border: 0; border-top: 1px solid #dcd7ca; margin: 14px 0 4px;
+    border: 0; border-top: 1px solid #e0e0e0; margin: 16px 0 2px;
   }
   .plot { flex: 1 1 auto; min-height: 0; }
   .fig figcaption {
-    margin-top: 10px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10.5px;
-    letter-spacing: 0.06em; text-transform: uppercase; color: #8a867d;
+    margin-top: 12px; padding-top: 10px; border-top: 1px solid #e0e0e0;
+    font-size: 12px; line-height: 1.4; color: #6f6f6f;
   }
   @media (max-width: 520px) {
     .fig { padding: 18px 16px 14px; }
-    .fig h1 { font-size: 18px; }
+    .fig h1 { font-size: 17px; }
     .fig .sub { font-size: 13px; }
   }
 </style>
@@ -51,7 +50,7 @@
   <figcaption>Source: dathere/pose-ckanext-metadata weekly crawl · n = 488 portals reporting plugins</figcaption>
 </figure>
 <script>
-Plotly.newPlot("plot", [{"type": "bar", "orientation": "h", "x": [18.9, 22.7, 24.4, 25.6, 27.7, 31.8, 32.8, 38.3, 40.8, 44.9], "y": ["ckanext-googleanalytics", "ckanext-spatial", "ckanext-pages", "ckanext-envvars", "ckanext-xloader", "ckanext-harvest", "ckanext-scheming", "ckanext-pdfview", "ckanext-geoview", "ckanext-dcat"], "customdata": [92, 111, 119, 125, 135, 155, 160, 187, 199, 219], "marker": {"color": "#2f6489", "cornerradius": 2}, "text": ["19%", "23%", "24%", "26%", "28%", "32%", "33%", "38%", "41%", "45%"], "textposition": "outside", "cliponaxis": false, "textfont": {"family": "'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 11.5, "color": "#56534d"}, "hovertemplate": "<b>%{y}</b><br>%{customdata} portals (%{x}%)<extra></extra>"}], {"font": {"family": "'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12.5, "color": "#56534d"}, "paper_bgcolor": "#fffdf8", "plot_bgcolor": "#fffdf8", "margin": {"l": 8, "r": 30, "t": 10, "b": 8}, "hoverlabel": {"bgcolor": "#fffdf8", "bordercolor": "#dcd7ca", "font": {"family": "'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12.5, "color": "#1c1b19"}, "align": "left"}, "showlegend": false, "bargap": 0.36, "xaxis": {"showgrid": true, "zeroline": false, "showline": false, "ticks": "", "automargin": true, "tickfont": {"family": "'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12, "color": "#56534d"}, "gridcolor": "#ebe6da", "ticksuffix": "%", "title": {"text": "Share of reporting portals", "standoff": 12, "font": {"family": "'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 11.5, "color": "#8a867d"}}, "range": [0, 50]}, "yaxis": {"showgrid": false, "zeroline": false, "showline": false, "ticks": "", "automargin": true, "tickfont": {"family": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", "size": 11.5, "color": "#1c1b19"}}}, {displayModeBar: false, responsive: true});
+Plotly.newPlot("plot", [{"type": "bar", "orientation": "h", "x": [18.9, 22.7, 24.4, 25.6, 27.7, 31.8, 32.8, 38.3, 40.8, 44.9], "y": ["ckanext-googleanalytics", "ckanext-spatial", "ckanext-pages", "ckanext-envvars", "ckanext-xloader", "ckanext-harvest", "ckanext-scheming", "ckanext-pdfview", "ckanext-geoview", "ckanext-dcat"], "customdata": [92, 111, 119, 125, 135, 155, 160, 187, 199, 219], "marker": {"color": "#0f62fe", "cornerradius": 0}, "text": ["19%", "23%", "24%", "26%", "28%", "32%", "33%", "38%", "41%", "45%"], "textposition": "outside", "cliponaxis": false, "textfont": {"family": "'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 11.5, "color": "#525252"}, "hovertemplate": "<b>%{y}</b><br>%{customdata} portals (%{x}%)<extra></extra>"}], {"font": {"family": "'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12.5, "color": "#525252"}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "margin": {"l": 8, "r": 30, "t": 10, "b": 8}, "hoverlabel": {"bgcolor": "#ffffff", "bordercolor": "#e0e0e0", "font": {"family": "'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12.5, "color": "#161616"}, "align": "left"}, "showlegend": false, "bargap": 0.44, "xaxis": {"showgrid": true, "zeroline": false, "showline": false, "ticks": "", "automargin": true, "tickfont": {"family": "'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12, "color": "#525252"}, "gridcolor": "#e8e8e8", "ticksuffix": "%", "title": {"text": "Share of reporting portals", "standoff": 12, "font": {"family": "'IBM Plex Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 11.5, "color": "#6f6f6f"}}, "range": [0, 50]}, "yaxis": {"showgrid": false, "zeroline": false, "showline": false, "ticks": "", "automargin": true, "tickfont": {"family": "'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace", "size": 11.5, "color": "#161616"}}}, {displayModeBar: false, responsive: true});
 </script>
 </body>
 </html>
