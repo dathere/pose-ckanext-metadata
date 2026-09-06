@@ -1,0 +1,9 @@
+tstamp,url,num_datasets,num_groups,num_organizations,ckan_version,extensions
+2026-09-06,https://data.bayanat.ae,0,0,0,,
+2026-09-06,https://opendata.fcsc.gov.ae,0,0,0,,
+2026-09-06,https://datos.ambiente.gob.ar,0,0,0,,
+2026-09-06,https://datos.cultura.gob.ar,0,0,0,,
+2026-09-06,https://datosestadistica.cba.gov.ar,645,42,7,2.11.5,"[""push_errors"", ""cba_estadistica"", ""pdf_view"", ""activity"", ""s3filestore"", ""tracking"", ""api_tracking"", ""announcements"", ""datastore"", ""xloader"", ""image_view"", ""text_view"", ""datatables_view"", ""dbquery"", ""resource_proxy"", ""geo_view"", ""geojson_view"", ""wmts_view"", ""shp_view""]"
+2026-09-06,https://datos.magyp.gob.ar,152,0,38,2.7.6,"[""stats"", ""text_view"", ""image_view"", ""recline_grid_view"", ""hierarchy_display"", ""hierarchy_form"", ""dcat"", ""structured_data"", ""gobar_theme"", ""datastore"", ""seriestiempoarexplorer"", ""xloader"", ""googleanalytics""]"
+2026-09-06,https://datos.minem.gob.ar,178,20,21,2.7.4,"[""stats"", ""text_view"", ""image_view"", ""recline_view"", ""viewhelpers"", ""linechart"", ""barchart"", ""piechart"", ""hierarchy_display"", ""hierarchy_form"", ""gobar_theme"", ""googleanalytics"", ""seriestiempoarexplorer"", ""datajson_harvest"", ""datajson"", ""harvest"", ""ckan_harvester"", ""datapusher"", ""datastore""]"
+2026-09-06,https://datos.mininterior.gob.ar,15,0,13,2.7.6,"[""stats"", ""text_view"", ""image_view"", ""recline_view"", ""hierarchy_display"", ""hierarchy_form"", ""dcat"", ""structured_data"", ""gobar_theme"", ""datastore"", ""datapusher"", ""seriestiempoarexplorer"", ""googleanalytics""]"
