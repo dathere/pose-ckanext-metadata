@@ -39,7 +39,7 @@ qsv sqlp "$TMP/enriched.csv" "
            ROUND(100.0 * SUM(CASE WHEN ext <> '' THEN 1 ELSE 0 END) / COUNT(*), 1) AS pct,
            CASE WHEN SUM(CASE WHEN ext <> '' THEN 1 ELSE 0 END) = 0 THEN 'none'
                 WHEN 100.0 * SUM(CASE WHEN ext <> '' THEN 1 ELSE 0 END) / COUNT(*)
-                     < $MIN_REPORTING_PCT THEN 'degraded'
+                     < $MIN_REPORTING_PCT THEN 'partial'
                 ELSE 'ok' END AS quality,
            100.0 * SUM(CASE WHEN ext <> '' THEN 1 ELSE 0 END) / COUNT(*)
                 >= $MIN_REPORTING_PCT AS included
