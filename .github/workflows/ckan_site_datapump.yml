@@ -52,7 +52,7 @@ jobs:
         # A degraded discovery step is what produced the 8-row, name-less
         # 2026-09-06 crawl. Checking the file merely exists let that through,
         # so check its shape and compare its size against the last real crawl.
-        ./check_crawl.sh site_urls.csv 'name,url' ../sites-history
+        ../ecosystem/check_crawl.sh site_urls.csv 'name,url' ../sites-history
     
     - name: Step 2 - Fetch Sites Data via CKAN Action API
       run: |
@@ -61,7 +61,7 @@ jobs:
         python 2CKANActionAPI.py
         echo "✓ Sites data extraction completed"
 
-        ./check_crawl.sh ckan_stats.csv \
+        ../ecosystem/check_crawl.sh ckan_stats.csv \
           'tstamp,name,url,num_datasets,num_groups,num_organizations,ckan_version,extensions' \
           ../sites-history
     
@@ -105,7 +105,7 @@ jobs:
         echo "=== STEP 5: Archiving crawl ==="
         cd sites-workflow
 
-        ./check_crawl.sh ckan_stats.csv \
+        ../ecosystem/check_crawl.sh ckan_stats.csv \
           'tstamp,name,url,num_datasets,num_groups,num_organizations,ckan_version,extensions' \
           ../sites-history
 

@@ -6,6 +6,10 @@ on:
   workflow_dispatch:
     # Allows manual triggering from GitHub UI
 
+# Step 8 commits the crawl archive, the same as the sites workflow does.
+permissions:
+  contents: write
+
 env:
   GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
   CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
@@ -30,21 +34,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
+    - name: Install qsv
+      run: |
+        QSV_VERSION=22.0.1
+        curl -sSLo "$RUNNER_TEMP/qsv.zip" \
+          "https://github.com/dathere/qsv/releases/download/$QSV_VERSION/qsv-$QSV_VERSION-x86_64-unknown-linux-gnu.zip"
+        unzip -q -o "$RUNNER_TEMP/qsv.zip" -d "$RUNNER_TEMP/qsv"
+        sudo install "$RUNNER_TEMP/qsv/qsv" /usr/local/bin/qsv
+        qsv --version
+
     - name: Step 1 - Extract GitHub URLs from CKAN
       run: |
         echo "=== STEP 1: Extracting GitHub URLs from CKAN ==="
         cd extensions-workflow
         python 1getURL.py
         echo "✓ URL extraction completed"
-        
-        # Check if output file was created
-        if [ -f "url_list.csv" ]; then
-          echo "✓ url_list.csv created successfully"
-          wc -l url_list.csv
-        else
-          echo "✗ url_list.csv not found"
-          exit 1
-        fi
+
+        # This step returning nothing is how the 2026-09-06 run failed. The
+        # floor compares against the newest archived crawl, so a half-empty
+        # discovery is caught rather than propagated.
+        ../ecosystem/check_crawl.sh url_list.csv 'catalog_url,github_url' ../extensions-history
     
     - name: Step 2 - Fetch Dynamic Metadata from GitHub
       run: |
@@ -52,15 +61,10 @@ jobs:
         cd extensions-workflow
         python 2refresh.py
         echo "✓ Metadata extraction completed"
-        
-        # Check if output file was created
-        if [ -f "dynamic_metadata_update.csv" ]; then
-          echo "✓ dynamic_metadata_update.csv created successfully"
-          wc -l dynamic_metadata_update.csv
-        else
-          echo "✗ dynamic_metadata_update.csv not found"
-          exit 1
-        fi
+
+        ../ecosystem/check_crawl.sh dynamic_metadata_update.csv \
+          'tstamp,repository_name,url,forks_count,total_releases,latest_release,release_date,stars,open_issues,contributors_count,discussions' \
+          ../extensions-history
     
     - name: Step 3 - Update CKAN Catalog with Metadata
       continue-on-error: true
@@ -90,6 +94,63 @@ jobs:
         python timeseries_append.py dynamic_metadata_update.csv
         echo "✓ Time-series data append completed"
     
+    # Deliberately NOT continue-on-error, for the same reason as the sites
+    # pipeline: qsv cat rows stacks the archive positionally, so a malformed
+    # file does not degrade the weekly build, it kills it.
+    - name: Step 5 - Archive crawl
+      if: ${{ !cancelled() }}
+      run: |
+        echo "=== STEP 5: Archiving crawl ==="
+        cd extensions-workflow
+
+        ../ecosystem/check_crawl.sh dynamic_metadata_update.csv \
+          'tstamp,repository_name,url,forks_count,total_releases,latest_release,release_date,stars,open_issues,contributors_count,discussions' \
+          ../extensions-history
+
+        # Name the archive after the crawl's own timestamp, not the run date
+        STAMP=$(qsv sqlp dynamic_metadata_update.csv "SELECT MIN(tstamp) FROM _t_1" | qsv behead | cut -c1-10)
+        mkdir -p ../extensions-history
+        # qsv input rather than cp: re-serialising normalises line endings so
+        # every archived file stacks identically.
+        qsv input dynamic_metadata_update.csv > "../extensions-history/$STAMP.csv"
+        echo "✓ Archived crawl as extensions-history/$STAMP.csv"
+
+    - name: Step 6 - Build derived CSVs
+      if: ${{ !cancelled() }}
+      continue-on-error: true
+      run: |
+        echo "=== STEP 6: Building derived CSVs ==="
+        cd extensions-workflow
+
+        mkdir -p derived
+        ./derive_ext_csvs.sh snapshot dynamic_metadata_update.csv derived
+
+        # Weekly mode needs two or more crawls
+        CRAWLS=$(ls -1 ../extensions-history/*.csv | wc -l | tr -d " ")
+        if [ "$CRAWLS" -ge 2 ]; then
+          qsv cat rows ../extensions-history/*.csv > "$RUNNER_TEMP/ext_history.csv"
+          ./derive_ext_csvs.sh weekly "$RUNNER_TEMP/ext_history.csv" derived
+        else
+          echo "Only $CRAWLS crawl archived, skipping weekly mode"
+        fi
+
+        ls -la derived
+
+    - name: Step 7 - Upload derived CSVs to CKAN
+      if: ${{ !cancelled() }}
+      continue-on-error: true
+      run: |
+        echo "=== STEP 7: Uploading derived CSVs as CKAN resources ==="
+        cd extensions-workflow
+        python upload_ext_derived.py derived
+
+    - name: Step 8 - Commit archived crawl
+      if: ${{ !cancelled() }}
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: 'chore: archive weekly CKAN extensions crawl [automated]'
+        file_pattern: 'extensions-history/*.csv'
+
 #    - name: Step 5 - Create Table View for Extensions Resource
 #      run: |
 #        echo "=== STEP 5: Creating table view for extensions resource ==="
@@ -105,6 +166,7 @@ jobs:
         path: |
           extensions-workflow/*.csv
           extensions-workflow/*.log
+          extensions-workflow/derived/*.csv
         retention-days: 7
     
     - name: Upload generated CSVs as artifacts
@@ -115,6 +177,7 @@ jobs:
         path: |
           extensions-workflow/dynamic_metadata_update.csv
           extensions-workflow/existing_metadata.csv
+          extensions-workflow/derived/*.csv
         retention-days: 30
     
     - name: Workflow Summary
