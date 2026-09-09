@@ -1,0 +1,103 @@
+name: Ecosystem Rollup
+
+# Runs after the sites crawl, which is the later of the two weekly pipelines.
+# Both of them commit their archive to the repo, so this job needs nothing from
+# their runners: it checks out main and rebuilds from sites-history/ and
+# extensions-history/. No artifact passing, no shared filesystem, and it can be
+# re-run on its own whenever the derivation changes.
+on:
+  workflow_run:
+    workflows: ["Datapump CKAN Sites Timeseries Metadata"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+
+jobs:
+  rollup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5
+      with:
+        ref: main
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Install qsv
+      run: |
+        QSV_VERSION=22.0.1
+        curl -sSLo "$RUNNER_TEMP/qsv.zip" \
+          "https://github.com/dathere/qsv/releases/download/$QSV_VERSION/qsv-$QSV_VERSION-x86_64-unknown-linux-gnu.zip"
+        unzip -q -o "$RUNNER_TEMP/qsv.zip" -d "$RUNNER_TEMP/qsv"
+        sudo install "$RUNNER_TEMP/qsv/qsv" /usr/local/bin/qsv
+        qsv --version
+
+    - name: Rebuild derived CSVs from both archives
+      run: |
+        echo "=== Rebuilding derived CSVs ==="
+        mkdir -p sites-workflow/derived extensions-workflow/derived
+
+        # Latest archived crawl drives snapshot mode; the stack drives weekly.
+        # quarantine/ lives in a subdirectory, so the glob steps over it.
+        LATEST_SITES=$(ls -1 sites-history/*.csv | sort | tail -1)
+        qsv cat rows sites-history/*.csv > "$RUNNER_TEMP/sites_history.csv"
+        ./sites-workflow/derive_csvs.sh snapshot "$LATEST_SITES" sites-workflow/derived
+        ./sites-workflow/derive_csvs.sh weekly "$RUNNER_TEMP/sites_history.csv" sites-workflow/derived
+
+        LATEST_EXT=$(ls -1 extensions-history/*.csv | sort | tail -1)
+        qsv cat rows extensions-history/*.csv > "$RUNNER_TEMP/ext_history.csv"
+        ./extensions-workflow/derive_ext_csvs.sh weekly "$RUNNER_TEMP/ext_history.csv" extensions-workflow/derived
+
+    - name: Join installs against upstream health
+      run: |
+        echo "=== Building ckan_ecosystem_health.csv ==="
+        python ecosystem/build_ecosystem_health.py \
+          sites-workflow/derived extensions-workflow/derived \
+          -o extensions-workflow/derived
+
+    - name: Build dashboard payload
+      run: |
+        echo "=== Building dashboard-data/dashboard.json ==="
+        python ecosystem/build_dashboard_json.py \
+          sites-workflow/derived extensions-workflow/derived \
+          -o dashboard-data
+
+    - name: Upload the joined CSV to CKAN
+      continue-on-error: true
+      run: |
+        echo "=== Uploading ckan_ecosystem_health.csv ==="
+        cd extensions-workflow
+        python upload_ext_derived.py derived
+
+    - name: Commit dashboard data
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: 'chore: refresh ecosystem dashboard data [automated]'
+        file_pattern: 'dashboard-data/*.json'
+
+    - name: Upload rollup CSVs as artifacts
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ecosystem-rollup
+        path: |
+          sites-workflow/derived/*.csv
+          extensions-workflow/derived/*.csv
+          dashboard-data/*.json
+        retention-days: 30
