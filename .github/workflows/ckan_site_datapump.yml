@@ -48,15 +48,11 @@ jobs:
         cd sites-workflow
         python 1getSitesURL.py
         echo "✓ Sites URL extraction completed"
-        
-        # Check if output file was created
-        if [ -f "site_urls.csv" ]; then
-          echo "✓ site_urls.csv created successfully"
-          wc -l site_urls.csv
-        else
-          echo "✗ site_urls.csv not found"
-          exit 1
-        fi
+
+        # A degraded discovery step is what produced the 8-row, name-less
+        # 2026-09-06 crawl. Checking the file merely exists let that through,
+        # so check its shape and compare its size against the last real crawl.
+        ./check_crawl.sh site_urls.csv 'name,url' ../sites-history
     
     - name: Step 2 - Fetch Sites Data via CKAN Action API
       run: |
@@ -64,15 +60,10 @@ jobs:
         cd sites-workflow
         python 2CKANActionAPI.py
         echo "✓ Sites data extraction completed"
-        
-        # Check if output file was created
-        if [ -f "ckan_stats.csv" ]; then
-          echo "✓ ckan_stats.csv created successfully"
-          wc -l ckan_stats.csv
-        else
-          echo "✗ ckan_stats.csv not found"
-          exit 1
-        fi
+
+        ./check_crawl.sh ckan_stats.csv \
+          'tstamp,name,url,num_datasets,num_groups,num_organizations,ckan_version,extensions' \
+          ../sites-history
     
     - name: Step 3 - Update CKAN Sites Catalog
       continue-on-error: true
@@ -102,23 +93,37 @@ jobs:
         python datapump.py ckan_stats.csv
         echo "✓ Time-series data append completed"
 
-    - name: Step 5 - Archive crawl and build derived CSVs
+    # Deliberately NOT continue-on-error. A bad archive is worse than a missing
+    # one: qsv cat rows stacks the history positionally, so one file with the
+    # wrong columns does not degrade the weekly build, it kills it. That is what
+    # sites-history/2026-09-06.csv did, and because the old combined step
+    # swallowed its own failure, the weekly resources on the catalog went stale
+    # for two crawls with nothing reported.
+    - name: Step 5 - Archive crawl
       if: ${{ !cancelled() }}
-      continue-on-error: true
       run: |
-        echo "=== STEP 5: Archiving crawl and building derived CSVs ==="
+        echo "=== STEP 5: Archiving crawl ==="
         cd sites-workflow
 
-        if [ ! -f "ckan_stats.csv" ]; then
-          echo "✗ ckan_stats.csv not found, nothing to archive"
-          exit 1
-        fi
+        ./check_crawl.sh ckan_stats.csv \
+          'tstamp,name,url,num_datasets,num_groups,num_organizations,ckan_version,extensions' \
+          ../sites-history
 
         # Name the archive after the crawl's own timestamp, not the run date
         STAMP=$(qsv sqlp ckan_stats.csv "SELECT MIN(tstamp) FROM _t_1" | qsv behead | cut -c1-10)
         mkdir -p ../sites-history
-        cp ckan_stats.csv "../sites-history/$STAMP.csv"
+        # qsv input rather than cp: it re-serializes, so a CRLF dump (the
+        # crawler started emitting them on 2026-08-30) is normalised on the way
+        # into the archive and every file stacks identically.
+        qsv input ckan_stats.csv > "../sites-history/$STAMP.csv"
         echo "✓ Archived crawl as sites-history/$STAMP.csv"
+
+    - name: Step 6 - Build derived CSVs
+      if: ${{ !cancelled() }}
+      continue-on-error: true
+      run: |
+        echo "=== STEP 6: Building derived CSVs ==="
+        cd sites-workflow
 
         mkdir -p derived
         ./derive_csvs.sh snapshot ckan_stats.csv derived
@@ -134,23 +139,23 @@ jobs:
 
         ls -la derived
 
-    - name: Step 6 - Upload derived CSVs to CKAN
+    - name: Step 7 - Upload derived CSVs to CKAN
       if: ${{ !cancelled() }}
       continue-on-error: true
       run: |
-        echo "=== STEP 6: Uploading derived CSVs as CKAN resources ==="
+        echo "=== STEP 7: Uploading derived CSVs as CKAN resources ==="
         cd sites-workflow
         python upload_derived.py derived
 
-    - name: Step 7 - Patch extension install counts
+    - name: Step 8 - Patch extension install counts
       if: ${{ !cancelled() }}
       continue-on-error: true
       run: |
-        echo "=== STEP 7: Patching instances_count on extension packages ==="
+        echo "=== STEP 8: Patching instances_count on extension packages ==="
         cd sites-workflow
         python patch_instance_counts.py derived
 
-    - name: Step 8 - Commit archived crawl
+    - name: Step 9 - Commit archived crawl
       if: ${{ !cancelled() }}
       uses: stefanzweifel/git-auto-commit-action@v5
       with:

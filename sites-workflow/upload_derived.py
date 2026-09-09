@@ -50,6 +50,10 @@ DESCRIPTIONS = {
     'ckan_extension_cohort_series.csv':
         'Install count per plugin per crawl date, restricted to the cohort, so a '
         'change reflects a real install rather than a portal answering again.',
+    'ckan_crawl_quality.csv':
+        'Per crawl week: how many instances were seen, how many reported a plugin '
+        'list, and whether that week was good enough to include in the adoption '
+        'series. Read this before reading a dip as a real change.',
 }
 
 scraper = cloudscraper.create_scraper()
