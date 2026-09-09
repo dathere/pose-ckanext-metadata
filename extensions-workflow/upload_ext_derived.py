@@ -35,6 +35,13 @@ DESCRIPTIONS = {
     'ckan_ext_maintenance.csv':
         'How many extensions fall in each maintenance bucket per crawl week — the '
         'shape of the ecosystem, not of any one project.',
+    'ckan_ext_crawl_quality.csv':
+        'Per crawl week: how many repositories the crawl returned against the median '
+        'crawl, and whether that week was complete enough to include.',
+    'ckan_ecosystem_health.csv':
+        'The two pipelines joined: how many catalogued CKAN instances were observed '
+        'running each extension, next to its GitHub health, with a risk flag for '
+        'extensions that are widely installed and no longer maintained upstream.',
 }
 
 
