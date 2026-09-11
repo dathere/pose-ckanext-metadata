@@ -78,6 +78,11 @@ jobs:
           sites-workflow/derived extensions-workflow/derived \
           -o dashboard-data
 
+    - name: Build the published charts
+      run: |
+        echo "=== Building docs/charts from the payload ==="
+        python ecosystem/build_charts.py dashboard-data/dashboard.json -o docs/charts
+
     - name: Upload the joined CSV to CKAN
       continue-on-error: true
       run: |
@@ -88,8 +93,8 @@ jobs:
     - name: Commit dashboard data
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: 'chore: refresh ecosystem dashboard data [automated]'
-        file_pattern: 'dashboard-data/*.json'
+        commit_message: 'chore: refresh ecosystem dashboard data and charts [automated]'
+        file_pattern: 'dashboard-data/*.json docs/charts/*.html'
 
     - name: Upload rollup CSVs as artifacts
       if: ${{ !cancelled() }}
@@ -100,4 +105,5 @@ jobs:
           sites-workflow/derived/*.csv
           extensions-workflow/derived/*.csv
           dashboard-data/*.json
+          docs/charts/*.html
         retention-days: 30
