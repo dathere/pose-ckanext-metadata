@@ -1,0 +1,1455 @@
+tstamp,repository_name,url,forks_count,total_releases,latest_release,release_date,stars,open_issues,contributors_count,discussions
+2026-09-12,ondics/ckanext-similar-datasets,https://github.com/ondics/ckanext-similar-datasets,3,1,v1.0.0,2021-11-12,4,0,2,False
+2026-09-12,ViderumGlobal/ckanext-ed,https://github.com/ViderumGlobal/ckanext-ed,5,0,No releases,No releases,1,14,6,False
+2026-09-12,ckan/ckanext-deadoralive,https://github.com/ckan/ckanext-deadoralive,7,0,No releases,No releases,6,12,2,False
+2026-09-12,vrk-kpa/ckanext-matomo,https://github.com/vrk-kpa/ckanext-matomo,5,0,No releases,No releases,2,0,9,False
+2026-09-12,aptivate/ckanext-datasetthumbnail,https://github.com/aptivate/ckanext-datasetthumbnail,4,1,v1.0.0,2016-07-06,7,5,6,False
+2026-09-12,damalaga/ckanext-federador,https://github.com/damalaga/ckanext-federador,2,0,No releases,No releases,1,0,2,False
+2026-09-12,stadt-karlsruhe/ckanext-discovery,https://github.com/stadt-karlsruhe/ckanext-discovery,6,0,No releases,No releases,10,2,1,False
+2026-09-12,nectec-opend/ckanext-thaigdc2fa,https://github.com/nectec-opend/ckanext-thaigdc2fa,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-resourcesfilter,https://github.com/okfn/ckanext-resourcesfilter,2,0,No releases,No releases,3,1,2,False
+2026-09-12,6aika/ckanext-rating,https://github.com/6aika/ckanext-rating,19,0,No releases,No releases,2,1,2,False
+2026-09-12,conwetlab/ckanext-privatedatasets,https://github.com/conwetlab/ckanext-privatedatasets,15,24,v0.4.1,2020-03-16,19,9,9,False
+2026-09-12,conwetlab/ckanext-oauth2,https://github.com/conwetlab/ckanext-oauth2,59,17,v0.7.0,2019-04-12,25,22,7,False
+2026-09-12,datosgobar/ckanext-seriestiempoarexplorer,https://github.com/datosgobar/ckanext-seriestiempoarexplorer,4,17,2.8.1,2019-11-27,1,1,5,False
+2026-09-12,datosgobar/ckanext-gobar-theme,https://github.com/datosgobar/ckanext-gobar-theme,0,0,No releases,No releases,0,0,2,False
+2026-09-12,conwetlab/ckanext-datarequests,https://github.com/conwetlab/ckanext-datarequests,52,17,v1.1.0,2018-09-24,18,10,6,False
+2026-09-12,ckan/ckanext-viewhelpers,https://github.com/ckan/ckanext-viewhelpers,11,0,No releases,No releases,5,6,2,False
+2026-09-12,keitaroinc/ckanext-saml2auth,https://github.com/keitaroinc/ckanext-saml2auth,41,10,v1.3.0,2022-12-14,24,17,17,False
+2026-09-12,ckan/ckanext-hierarchy,https://github.com/ckan/ckanext-hierarchy,66,2,v1.2.2,2025-02-26,33,10,17,False
+2026-09-12,ckan/ckanext-spatial,https://github.com/ckan/ckanext-spatial,206,8,v2.3.2,2026-08-11,136,106,42,False
+2026-09-12,OpenGov-OpenData/ckanext-markdown_view,https://github.com/OpenGov-OpenData/ckanext-markdown_view,0,0,No releases,No releases,0,0,2,False
+2026-09-12,datopian/ckanext-c3charts,https://github.com/datopian/ckanext-c3charts,10,7,v0.3.2,2018-02-09,5,0,6,False
+2026-09-12,ckan/ckanext-fluent,https://github.com/ckan/ckanext-fluent,32,0,No releases,No releases,28,12,10,False
+2026-09-12,NaturalHistoryMuseum/ckanext-doi,https://github.com/NaturalHistoryMuseum/ckanext-doi,20,34,v4.0.4,2025-09-22,27,13,9,False
+2026-09-12,kata-csc/ckanext-sitemap,https://github.com/kata-csc/ckanext-sitemap,11,0,No releases,No releases,1,3,5,False
+2026-09-12,ckan/ckanext-showcase,https://github.com/ckan/ckanext-showcase,77,18,v1.8.4,2025-07-22,47,53,26,False
+2026-09-12,ckan/ckanext-xloader,https://github.com/ckan/ckanext-xloader,67,17,2.5.0,2026-09-07,58,49,27,False
+2026-09-12,okfn/ckanext-stats,https://github.com/okfn/ckanext-stats,0,0,No releases,No releases,2,0,2,False
+2026-09-12,ckan/ckanext-scheming,https://github.com/ckan/ckanext-scheming,181,0,No releases,No releases,102,123,41,False
+2026-09-12,okfn/ckanext-s3filestore,https://github.com/okfn/ckanext-s3filestore,37,0,No releases,No releases,13,29,9,False
+2026-09-12,ckan/ckanext-pdfview,https://github.com/ckan/ckanext-pdfview,47,4,0.0.8,2022-04-08,27,10,10,False
+2026-09-12,ckan/ckanext-pages,https://github.com/ckan/ckanext-pages,105,4,v0.5.2,2023-06-07,58,45,23,False
+2026-09-12,dathere/ckanext-officedocs,https://github.com/dathere/ckanext-officedocs,1,0,No releases,No releases,0,1,4,False
+2026-09-12,ckan/ckanext-googleanalytics,https://github.com/ckan/ckanext-googleanalytics,84,0,No releases,No releases,36,19,30,False
+2026-09-12,pduchesne/ckanext-geoview,https://github.com/pduchesne/ckanext-geoview,98,0,No releases,No releases,16,8,13,False
+2026-09-12,ckan/ckanext-envvars,https://github.com/ckan/ckanext-envvars,8,5,v0.0.6,2024-09-09,16,6,4,False
+2026-09-12,ckan/ckanext-dcat,https://github.com/ckan/ckanext-dcat,155,25,v2.4.4,2026-08-11,194,72,36,False
+2026-09-12,datagovuk/ckanext-datastore,https://github.com/datagovuk/ckanext-datastore,2,0,No releases,No releases,0,0,2,False
+2026-09-12,HHS/ckanext-datajson,https://github.com/HHS/ckanext-datajson,80,1,v0.1,2014-11-14,20,7,6,False
+2026-09-12,datopian/ckanext-auth,https://github.com/datopian/ckanext-auth,3,0,No releases,No releases,4,5,3,False
+2026-09-12,ylchan87/ckanext-landdbcustomize,https://github.com/ylchan87/ckanext-landdbcustomize,2,0,No releases,No releases,0,0,1,False
+2026-09-12,awi-response/ckanext-ifacets,https://github.com/awi-response/ckanext-ifacets,0,2,v.0.0.2,2025-05-19,0,0,1,False
+2026-09-12,awi-response/ckanext-apgc_theme,https://github.com/awi-response/ckanext-apgc_theme,0,2,v2.0.0,2025-05-19,0,0,1,False
+2026-09-12,XVTSolutions/ckanext-reorder,https://github.com/XVTSolutions/ckanext-reorder,1,0,No releases,No releases,1,0,0,False
+2026-09-12,Marvell-Consulting/ckanext-nhs-theme,https://github.com/Marvell-Consulting/ckanext-nhs-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,EnviDat/ckanext-restricted,https://github.com/EnviDat/ckanext-restricted,27,2,0.0.4,2017-09-05,8,5,6,False
+2026-09-12,rapee/ckanext-thai_gdc,https://github.com/rapee/ckanext-thai_gdc,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ckan/ckanext-harvest,https://github.com/ckan/ckanext-harvest,215,29,v1.6.2,2025-11-11,142,122,65,False
+2026-09-12,TIBHannover/ckanext-theme4chem,https://github.com/TIBHannover/ckanext-theme4chem,0,0,No releases,No releases,0,4,1,False
+2026-09-12,datopian/ckanext-versioning,https://github.com/datopian/ckanext-versioning,3,4,v0.0.4,2020-07-14,7,17,11,False
+2026-09-12,datopian/ckanext-story,https://github.com/datopian/ckanext-story,0,0,No releases,No releases,3,0,0,False
+2026-09-12,TkTech/ckanext-search-export,https://github.com/TkTech/ckanext-search-export,0,0,No releases,No releases,3,0,1,False
+2026-09-12,DataShades/ckanext-better-stats,https://github.com/DataShades/ckanext-better-stats,1,0,No releases,No releases,3,0,1,False
+2026-09-12,ckan/ckanext-file-keeper-cloud,https://github.com/ckan/ckanext-file-keeper-cloud,0,0,No releases,No releases,3,0,1,False
+2026-09-12,datopian/ckanext-saasportal_quote,https://github.com/datopian/ckanext-saasportal_quote,1,1,v0.4,2018-02-08,2,0,4,False
+2026-09-12,datopian/ckanext-vrr,https://github.com/datopian/ckanext-vrr,0,7,v0.0.20,2019-02-08,2,1,6,False
+2026-09-12,edincubator/ckanext-ga,https://github.com/edincubator/ckanext-ga,0,0,No releases,No releases,2,0,1,False
+2026-09-12,edincubator/ckanext-protect_resources,https://github.com/edincubator/ckanext-protect_resources,0,0,No releases,No releases,2,0,1,False
+2026-09-12,datopian/ckanext-duplicateresource,https://github.com/datopian/ckanext-duplicateresource,0,0,No releases,No releases,2,0,1,False
+2026-09-12,datopian/ckanext-gitdatahub,https://github.com/datopian/ckanext-gitdatahub,1,0,No releases,No releases,2,9,2,False
+2026-09-12,rossjones/ckanext-mo-observations,https://github.com/rossjones/ckanext-mo-observations,0,0,No releases,No releases,1,0,1,False
+2026-09-12,openspending/ckanext-openspending,https://github.com/openspending/ckanext-openspending,1,0,No releases,No releases,1,3,0,False
+2026-09-12,fumi/ckanext-mimetypes,https://github.com/fumi/ckanext-mimetypes,0,0,No releases,No releases,1,0,1,False
+2026-09-12,friendlycode/ckanext-datagr,https://github.com/friendlycode/ckanext-datagr,1,0,No releases,No releases,1,0,1,False
+2026-09-12,taijiang-tw/ckanext-taijiang,https://github.com/taijiang-tw/ckanext-taijiang,0,0,No releases,No releases,1,8,1,False
+2026-09-12,OpenDevelopmentMekong/ckanext-odm_dataset,https://github.com/OpenDevelopmentMekong/ckanext-odm_dataset,1,62,v3.0.4,2017-12-23,1,34,1,False
+2026-09-12,XVTSolutions/ckanext-spatialUI,https://github.com/XVTSolutions/ckanext-spatialUI,1,0,No releases,No releases,1,3,0,False
+2026-09-12,fumi/ckanext-fake-datagojp,https://github.com/fumi/ckanext-fake-datagojp,0,0,No releases,No releases,1,0,1,False
+2026-09-12,opendata-swiss/ckanext-geocat,https://github.com/opendata-swiss/ckanext-geocat,2,6,2.0.3,2026-05-19,1,0,8,False
+2026-09-12,pmlrsg/ckanext-PML,https://github.com/pmlrsg/ckanext-PML,0,0,No releases,No releases,1,0,0,False
+2026-09-12,gzarzuelor/ckanext-ngsipreview,https://github.com/gzarzuelor/ckanext-ngsipreview,0,0,No releases,No releases,1,0,1,False
+2026-09-12,opendatamonitor/ckanext-harvestodm,https://github.com/opendatamonitor/ckanext-harvestodm,1,0,No releases,No releases,1,1,3,False
+2026-09-12,pmlrsg/ckanext-resourcepicker,https://github.com/pmlrsg/ckanext-resourcepicker,0,0,No releases,No releases,1,0,1,False
+2026-09-12,openresearchdata/ckanext-ordbase-theme,https://github.com/openresearchdata/ckanext-ordbase-theme,1,0,No releases,No releases,1,0,2,False
+2026-09-12,OpenDataNode/ckanext-storage-admin,https://github.com/OpenDataNode/ckanext-storage-admin,0,0,No releases,No releases,1,0,1,False
+2026-09-12,UoA-eResearch/ckanext-external_id,https://github.com/UoA-eResearch/ckanext-external_id,0,0,No releases,No releases,1,0,1,False
+2026-09-12,transparenzportalhamburg/ckanext-distributed-harvester,https://github.com/transparenzportalhamburg/ckanext-distributed-harvester,0,0,No releases,No releases,1,0,1,False
+2026-09-12,abgov/ckanext-classification,https://github.com/abgov/ckanext-classification,1,0,No releases,No releases,1,1,2,False
+2026-09-12,AQUACROSS/ckanext-aquacross_theme,https://github.com/AQUACROSS/ckanext-aquacross_theme,1,0,No releases,No releases,1,0,3,False
+2026-09-12,SpaceApplications/ckanext-obeos-ldp,https://github.com/SpaceApplications/ckanext-obeos-ldp,0,0,No releases,No releases,1,0,2,False
+2026-09-12,eawag-rdm/ckanext-eaw_schema,https://github.com/eawag-rdm/ckanext-eaw_schema,1,0,No releases,No releases,1,0,1,False
+2026-09-12,ConocimientoAbierto/ckanext-fca_theme,https://github.com/ConocimientoAbierto/ckanext-fca_theme,0,0,No releases,No releases,1,0,1,False
+2026-09-12,NextGeoss/ckanext-kpis,https://github.com/NextGeoss/ckanext-kpis,0,2,v0.2,2017-11-28,1,3,2,False
+2026-09-12,eradan/ckanext-toscana-reports,https://github.com/eradan/ckanext-toscana-reports,1,0,No releases,No releases,1,0,0,False
+2026-09-12,routetopa/ckanext_rtpa_anomaly_detection,https://github.com/routetopa/ckanext_rtpa_anomaly_detection,0,0,No releases,No releases,1,0,2,False
+2026-09-12,etri-odp/ckanext-hdfs,https://github.com/etri-odp/ckanext-hdfs,0,0,No releases,No releases,1,1,2,False
+2026-09-12,canhdc/ckanext-library,https://github.com/canhdc/ckanext-library,0,0,No releases,No releases,1,0,3,False
+2026-09-12,data-govt-nz/ckanext-raygun,https://github.com/data-govt-nz/ckanext-raygun,0,0,No releases,No releases,1,0,3,False
+2026-09-12,NextGeoss/ckanext-pilotextract,https://github.com/NextGeoss/ckanext-pilotextract,0,0,No releases,No releases,1,0,1,False
+2026-09-12,CSIRO-enviro-informatics/ckanext-dcat-rev,https://github.com/CSIRO-enviro-informatics/ckanext-dcat-rev,0,0,No releases,No releases,1,0,14,False
+2026-09-12,BetaNYC/ckanext-datacity_theme,https://github.com/BetaNYC/ckanext-datacity_theme,0,0,No releases,No releases,1,0,1,False
+2026-09-12,CSIRO-enviro-informatics/ckanext-user_ext,https://github.com/CSIRO-enviro-informatics/ckanext-user_ext,0,1,v0.1,2018-05-11,1,0,1,False
+2026-09-12,datopian/ckanext-dcat_ap_no,https://github.com/datopian/ckanext-dcat_ap_no,0,2,v0.0.2,2019-01-11,1,0,1,False
+2026-09-12,CSIRO-enviro-informatics/ckanext-csiro_hub_theme,https://github.com/CSIRO-enviro-informatics/ckanext-csiro_hub_theme,1,2,v0.2,2019-03-22,1,1,2,False
+2026-09-12,geological-survey-of-queensland/gsq-ckanext-gsq-theme,https://github.com/geological-survey-of-queensland/gsq-ckanext-gsq-theme,0,0,No releases,No releases,1,0,2,False
+2026-09-12,pdelboca/ckanext-datasetsperpage,https://github.com/pdelboca/ckanext-datasetsperpage,0,0,No releases,No releases,1,0,1,False
+2026-09-12,sivang/ckanext-brokenafter,https://github.com/sivang/ckanext-brokenafter,0,0,No releases,No releases,1,0,2,False
+2026-09-12,knowdive/ckanext-liveschema_theme,https://github.com/knowdive/ckanext-liveschema_theme,1,0,No releases,No releases,1,0,1,False
+2026-09-12,geological-survey-of-queensland/gsq-ckanext-scheming,https://github.com/geological-survey-of-queensland/gsq-ckanext-scheming,1,0,No releases,No releases,1,0,19,False
+2026-09-12,avdata99/ckanext-google_drive_import,https://github.com/avdata99/ckanext-google_drive_import,0,0,No releases,No releases,1,0,1,False
+2026-09-12,datopian/ckanext-zip,https://github.com/datopian/ckanext-zip,0,0,No releases,No releases,1,0,0,False
+2026-09-12,fwoerister/ckanext-archiveview,https://github.com/fwoerister/ckanext-archiveview,1,2,v0.0.2,2020-10-04,1,0,1,False
+2026-09-12,geoenvo/ckanext-onedataportal,https://github.com/geoenvo/ckanext-onedataportal,1,0,No releases,No releases,1,6,1,False
+2026-09-12,opendata-swiss/ckanext-ogdchcommands,https://github.com/opendata-swiss/ckanext-ogdchcommands,0,2,v2.1.0,2025-08-13,1,0,5,False
+2026-09-12,tum-gis/ckanext-importerexporter-sddi,https://github.com/tum-gis/ckanext-importerexporter-sddi,0,0,No releases,No releases,1,0,1,False
+2026-09-12,datospy/ckanext-datos_theme,https://github.com/datospy/ckanext-datos_theme,0,0,No releases,No releases,1,0,1,False
+2026-09-12,cuprit-gbr/ckanext-cuprit,https://github.com/cuprit-gbr/ckanext-cuprit,2,0,No releases,No releases,1,0,3,False
+2026-09-12,CivityNL/ckanext-scorewater,https://github.com/CivityNL/ckanext-scorewater,0,0,No releases,No releases,1,0,3,False
+2026-09-12,dvrpc/ckanext-dvrpc_gis_harvester,https://github.com/dvrpc/ckanext-dvrpc_gis_harvester,0,0,No releases,No releases,1,1,3,False
+2026-09-12,gjagnoor/ckanext-accessthedata,https://github.com/gjagnoor/ckanext-accessthedata,0,0,No releases,No releases,1,0,12,False
+2026-09-12,CSCfi/fairdata-ckanext-oaipmh,https://github.com/CSCfi/fairdata-ckanext-oaipmh,0,0,No releases,No releases,1,0,9,False
+2026-09-12,TIBHannover/ckanext-rdkit-visuals,https://github.com/TIBHannover/ckanext-rdkit-visuals,1,1,v.0.2.0,2023-11-29,1,0,1,False
+2026-09-12,CSCfi/fairdata-ckanext-spatial,https://github.com/CSCfi/fairdata-ckanext-spatial,0,0,No releases,No releases,1,0,25,False
+2026-09-12,CSCfi/fairdata-ckanext-harvest,https://github.com/CSCfi/fairdata-ckanext-harvest,0,0,No releases,No releases,1,0,31,False
+2026-09-12,gjagnoor/ckanext-accesTheData,https://github.com/gjagnoor/ckanext-accesTheData,0,0,No releases,No releases,1,0,13,False
+2026-09-12,GreaterLondonAuthority/dfl-ckanext-havester,https://github.com/GreaterLondonAuthority/dfl-ckanext-havester,2,0,No releases,No releases,1,3,11,False
+2026-09-12,csse-uoft/ckanext-udc,https://github.com/csse-uoft/ckanext-udc,0,0,No releases,No releases,1,14,2,False
+2026-09-12,gavram/ckanext-sdaia_custom_apis,https://github.com/gavram/ckanext-sdaia_custom_apis,0,0,No releases,No releases,1,0,1,False
+2026-09-12,OCHA-DAP/ckanext-api_token_notifications,https://github.com/OCHA-DAP/ckanext-api_token_notifications,0,0,No releases,No releases,1,0,1,False
+2026-09-12,josip555/ckanext-dcathr,https://github.com/josip555/ckanext-dcathr,0,0,No releases,No releases,1,0,1,False
+2026-09-12,aleks-iv/ckanext-mltk,https://github.com/aleks-iv/ckanext-mltk,0,0,No releases,No releases,1,0,1,False
+2026-09-12,Mat-O-Lab/ckanext-matolabtheme,https://github.com/Mat-O-Lab/ckanext-matolabtheme,0,9,v1.0.8,2026-03-19,1,1,1,False
+2026-09-12,fjelltopp/ckanext-fjelltopp-theme,https://github.com/fjelltopp/ckanext-fjelltopp-theme,0,0,No releases,No releases,1,3,2,False
+2026-09-12,janbruckert/ckanext_dataminds,https://github.com/janbruckert/ckanext_dataminds,0,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-media,https://github.com/DataShades/ckanext-media,0,0,No releases,No releases,1,0,1,False
+2026-09-12,gisman/ckanext-embedding,https://github.com/gisman/ckanext-embedding,0,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-tables,https://github.com/DataShades/ckanext-tables,0,0,No releases,No releases,2,0,1,False
+2026-09-12,net7/ckanext-opendata-theme,https://github.com/net7/ckanext-opendata-theme,0,0,No releases,No releases,1,0,3,False
+2026-09-12,SDM-TIB/ckanext-iam4nfdi,https://github.com/SDM-TIB/ckanext-iam4nfdi,0,2,v0.2.0,2026-02-12,1,0,1,False
+2026-09-12,phoozy54/ckanext-somaliland,https://github.com/phoozy54/ckanext-somaliland,0,0,No releases,No releases,1,0,1,True
+2026-09-12,TkTech/ckanext-link,https://github.com/TkTech/ckanext-link,1,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-recommendation,https://github.com/DataShades/ckanext-recommendation,0,0,No releases,No releases,1,0,1,False
+2026-09-12,ondics/ckanext-metadata-beautifier,https://github.com/ondics/ckanext-metadata-beautifier,1,0,No releases,No releases,1,1,1,False
+2026-09-12,opendatazurich/ckanext-stadtzh-notify,https://github.com/opendatazurich/ckanext-stadtzh-notify,0,2,v1.0.0,2015-06-25,0,0,4,False
+2026-09-12,microcomp/ckanext-responsive_design,https://github.com/microcomp/ckanext-responsive_design,0,0,No releases,No releases,0,0,4,False
+2026-09-12,eawag-rdm/ckanext-eaw_theme,https://github.com/eawag-rdm/ckanext-eaw_theme,1,0,No releases,No releases,0,0,0,False
+2026-09-12,eawag-rdm/ckanext-eaw_vocabularies,https://github.com/eawag-rdm/ckanext-eaw_vocabularies,0,0,No releases,No releases,0,3,0,False
+2026-09-12,routetopa/ckanext-pivottable,https://github.com/routetopa/ckanext-pivottable,1,0,No releases,No releases,0,2,2,False
+2026-09-12,6aika/ckanext-datasetcopy,https://github.com/6aika/ckanext-datasetcopy,0,0,No releases,No releases,0,1,1,False
+2026-09-12,6aika/ckanext-editor,https://github.com/6aika/ckanext-editor,1,0,No releases,No releases,0,1,1,False
+2026-09-12,ozwillo/ckanext-ozwillo-routes,https://github.com/ozwillo/ckanext-ozwillo-routes,0,0,No releases,No releases,0,1,2,False
+2026-09-12,JoseSalgado1024/ckanext-needupdate,https://github.com/JoseSalgado1024/ckanext-needupdate,0,0,No releases,No releases,0,1,1,False
+2026-09-12,aragonopendata/ckanext-iaest,https://github.com/aragonopendata/ckanext-iaest,0,0,No releases,No releases,0,0,3,False
+2026-09-12,sorki/ckanext-redmine-autoissues,https://github.com/sorki/ckanext-redmine-autoissues,0,0,No releases,No releases,0,2,6,False
+2026-09-12,depositar/ckanext-depositar_theme,https://github.com/depositar/ckanext-depositar_theme,1,28,1.1.21,2026-09-11,0,0,5,False
+2026-09-12,derilinx/ckanext-odm_dataset-ext,https://github.com/derilinx/ckanext-odm_dataset-ext,0,0,No releases,No releases,0,0,3,False
+2026-09-12,dataoverheid/ckanext-dataoverheid,https://github.com/dataoverheid/ckanext-dataoverheid,1,10,v2.2.2,2020-09-15,0,1,2,False
+2026-09-12,open-data-toronto/ckanext-solr-sqs,https://github.com/open-data-toronto/ckanext-solr-sqs,1,2,v1.2.0,2022-01-12,0,0,3,False
+2026-09-12,f-osorio/ckanext-journal-dashboard,https://github.com/f-osorio/ckanext-journal-dashboard,0,0,No releases,No releases,0,0,0,False
+2026-09-12,salsadigitalauorg/ckanext-package-group-permissions,https://github.com/salsadigitalauorg/ckanext-package-group-permissions,1,22,4.2.0,2025-04-11,0,0,3,False
+2026-09-12,salsadigitalauorg/ckanext-ga-api-actions,https://github.com/salsadigitalauorg/ckanext-ga-api-actions,1,0,No releases,No releases,0,1,3,False
+2026-09-12,fjelltopp/ckanext-dhis2harvester,https://github.com/fjelltopp/ckanext-dhis2harvester,0,0,No releases,No releases,0,0,8,False
+2026-09-12,onesaitplatform/ckanext-onesaitplatform,https://github.com/onesaitplatform/ckanext-onesaitplatform,2,0,No releases,No releases,0,0,2,False
+2026-09-12,justicehub-in/ckanext-tableview,https://github.com/justicehub-in/ckanext-tableview,0,0,No releases,No releases,0,0,1,False
+2026-09-12,BioplatformsAustralia/ckanext-initiatives,https://github.com/BioplatformsAustralia/ckanext-initiatives,1,0,No releases,No releases,0,0,1,False
+2026-09-12,REACH-Incubator/ckanext-REACH_theme,https://github.com/REACH-Incubator/ckanext-REACH_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,belgium-its-steering-committee/ckanext-benap-harvesters,https://github.com/belgium-its-steering-committee/ckanext-benap-harvesters,0,0,No releases,No releases,0,1,1,False
+2026-09-12,salsadigitalauorg/ckanext-qdes-theme,https://github.com/salsadigitalauorg/ckanext-qdes-theme,0,25,4.2.0,2025-05-13,0,0,4,False
+2026-09-12,salsadigitalauorg/ckanext-qdes-schema,https://github.com/salsadigitalauorg/ckanext-qdes-schema,0,26,4.2.0,2025-07-22,0,0,4,False
+2026-09-12,Dataninja/ckanext-designers_italia,https://github.com/Dataninja/ckanext-designers_italia,0,0,No releases,No releases,0,0,0,False
+2026-09-12,CollectivaT-dev/ckanext-collectivat-theme,https://github.com/CollectivaT-dev/ckanext-collectivat-theme,1,0,No releases,No releases,0,0,1,False
+2026-09-12,unckan/ckanext-siu-harvester,https://github.com/unckan/ckanext-siu-harvester,0,2,0.2.76,2020-09-06,0,10,1,False
+2026-09-12,cityofcapetown/ckanext-cct_metadata,https://github.com/cityofcapetown/ckanext-cct_metadata,1,0,No releases,No releases,0,3,1,False
+2026-09-12,geosolutions-it/ckanext-c195,https://github.com/geosolutions-it/ckanext-c195,0,0,No releases,No releases,0,1,2,False
+2026-09-12,salsadigitalauorg/ckanext-harvest-tools,https://github.com/salsadigitalauorg/ckanext-harvest-tools,0,0,No releases,No releases,0,1,3,False
+2026-09-12,katucker/ckanext-ed-docs,https://github.com/katucker/ckanext-ed-docs,2,0,No releases,No releases,0,0,2,False
+2026-09-12,cioos-atlantic/ckanext-vitality,https://github.com/cioos-atlantic/ckanext-vitality,0,0,No releases,No releases,0,6,3,False
+2026-09-12,RTIInternational/ckanext-searchterms,https://github.com/RTIInternational/ckanext-searchterms,0,0,No releases,No releases,0,1,4,False
+2026-09-12,jshenaop/ckanext-ane,https://github.com/jshenaop/ckanext-ane,0,0,No releases,No releases,0,0,0,False
+2026-09-12,RTIInternational/ckanext-summarystats,https://github.com/RTIInternational/ckanext-summarystats,0,0,No releases,No releases,0,0,2,False
+2026-09-12,GeoinformationSystems/ckanext-geokurstyle,https://github.com/GeoinformationSystems/ckanext-geokurstyle,0,0,No releases,No releases,0,0,2,False
+2026-09-12,stream-project/ckanext-tags,https://github.com/stream-project/ckanext-tags,0,0,No releases,No releases,0,0,1,False
+2026-09-12,benjwadams/ckanext-temporal,https://github.com/benjwadams/ckanext-temporal,0,0,No releases,No releases,0,0,1,False
+2026-09-12,stream-project/ckanext-qualityreports,https://github.com/stream-project/ckanext-qualityreports,0,0,No releases,No releases,0,0,1,False
+2026-09-12,stream-project/ckanext-dataretrieval,https://github.com/stream-project/ckanext-dataretrieval,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-Dataset-Reference,https://github.com/TIBHannover/ckanext-Dataset-Reference,0,5,3.0.0,2025-02-05,0,0,2,False
+2026-09-12,solalem/ckanext-datagovet-theme,https://github.com/solalem/ckanext-datagovet-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,unckan/ckanext-ui-universidad,https://github.com/unckan/ckanext-ui-universidad,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datos-desarrollosocial-nacion/ckanext-mds_theme,https://github.com/datos-desarrollosocial-nacion/ckanext-mds_theme,0,1,v0.9.0,2021-06-25,0,0,1,False
+2026-09-12,virgoaugustine/ckanext-userlocation_extension,https://github.com/virgoaugustine/ckanext-userlocation_extension,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Randbee/ckanext-aquacross_metadata,https://github.com/Randbee/ckanext-aquacross_metadata,1,0,No releases,No releases,0,0,5,False
+2026-09-12,skeenatrust/ckanext-skt_template,https://github.com/skeenatrust/ckanext-skt_template,0,0,No releases,No releases,0,0,2,False
+2026-09-12,opendata-swiss/ckanext-switzerland_users,https://github.com/opendata-swiss/ckanext-switzerland_users,0,1,1.0.0,2026-02-03,0,0,3,False
+2026-09-12,Randbee/ckanext-ponderful_theme,https://github.com/Randbee/ckanext-ponderful_theme,1,0,No releases,No releases,0,0,5,False
+2026-09-12,mominimtiaz786/ckanext-custom_categories,https://github.com/mominimtiaz786/ckanext-custom_categories,0,0,No releases,No releases,0,0,1,False
+2026-09-12,mikelhpdatke/ckanext-theme-vasi,https://github.com/mikelhpdatke/ckanext-theme-vasi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Creainter-DevOps/ckanext-mef_theme,https://github.com/Creainter-DevOps/ckanext-mef_theme,0,0,No releases,No releases,0,0,2,False
+2026-09-12,benjwadams/ckanext-metocean-keywords,https://github.com/benjwadams/ckanext-metocean-keywords,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-Semantic-Media-Wiki,https://github.com/TIBHannover/ckanext-Semantic-Media-Wiki,0,4,v2.0.0,2022-01-26,0,2,3,False
+2026-09-12,Patrick1Rhode/ckanext-scheming_iso19115,https://github.com/Patrick1Rhode/ckanext-scheming_iso19115,1,0,No releases,No releases,0,0,1,False
+2026-09-12,FCSCOpendata/ckanext-fcscopendata,https://github.com/FCSCOpendata/ckanext-fcscopendata,2,14,v1.1.6,2022-10-05,0,12,5,False
+2026-09-12,brede9ray/ckanext,https://github.com/brede9ray/ckanext,0,0,No releases,No releases,0,0,1,False
+2026-09-12,NaturalHistoryMuseum/cookiecutter-ckanext,https://github.com/NaturalHistoryMuseum/cookiecutter-ckanext,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SmdhMdep/ckanext-smdh,https://github.com/SmdhMdep/ckanext-smdh,0,0,No releases,No releases,0,0,5,False
+2026-09-12,BioplatformsAustralia/ckanext-bpaschema,https://github.com/BioplatformsAustralia/ckanext-bpaschema,0,0,No releases,No releases,0,0,5,False
+2026-09-12,Development-Sergai/-ckanext-harvest,https://github.com/Development-Sergai/-ckanext-harvest,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SmdhMdep/ckanext-taglist,https://github.com/SmdhMdep/ckanext-taglist,0,0,No releases,No releases,0,0,3,False
+2026-09-12,bhavin2897/ckanext-hidepremissions,https://github.com/bhavin2897/ckanext-hidepremissions,0,0,No releases,No releases,0,0,1,False
+2026-09-12,dreddx/ckanext-dreddx_theme,https://github.com/dreddx/ckanext-dreddx_theme,0,0,No releases,No releases,0,0,2,False
+2026-09-12,cioos-atlantic/ckanext-restricted_search,https://github.com/cioos-atlantic/ckanext-restricted_search,0,0,No releases,No releases,0,0,1,False
+2026-09-12,eawag-rdm/ckanext-eaw_helpers,https://github.com/eawag-rdm/ckanext-eaw_helpers,1,0,No releases,No releases,0,0,0,False
+2026-09-12,bhavin2897/ckanext-oai_metadataschema,https://github.com/bhavin2897/ckanext-oai_metadataschema,0,0,No releases,No releases,0,0,1,False
+2026-09-12,rue-a/ckanext-traffic_light,https://github.com/rue-a/ckanext-traffic_light,1,0,No releases,No releases,0,0,1,False
+2026-09-12,YourOpenDAta/ckanext-yoda_theme,https://github.com/YourOpenDAta/ckanext-yoda_theme,0,6,v1.1,2023-03-28,0,0,3,False
+2026-09-12,dreddx/ckanext-dreddx_networkview,https://github.com/dreddx/ckanext-dreddx_networkview,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ODCambodia/ckanext-lp_theme,https://github.com/ODCambodia/ckanext-lp_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,kominfo-denpasar/ckanext-dps_theme,https://github.com/kominfo-denpasar/ckanext-dps_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,dathere/ckanext-boernetx_theme,https://github.com/dathere/ckanext-boernetx_theme,0,0,No releases,No releases,0,1,4,False
+2026-09-12,bhavin2897/ckanext-related_resources,https://github.com/bhavin2897/ckanext-related_resources,0,1,v.0.2.0,2023-11-29,0,0,1,False
+2026-09-12,liip/ckanext-dcat_switzerland,https://github.com/liip/ckanext-dcat_switzerland,1,0,No releases,No releases,0,0,2,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-datagovtheme,https://github.com/OpenGovDataMirror/A_gsa_ckanext-datagovtheme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-qa,https://github.com/OpenGovDataMirror/A_gsa_ckanext-qa,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-harvest,https://github.com/OpenGovDataMirror/A_gsa_ckanext-harvest,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-googleanalyticsbasic,https://github.com/OpenGovDataMirror/A_gsa_ckanext-googleanalyticsbasic,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-geodatagov,https://github.com/OpenGovDataMirror/A_gsa_ckanext-geodatagov,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-datajson,https://github.com/OpenGovDataMirror/A_gsa_ckanext-datajson,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-archiver,https://github.com/OpenGovDataMirror/A_gsa_ckanext-archiver,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Improvement-Service/ckanext-geoserver_web_service,https://github.com/Improvement-Service/ckanext-geoserver_web_service,0,0,No releases,No releases,0,0,3,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-spatial,https://github.com/OpenGovDataMirror/A_gsa_ckanext-spatial,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-security,https://github.com/OpenGovDataMirror/A_gsa_ckanext-security,0,0,No releases,No releases,0,0,1,False
+2026-09-12,kittichai-pkorn/ckanext-dga-stats-custom,https://github.com/kittichai-pkorn/ckanext-dga-stats-custom,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-fulltext,https://github.com/OpenGovDataMirror/A_gsa_ckanext-fulltext,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-usmetadata,https://github.com/OpenGovDataMirror/A_gsa_ckanext-usmetadata,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-extlink,https://github.com/OpenGovDataMirror/A_gsa_ckanext-extlink,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-react_usmetadata,https://github.com/OpenGovDataMirror/A_gsa_ckanext-react_usmetadata,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-dcat_usmetadata,https://github.com/OpenGovDataMirror/A_gsa_ckanext-dcat_usmetadata,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-saml2,https://github.com/OpenGovDataMirror/A_gsa_ckanext-saml2,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-metrics_dashboard,https://github.com/OpenGovDataMirror/A_gsa_ckanext-metrics_dashboard,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGovDataMirror/A_gsa_ckanext-ga-report,https://github.com/OpenGovDataMirror/A_gsa_ckanext-ga-report,0,0,No releases,No releases,0,0,1,False
+2026-09-12,tlmat-unican/ckanext-harvest-ngsild,https://github.com/tlmat-unican/ckanext-harvest-ngsild,2,0,No releases,No releases,0,0,2,False
+2026-09-12,GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal,https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal,2,61,v1.13.0,2026-07-20,0,10,22,False
+2026-09-12,luccasmmg/ckanext-sdaia,https://github.com/luccasmmg/ckanext-sdaia,0,0,No releases,No releases,0,0,1,False
+2026-09-12,annefou/ckanext-signposting,https://github.com/annefou/ckanext-signposting,0,0,No releases,No releases,0,1,1,False
+2026-09-12,thepaeth/ckanext-authsso,https://github.com/thepaeth/ckanext-authsso,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Trusts-eu/ckanext-ids,https://github.com/Trusts-eu/ckanext-ids,0,0,No releases,No releases,0,0,4,False
+2026-09-12,CivityNL/ckanext-definitions,https://github.com/CivityNL/ckanext-definitions,0,0,No releases,No releases,0,1,5,False
+2026-09-12,CivityNL/ckanext-keycloaksynch,https://github.com/CivityNL/ckanext-keycloaksynch,0,0,No releases,No releases,0,0,3,False
+2026-09-12,UCC-Web-Dev-Team/ckanext-rocdatahub,https://github.com/UCC-Web-Dev-Team/ckanext-rocdatahub,0,1,v0.0.2,2023-10-25,0,0,1,False
+2026-09-12,SmdhMdep/ckanext-generalpublic,https://github.com/SmdhMdep/ckanext-generalpublic,0,0,No releases,No releases,0,0,3,False
+2026-09-12,MandanaMoshref/ckanext-lhm,https://github.com/MandanaMoshref/ckanext-lhm,1,0,No releases,No releases,0,0,1,False
+2026-09-12,vicding-mi/ckanext-isebel,https://github.com/vicding-mi/ckanext-isebel,0,0,No releases,No releases,0,0,1,False
+2026-09-12,younixue3/ckanext-mahulu,https://github.com/younixue3/ckanext-mahulu,0,0,No releases,No releases,0,0,2,False
+2026-09-12,CivityNL/ckanext-civity,https://github.com/CivityNL/ckanext-civity,0,8,2.8.0,2025-10-27,0,0,5,False
+2026-09-12,annefou/ckanext-rocrate,https://github.com/annefou/ckanext-rocrate,0,0,No releases,No releases,0,0,1,False
+2026-09-12,GreaterLondonAuthority/dfl-ckanext,https://github.com/GreaterLondonAuthority/dfl-ckanext,1,0,No releases,No releases,0,2,16,False
+2026-09-12,BioplatformsAustralia/ckanext-drs,https://github.com/BioplatformsAustralia/ckanext-drs,0,1,0.0.1,2023-11-19,0,0,2,False
+2026-09-12,OpenDataGIS/ckanext-template_theme,https://github.com/OpenDataGIS/ckanext-template_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SmdhMdep/ckanext-datasci-sharing,https://github.com/SmdhMdep/ckanext-datasci-sharing,0,0,No releases,No releases,0,0,2,False
+2026-09-12,ALTERNATIVE-EU/ckanext-alternative_theme,https://github.com/ALTERNATIVE-EU/ckanext-alternative_theme,0,0,No releases,No releases,0,1,4,False
+2026-09-12,EnviDat/ckanext-envidat_validators,https://github.com/EnviDat/ckanext-envidat_validators,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ALTERNATIVE-EU/ckanext-keycloak_auth,https://github.com/ALTERNATIVE-EU/ckanext-keycloak_auth,0,0,No releases,No releases,0,4,3,False
+2026-09-12,armphanu/ckanext-dcat-armphanu,https://github.com/armphanu/ckanext-dcat-armphanu,0,0,No releases,No releases,0,0,1,False
+2026-09-12,JVickery-TBS/ckanext-dev-theme,https://github.com/JVickery-TBS/ckanext-dev-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OihaneGomez/ckanext-auroral_theme,https://github.com/OihaneGomez/ckanext-auroral_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,armphanu/ckanext-pdfview-armphanu,https://github.com/armphanu/ckanext-pdfview-armphanu,0,0,No releases,No releases,0,0,1,False
+2026-09-12,bvcentre/ckanext-bvrc_theme,https://github.com/bvcentre/ckanext-bvrc_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,armphanu/ckanext-xloader-armphanu,https://github.com/armphanu/ckanext-xloader-armphanu,0,0,No releases,No releases,0,0,1,False
+2026-09-12,EnviDat/ckanext-restricted_api,https://github.com/EnviDat/ckanext-restricted_api,2,0,No releases,No releases,0,1,1,False
+2026-09-12,armphanu/ckanext-hierarchy-armphanu,https://github.com/armphanu/ckanext-hierarchy-armphanu,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenDataGIS/ckanext-iepnb_assets,https://github.com/OpenDataGIS/ckanext-iepnb_assets,0,0,No releases,No releases,0,0,1,False
+2026-09-12,geogeek11/-ckanext-datagov2,https://github.com/geogeek11/-ckanext-datagov2,0,0,No releases,No releases,0,0,1,False
+2026-09-12,fjelltopp/ckanext-who-romania,https://github.com/fjelltopp/ckanext-who-romania,0,0,No releases,No releases,0,1,3,False
+2026-09-12,armphanu/ckanext-scheming-armphanu,https://github.com/armphanu/ckanext-scheming-armphanu,0,0,No releases,No releases,0,0,1,False
+2026-09-12,EnviDat/ckanext-cloudstorage_api,https://github.com/EnviDat/ckanext-cloudstorage_api,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DvtGutto/ckanext-editor_access,https://github.com/DvtGutto/ckanext-editor_access,0,0,No releases,No releases,0,0,1,False
+2026-09-12,tlmat-unican/ckanext-salted-template,https://github.com/tlmat-unican/ckanext-salted-template,1,0,No releases,No releases,0,0,1,False
+2026-09-12,eawag-rdm/ckanext-eaw_core,https://github.com/eawag-rdm/ckanext-eaw_core,1,0,No releases,No releases,0,0,0,False
+2026-09-12,kowh-ai/ckanext-xloader-backup,https://github.com/kowh-ai/ckanext-xloader-backup,0,0,No releases,No releases,0,0,17,False
+2026-09-12,pdelboca/ckanext-htmx-demo,https://github.com/pdelboca/ckanext-htmx-demo,0,0,No releases,No releases,0,0,1,False
+2026-09-12,armphanu/ckanext-dga-stats-armphanu,https://github.com/armphanu/ckanext-dga-stats-armphanu,0,0,No releases,No releases,0,0,3,False
+2026-09-12,armphanu/ckanext-thai-gdc-armphanu,https://github.com/armphanu/ckanext-thai-gdc-armphanu,0,0,No releases,No releases,0,1,3,False
+2026-09-12,NIED-DIR/ckanext-sip4d,https://github.com/NIED-DIR/ckanext-sip4d,1,3,v1.1,2024-05-15,0,1,4,False
+2026-09-12,ndelacour/ckanext-safran_opendata_theme,https://github.com/ndelacour/ckanext-safran_opendata_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ucigenomics/ckanext-u54_theme,https://github.com/ucigenomics/ckanext-u54_theme,0,0,No releases,No releases,0,0,8,False
+2026-09-12,fpichardom/ckanext-knowtest,https://github.com/fpichardom/ckanext-knowtest,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ericariyanto/ckanext-pstheme,https://github.com/ericariyanto/ckanext-pstheme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,nicholas-owen/ckanext-harbour,https://github.com/nicholas-owen/ckanext-harbour,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SDM-TIB/ckanext-advancedstats,https://github.com/SDM-TIB/ckanext-advancedstats,0,11,v0.8.0,2026-06-25,0,0,1,False
+2026-09-12,thiagoc01/ckanext-presencas,https://github.com/thiagoc01/ckanext-presencas,0,0,No releases,No releases,0,0,1,False
+2026-09-12,mauriciobelusso/ckanext-health,https://github.com/mauriciobelusso/ckanext-health,0,0,No releases,No releases,0,0,1,False
+2026-09-12,gislab-augsburg/ckanext-hidelogout,https://github.com/gislab-augsburg/ckanext-hidelogout,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenDataGIS/ckanext-fototeca,https://github.com/OpenDataGIS/ckanext-fototeca,1,5,v1.2.2,2025-02-04,0,0,2,False
+2026-09-12,SDM-TIB/ckanext-datacomparison,https://github.com/SDM-TIB/ckanext-datacomparison,0,17,v0.8.0,2026-08-25,0,0,1,False
+2026-09-12,gislab-augsburg/ckanext-iso,https://github.com/gislab-augsburg/ckanext-iso,0,0,No releases,No releases,0,0,0,False
+2026-09-12,MaDiPHS/ckanext-madiphstheming,https://github.com/MaDiPHS/ckanext-madiphstheming,0,0,No releases,No releases,0,0,1,False
+2026-09-12,gislab-augsburg/ckanext-restrictaccess,https://github.com/gislab-augsburg/ckanext-restrictaccess,0,0,No releases,No releases,0,0,1,False
+2026-09-12,sherryvoid/ckanext-regx,https://github.com/sherryvoid/ckanext-regx,0,0,No releases,No releases,0,0,12,False
+2026-09-12,SDM-TIB/ckanext-kgcreation,https://github.com/SDM-TIB/ckanext-kgcreation,0,0,No releases,No releases,1,0,4,False
+2026-09-12,fpichardom/ckanext-biodigiknow,https://github.com/fpichardom/ckanext-biodigiknow,0,0,No releases,No releases,0,0,1,False
+2026-09-12,gabipana7/ckanext-danubius_theme,https://github.com/gabipana7/ckanext-danubius_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,GreaterLondonAuthority/dfl-ckanext-pages,https://github.com/GreaterLondonAuthority/dfl-ckanext-pages,0,0,No releases,No releases,0,0,1,False
+2026-09-12,RedCiudadana/ckanext-segeplan-theme,https://github.com/RedCiudadana/ckanext-segeplan-theme,0,0,No releases,No releases,0,1,1,False
+2026-09-12,simeonwetzel/ckanext-solr-vectorstore,https://github.com/simeonwetzel/ckanext-solr-vectorstore,0,0,No releases,No releases,0,0,2,False
+2026-09-12,SmdhMdep/ckanext-falkor2,https://github.com/SmdhMdep/ckanext-falkor2,0,0,No releases,No releases,0,1,1,False
+2026-09-12,RedCiudadana/ckanext-minfin-theme,https://github.com/RedCiudadana/ckanext-minfin-theme,0,0,No releases,No releases,0,1,1,False
+2026-09-12,In-For-Disaster-Analytics/ckanext-tacc_theme,https://github.com/In-For-Disaster-Analytics/ckanext-tacc_theme,0,2,0.1.0,2024-12-20,0,2,1,False
+2026-09-12,fjelltopp/ckanext-file-uploader,https://github.com/fjelltopp/ckanext-file-uploader,0,1,1.0.0,2025-01-24,0,1,1,False
+2026-09-12,JVickery-TBS/ckanext-ds-formats,https://github.com/JVickery-TBS/ckanext-ds-formats,0,0,No releases,No releases,0,0,1,False
+2026-09-12,gislab-augsburg/ckanext-remove_login_icon,https://github.com/gislab-augsburg/ckanext-remove_login_icon,0,0,No releases,No releases,0,0,0,False
+2026-09-12,TIBHannover/ckanext-harvester4chem,https://github.com/TIBHannover/ckanext-harvester4chem,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ALTERNATIVE-EU/ckanext-keycloak_access_token,https://github.com/ALTERNATIVE-EU/ckanext-keycloak_access_token,0,0,No releases,No releases,0,0,1,False
+2026-09-12,NCCR-AntiResist/ckanext-antiresist-catalog-theme,https://github.com/NCCR-AntiResist/ckanext-antiresist-catalog-theme,0,1,v0.0.1,2024-03-06,0,0,1,False
+2026-09-12,pcbimon/ckanext-oauth2-py2,https://github.com/pcbimon/ckanext-oauth2-py2,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ucigenomics/ckanext-p01als_theme,https://github.com/ucigenomics/ckanext-p01als_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ucigenomics/ckanext-p30skin_theme,https://github.com/ucigenomics/ckanext-p30skin_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ytgov/ckanext-yukondesign,https://github.com/ytgov/ckanext-yukondesign,1,14,v1.2.4,2026-06-17,0,5,4,False
+2026-09-12,datosgobes/ckanext-dge,https://github.com/datosgobes/ckanext-dge,0,4,v2.2.1,2026-08-19,0,0,2,False
+2026-09-12,justgeorge12/ckanext-xamin,https://github.com/justgeorge12/ckanext-xamin,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SDM-TIB/ckanext-falcon,https://github.com/SDM-TIB/ckanext-falcon,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Fuyutaru/ckanext-zenodo,https://github.com/Fuyutaru/ckanext-zenodo,0,0,No releases,No releases,0,0,1,False
+2026-09-12,sofia-municipality/ckanext-sofia,https://github.com/sofia-municipality/ckanext-sofia,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Edd-Legend/ckanext-mtcui,https://github.com/Edd-Legend/ckanext-mtcui,0,0,No releases,No releases,0,0,0,False
+2026-09-12,SDM-TIB/ckanext-datasetimporter,https://github.com/SDM-TIB/ckanext-datasetimporter,1,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenDataGIS/ckanext-bne,https://github.com/OpenDataGIS/ckanext-bne,1,1,v1.0.0,2024-10-18,0,3,2,False
+2026-09-12,bv-forest-research/ckanext-sipex,https://github.com/bv-forest-research/ckanext-sipex,0,0,No releases,No releases,0,0,3,False
+2026-09-12,BPM-Conseil/ckanext-datapusherplusapi,https://github.com/BPM-Conseil/ckanext-datapusherplusapi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,opalthailand/ckanext-cdp,https://github.com/opalthailand/ckanext-cdp,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-portalmetrics,https://github.com/OpenGov-OpenData/ckanext-portalmetrics,0,0,No releases,No releases,0,0,2,False
+2026-09-12,Onestringlab/ckanext-harvestapi,https://github.com/Onestringlab/ckanext-harvestapi,0,0,No releases,No releases,0,0,2,False
+2026-09-12,Onestringlab/-ckanext-datasetapproval,https://github.com/Onestringlab/-ckanext-datasetapproval,0,0,No releases,No releases,0,0,3,False
+2026-09-12,stefina/ckanext-maillog,https://github.com/stefina/ckanext-maillog,0,0,No releases,No releases,0,1,1,False
+2026-09-12,Gpdos/ckanext-inferiafrontend,https://github.com/Gpdos/ckanext-inferiafrontend,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-dimred,https://github.com/DataShades/ckanext-dimred,0,0,No releases,No releases,0,0,1,False
+2026-09-12,BioplatformsAustralia/ckanext-aup,https://github.com/BioplatformsAustralia/ckanext-aup,0,0,No releases,No releases,0,1,1,False
+2026-09-12,DataShades/ckanext-scientometrics,https://github.com/DataShades/ckanext-scientometrics,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SeemsOdd/ckanext-data-requests,https://github.com/SeemsOdd/ckanext-data-requests,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-json-viewer,https://github.com/DataShades/ckanext-json-viewer,0,0,No releases,No releases,0,0,1,False
+2026-09-12,tans1/ckanext-dataset-graph,https://github.com/tans1/ckanext-dataset-graph,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-resource-docs,https://github.com/DataShades/ckanext-resource-docs,0,0,No releases,No releases,0,0,4,False
+2026-09-12,dathere/ckanext-discourse-extension,https://github.com/dathere/ckanext-discourse-extension,0,0,No releases,No releases,0,2,8,False
+2026-09-12,amirbuldan/ckanext-custom-theme,https://github.com/amirbuldan/ckanext-custom-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,blagojabozinovski/ckanext-chat-widget,https://github.com/blagojabozinovski/ckanext-chat-widget,0,0,No releases,No releases,0,0,1,False
+2026-09-12,RedCiudadana/ckanext-cr-theme,https://github.com/RedCiudadana/ckanext-cr-theme,0,0,No releases,No releases,0,1,1,False
+2026-09-12,datosgobes/ckanext-dge-brokenlinks,https://github.com/datosgobes/ckanext-dge-brokenlinks,0,3,v2.2.0,2026-06-16,0,0,2,False
+2026-09-12,okfn/ckanext-iati-generator,https://github.com/okfn/ckanext-iati-generator,2,0,No releases,No releases,0,2,3,False
+2026-09-12,datosgobes/ckanext-dge-dataservice,https://github.com/datosgobes/ckanext-dge-dataservice,0,3,v2.2.0,2026-06-16,0,0,2,False
+2026-09-12,open-data/ckanext-language-domains,https://github.com/open-data/ckanext-language-domains,0,0,No releases,No releases,0,1,1,False
+2026-09-12,pedritogonzalez88/ckanext-custom_auth,https://github.com/pedritogonzalez88/ckanext-custom_auth,0,0,No releases,No releases,0,0,0,False
+2026-09-12,UniBuc-DTD/ckanext-danubius-theme,https://github.com/UniBuc-DTD/ckanext-danubius-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,AustinMastLab/ckanext-digitizationknowledge-theme,https://github.com/AustinMastLab/ckanext-digitizationknowledge-theme,0,0,No releases,No releases,0,9,3,False
+2026-09-12,kikislater/ckanext-dataset_approval,https://github.com/kikislater/ckanext-dataset_approval,0,0,No releases,No releases,0,0,0,False
+2026-09-12,DataShades/ckanext-gpkg-view,https://github.com/DataShades/ckanext-gpkg-view,0,0,No releases,No releases,0,2,1,False
+2026-09-12,ervin-machine/ckanext-advanced_search,https://github.com/ervin-machine/ckanext-advanced_search,0,0,No releases,No releases,0,0,1,False
+2026-09-12,prefeitura-curvelo/ckanext-curvelo_theme,https://github.com/prefeitura-curvelo/ckanext-curvelo_theme,0,0,No releases,No releases,0,0,2,False
+2026-09-12,EnviDat/ckanext-datacite_publication,https://github.com/EnviDat/ckanext-datacite_publication,0,0,No releases,No releases,1,0,2,False
+2026-09-12,datosgobes/ckanext-dge-dashboard,https://github.com/datosgobes/ckanext-dge-dashboard,0,4,v2.2.0,2026-06-16,0,0,2,False
+2026-09-12,derilinx/ckanext-tabledesigner_hashcolumns,https://github.com/derilinx/ckanext-tabledesigner_hashcolumns,0,0,No releases,No releases,0,0,1,False
+2026-09-12,RedCiudadana/ckanext-hn-theme,https://github.com/RedCiudadana/ckanext-hn-theme,0,0,No releases,No releases,0,1,4,False
+2026-09-12,moxohch/ckanext-secure_logout,https://github.com/moxohch/ckanext-secure_logout,0,0,No releases,No releases,0,0,2,False
+2026-09-12,duttonw/ckanext-pycharm-debugger,https://github.com/duttonw/ckanext-pycharm-debugger,0,1,0.0.1,2025-05-13,0,0,1,False
+2026-09-12,theinhnam/ckanext-keycloak-oauth,https://github.com/theinhnam/ckanext-keycloak-oauth,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datosgobes/ckanext-dge-drupal-users,https://github.com/datosgobes/ckanext-dge-drupal-users,0,4,v2.2.0,2026-06-16,0,0,2,False
+2026-09-12,bhavin2897/ckanext-md_comp_layout,https://github.com/bhavin2897/ckanext-md_comp_layout,0,6,0.1.5,2026-03-04,0,0,1,False
+2026-09-12,SDM-TIB/ckanext-Code2NB,https://github.com/SDM-TIB/ckanext-Code2NB,0,0,No releases,No releases,0,0,1,False
+2026-09-12,BioplatformsAustralia/ckanext-oidc-pkce-bpa,https://github.com/BioplatformsAustralia/ckanext-oidc-pkce-bpa,1,0,No releases,No releases,0,0,3,False
+2026-09-12,LorenzBuehmann/ckanext-odp-le-profile,https://github.com/LorenzBuehmann/ckanext-odp-le-profile,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Skitionek/ckanext-native-cloud-storage,https://github.com/Skitionek/ckanext-native-cloud-storage,0,0,No releases,No releases,0,0,3,False
+2026-09-12,CVISDevelopment/ckanext-ua-portal-design,https://github.com/CVISDevelopment/ckanext-ua-portal-design,0,0,No releases,No releases,0,0,1,False
+2026-09-12,umich-biostatistics/ckanext-um_biostat_theme,https://github.com/umich-biostatistics/ckanext-um_biostat_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,mpolidori/ckanext-dcat-ap-3,https://github.com/mpolidori/ckanext-dcat-ap-3,0,0,No releases,No releases,0,0,0,False
+2026-09-12,Abeelha/ckanext-onboarding-theodoro-bertol,https://github.com/Abeelha/ckanext-onboarding-theodoro-bertol,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Marine-SABRES/ckanext-marine-sabres-theme,https://github.com/Marine-SABRES/ckanext-marine-sabres-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,tlegette-gsa/Ty_ckanext-saml2auth,https://github.com/tlegette-gsa/Ty_ckanext-saml2auth,0,0,No releases,No releases,0,0,12,False
+2026-09-12,pricilakrepeki/CGU_ckanext-cgu-dataset-form,https://github.com/pricilakrepeki/CGU_ckanext-cgu-dataset-form,0,0,No releases,No releases,0,0,2,False
+2026-09-12,henriquespedro/ckanext-ourem,https://github.com/henriquespedro/ckanext-ourem,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-orcid,https://github.com/DataShades/ckanext-orcid,0,0,No releases,No releases,0,0,1,False
+2026-09-12,dga-devops/ckanext-dquality,https://github.com/dga-devops/ckanext-dquality,0,0,No releases,No releases,0,0,1,False
+2026-09-12,pabrojast/ckanext-chartjs,https://github.com/pabrojast/ckanext-chartjs,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SEAMWARE/ckanext-tmforum,https://github.com/SEAMWARE/ckanext-tmforum,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-ddfxls,https://github.com/okfn/ckanext-ddfxls,1,0,No releases,No releases,0,0,1,False
+2026-09-12,pabrojast/ckanext-chartscha,https://github.com/pabrojast/ckanext-chartscha,0,0,No releases,No releases,0,0,1,False
+2026-09-12,unckan/ckanext-mcp,https://github.com/unckan/ckanext-mcp,1,0,No releases,No releases,1,0,1,False
+2026-09-12,ckan/ckanext-feedgen,https://github.com/ckan/ckanext-feedgen,0,0,No releases,No releases,0,0,1,False
+2026-09-12,gtxizang/ckanext-fynd,https://github.com/gtxizang/ckanext-fynd,0,0,No releases,No releases,0,0,0,False
+2026-09-12,pabrojast/ckanext-cstoolbox,https://github.com/pabrojast/ckanext-cstoolbox,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datopian/ckanext-openapidocs,https://github.com/datopian/ckanext-openapidocs,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-validate,https://github.com/okfn/ckanext-validate,1,8,0.5.2,2026-08-04,0,7,2,False
+2026-09-12,jumargo73/ckanext-ckanplugin,https://github.com/jumargo73/ckanext-ckanplugin,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SDM-TIB/ckanext-graphviewer,https://github.com/SDM-TIB/ckanext-graphviewer,0,0,No releases,No releases,0,0,2,False
+2026-09-12,BioplatformsAustralia/ckanext-lollipop,https://github.com/BioplatformsAustralia/ckanext-lollipop,0,0,No releases,No releases,0,0,1,False
+2026-09-12,desidedatum/ckanext-aemet,https://github.com/desidedatum/ckanext-aemet,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SEAMWARE/ckanext-ngsild,https://github.com/SEAMWARE/ckanext-ngsild,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SEAMWARE/ckanext-dsif,https://github.com/SEAMWARE/ckanext-dsif,0,1,0.1.0,2026-02-27,0,0,1,False
+2026-09-12,pabrojast/ckanext-stationsdischarge,https://github.com/pabrojast/ckanext-stationsdischarge,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-consumer,https://github.com/OpenGov-OpenData/ckanext-consumer,0,0,No releases,No releases,0,0,2,False
+2026-09-12,Wenze-Zhang/ckanext-filterview,https://github.com/Wenze-Zhang/ckanext-filterview,0,0,No releases,No releases,0,0,1,False
+2026-09-12,pabrojast/ckanext-maplibre,https://github.com/pabrojast/ckanext-maplibre,0,0,No releases,No releases,0,0,1,False
+2026-09-12,pabrojast/ckanext-csunesco,https://github.com/pabrojast/ckanext-csunesco,0,0,No releases,No releases,0,0,1,False
+2026-09-12,cwbi-apps/ckanext-usacecwbitheme,https://github.com/cwbi-apps/ckanext-usacecwbitheme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,pabrojast/ckanext-datashare,https://github.com/pabrojast/ckanext-datashare,0,0,No releases,No releases,0,0,1,False
+2026-09-12,cynkra/ckanext-sg,https://github.com/cynkra/ckanext-sg,1,0,No releases,No releases,0,2,1,False
+2026-09-12,pabrojast/ckanext-shptoapi,https://github.com/pabrojast/ckanext-shptoapi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,pabrojast/ckanext-terriassistant,https://github.com/pabrojast/ckanext-terriassistant,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-idb-theme,https://github.com/DataShades/ckanext-idb-theme,0,0,No releases,No releases,0,0,3,False
+2026-09-12,SDM-TIB/ckanext-ldm_schema,https://github.com/SDM-TIB/ckanext-ldm_schema,0,5,v1.1.0,2026-06-30,0,0,5,False
+2026-09-12,UniBuc-DTD/ckanext-erddap-harvester,https://github.com/UniBuc-DTD/ckanext-erddap-harvester,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datopian/ckanext-datastore-authz,https://github.com/datopian/ckanext-datastore-authz,0,0,No releases,No releases,0,0,1,False
+2026-09-12,doubleo-dev/ckanext-doubleo-theme,https://github.com/doubleo-dev/ckanext-doubleo-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-mlc-theme,https://github.com/DataShades/ckanext-mlc-theme,0,0,No releases,No releases,0,1,1,False
+2026-09-12,tanmayagrawal21/ckanext-resource-pagination,https://github.com/tanmayagrawal21/ckanext-resource-pagination,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-graphic-walker,https://github.com/DataShades/ckanext-graphic-walker,0,0,No releases,No releases,0,0,1,False
+2026-09-12,opendatadurban/ckanext-sdf-theme,https://github.com/opendatadurban/ckanext-sdf-theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,moxohch/ckanext-jwt_issuer,https://github.com/moxohch/ckanext-jwt_issuer,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SDM-TIB/ckanext-email_notify,https://github.com/SDM-TIB/ckanext-email_notify,0,1,v0.1.0,2026-07-22,0,0,2,False
+2026-09-12,gtxizang/ckanext-swagger-view,https://github.com/gtxizang/ckanext-swagger-view,0,0,No releases,No releases,0,1,0,False
+2026-09-12,cwbi-apps/ckanext-cwbi-harvesters,https://github.com/cwbi-apps/ckanext-cwbi-harvesters,0,0,No releases,No releases,0,1,2,False
+2026-09-12,Wenze-Zhang/ckanext-filterview-docker,https://github.com/Wenze-Zhang/ckanext-filterview-docker,0,0,No releases,No releases,0,0,1,False
+2026-09-12,bhavin2897/ckanext-chemstructure_search,https://github.com/bhavin2897/ckanext-chemstructure_search,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SEAMWARE/ckanext-oidc4vc,https://github.com/SEAMWARE/ckanext-oidc4vc,0,1,0.1.0,2026-02-26,0,0,1,False
+2026-09-12,cwbi-apps/ckanext-s3storage,https://github.com/cwbi-apps/ckanext-s3storage,0,3,v0.0.3,2026-03-18,0,0,1,False
+2026-09-12,SDM-TIB/ckanext-theme_ldm_tib,https://github.com/SDM-TIB/ckanext-theme_ldm_tib,1,4,v1.1.1,2026-09-01,0,0,5,False
+2026-09-12,DataShades/ckanext-midnight-blue-theme,https://github.com/DataShades/ckanext-midnight-blue-theme,1,0,No releases,No releases,0,1,2,False
+2026-09-12,UniBuc-DTD/ckanext-oai-pmh-harvester,https://github.com/UniBuc-DTD/ckanext-oai-pmh-harvester,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datopian/ckanext-s3-multipart-upload,https://github.com/datopian/ckanext-s3-multipart-upload,0,0,No releases,No releases,0,0,1,False
+2026-09-12,belgium-its-steering-committee/ckanext-ytp-request-for-ckan2.8.x,https://github.com/belgium-its-steering-committee/ckanext-ytp-request-for-ckan2.8.x,0,1,1.0.0,2024-06-05,0,0,8,False
+2026-09-12,DataShades/ckanext-blocksmith,https://github.com/DataShades/ckanext-blocksmith,1,0,No releases,No releases,7,4,2,False
+2026-09-12,datopian/ckanext-developerpage,https://github.com/datopian/ckanext-developerpage,5,0,No releases,No releases,10,0,4,False
+2026-09-12,datopian/ckanext-logstash,https://github.com/datopian/ckanext-logstash,0,0,No releases,No releases,4,0,1,False
+2026-09-12,ckan/ckanext-pose_ecosystem_catalog,https://github.com/ckan/ckanext-pose_ecosystem_catalog,1,5,v0.9.4,2026-09-09,7,32,5,True
+2026-09-12,datopian/ckanext-orgdashboards,https://github.com/datopian/ckanext-orgdashboards,4,23,v0.6,2017-11-16,9,0,6,False
+2026-09-12,datopian/ckanext-asset-storage,https://github.com/datopian/ckanext-asset-storage,2,1,v0.1.6,2021-04-09,2,4,2,False
+2026-09-12,datopian/ckanext-translate,https://github.com/datopian/ckanext-translate,0,3,v0.3.0,2021-10-27,0,1,3,False
+2026-09-12,datopian/ckanext-dataexplorer-react,https://github.com/datopian/ckanext-dataexplorer-react,6,0,No releases,No releases,8,3,3,False
+2026-09-12,datopian/ckanext-vocabulary,https://github.com/datopian/ckanext-vocabulary,1,0,No releases,No releases,1,2,1,False
+2026-09-12,datopian/ckanext-portaljs-improvements,https://github.com/datopian/ckanext-portaljs-improvements,0,0,No releases,No releases,2,0,1,False
+2026-09-12,datopian/ckanext-dataexplorer-graphql,https://github.com/datopian/ckanext-dataexplorer-graphql,1,0,No releases,No releases,0,0,2,False
+2026-09-12,datopian/ckanext-data-api,https://github.com/datopian/ckanext-data-api,0,0,No releases,No releases,0,0,2,False
+2026-09-12,datopian/ckanext-datastore-dumper,https://github.com/datopian/ckanext-datastore-dumper,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datopian/ckanext-sitemap,https://github.com/datopian/ckanext-sitemap,4,0,No releases,No releases,4,0,2,False
+2026-09-12,datopian/ckanext-gtm,https://github.com/datopian/ckanext-gtm,0,0,No releases,No releases,0,0,1,False
+2026-09-12,WPRDC/ckanext-spatialdata,https://github.com/WPRDC/ckanext-spatialdata,1,0,No releases,No releases,1,2,4,False
+2026-09-12,dathere/datapusher-plus,https://github.com/dathere/datapusher-plus,33,34,3.1.0-alpha,2026-05-24,47,26,49,True
+2026-09-12,ondics/ckanext-partialview,https://github.com/ondics/ckanext-partialview,1,2,1.0.1,2025-05-26,5,0,4,False
+2026-09-12,DataShades/ckanext-parquet,https://github.com/DataShades/ckanext-parquet,0,0,No releases,No releases,0,0,1,False
+2026-09-12,LeeDongHoon/ckanextcustomfields,https://github.com/LeeDongHoon/ckanextcustomfields,0,0,No releases,No releases,0,0,0,False
+2026-09-12,GSA/ckanext-collections,https://github.com/GSA/ckanext-collections,0,0,No releases,No releases,0,0,0,False
+2026-09-12,Mat-O-Lab/ckanext-chat,https://github.com/Mat-O-Lab/ckanext-chat,3,8,v0.2.0,2026-07-29,15,2,1,False
+2026-09-12,MartinHowitt/ckanext-gdl,https://github.com/MartinHowitt/ckanext-gdl,0,0,No releases,No releases,0,0,0,False
+2026-09-12,parker22/ckanext-countpackageclicks,https://github.com/parker22/ckanext-countpackageclicks,0,0,No releases,No releases,0,0,0,False
+2026-09-12,sabinem/ckanext-usermanagement,https://github.com/sabinem/ckanext-usermanagement,0,0,No releases,No releases,0,0,0,False
+2026-09-12,Nateem/ckanext-reqform,https://github.com/Nateem/ckanext-reqform,0,0,No releases,No releases,0,0,1,False
+2026-09-12,JVickery-TBS/ckanext-development,https://github.com/JVickery-TBS/ckanext-development,0,0,No releases,No releases,0,0,1,False
+2026-09-12,congbk92/ckanext-dataconverter,https://github.com/congbk92/ckanext-dataconverter,0,0,No releases,No releases,1,0,1,False
+2026-09-12,muict-is/ckanext-reportview,https://github.com/muict-is/ckanext-reportview,0,0,No releases,No releases,0,0,1,False
+2026-09-12,mutantsan/ckanext-relationships,https://github.com/mutantsan/ckanext-relationships,0,0,No releases,No releases,0,0,1,False
+2026-09-12,YourOpenDAta/ckanext-dcatapedp,https://github.com/YourOpenDAta/ckanext-dcatapedp,0,6,v1.0.4,2023-12-02,1,0,1,False
+2026-09-12,geoimpactag/ckanext-geoimpact,https://github.com/geoimpactag/ckanext-geoimpact,0,0,No releases,No releases,0,0,5,False
+2026-09-12,ififrank-un/ckanext-databaseharvester,https://github.com/ififrank-un/ckanext-databaseharvester,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenDataGIS/ckanext-miteco,https://github.com/OpenDataGIS/ckanext-miteco,0,6,v0.1.3-hotfix,2025-01-15,0,0,1,False
+2026-09-12,keitaroinc/ckanext-alisea,https://github.com/keitaroinc/ckanext-alisea,0,0,No releases,No releases,0,1,4,False
+2026-09-12,salsadigitalauorg/ckanext-qdes,https://github.com/salsadigitalauorg/ckanext-qdes,0,26,4.2.0,2025-06-04,0,0,4,False
+2026-09-12,kkakui/ckanext-edc,https://github.com/kkakui/ckanext-edc,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SDM-TIB/ckanext-jupyternotebook,https://github.com/SDM-TIB/ckanext-jupyternotebook,0,0,No releases,No releases,0,0,2,False
+2026-09-12,trungtincse/ckanext-eximiddleware,https://github.com/trungtincse/ckanext-eximiddleware,0,0,No releases,No releases,0,0,0,False
+2026-09-12,dathere/ckanext-datatablesview_plus,https://github.com/dathere/ckanext-datatablesview_plus,1,0,No releases,No releases,0,1,1,False
+2026-09-12,dathere/ckanext-twdh_reports,https://github.com/dathere/ckanext-twdh_reports,1,0,No releases,No releases,0,1,2,False
+2026-09-12,open-data/ckanext-virtual-library,https://github.com/open-data/ckanext-virtual-library,1,0,No releases,No releases,0,0,3,False
+2026-09-12,DataShades/ckanext-selfinfo,https://github.com/DataShades/ckanext-selfinfo,5,21,v2.0.3,2026-02-09,16,2,4,False
+2026-09-12,DataShades/ckanext-content,https://github.com/DataShades/ckanext-content,1,0,No releases,No releases,2,0,1,False
+2026-09-12,DataShades/ckanext-menu,https://github.com/DataShades/ckanext-menu,0,0,No releases,No releases,3,0,1,False
+2026-09-12,datopian/ckanext-dcat-ap-se-profile,https://github.com/datopian/ckanext-dcat-ap-se-profile,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datopian/ckanext-malmo,https://github.com/datopian/ckanext-malmo,0,1,v1.0.0,2026-01-13,0,0,2,False
+2026-09-12,datopian/ckanext-gwexplorer,https://github.com/datopian/ckanext-gwexplorer,0,0,No releases,No releases,1,0,1,False
+2026-09-12,datopian/ckanext-preflow,https://github.com/datopian/ckanext-preflow,0,5,v1.0.5,2026-04-21,0,0,1,False
+2026-09-12,datopian/ckanext-zurich,https://github.com/datopian/ckanext-zurich,0,5,v0.0.5,2025-06-06,0,0,1,False
+2026-09-12,XVTSolutions/ckanext-dsactions,https://github.com/XVTSolutions/ckanext-dsactions,1,1,v1.0,2014-04-30,0,0,0,False
+2026-09-12,open-data/ckanext-power-bi,https://github.com/open-data/ckanext-power-bi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,jqnatividad/ckanext-datatablesplus,https://github.com/jqnatividad/ckanext-datatablesplus,0,0,No releases,No releases,0,0,1,False
+2026-09-12,open-data/ckanext-gcnotify,https://github.com/open-data/ckanext-gcnotify,0,0,No releases,No releases,0,1,2,False
+2026-09-12,open-data/ckanext-az-keyvault,https://github.com/open-data/ckanext-az-keyvault,0,0,No releases,No releases,0,0,1,False
+2026-09-12,open-data/ckanext-datastore-search,https://github.com/open-data/ckanext-datastore-search,1,0,No releases,No releases,1,0,1,False
+2026-09-12,bcgov/ckanext-bcgov-disqus,https://github.com/bcgov/ckanext-bcgov-disqus,0,0,No releases,No releases,0,1,1,False
+2026-09-12,bcgov/ckanext-bcgov-cli,https://github.com/bcgov/ckanext-bcgov-cli,0,0,No releases,No releases,0,0,4,False
+2026-09-12,dpc-sdp/ckanext-datavic-reporting,https://github.com/dpc-sdp/ckanext-datavic-reporting,1,0,No releases,No releases,0,0,8,False
+2026-09-12,berlinonline/ckanext-berlin_dataset_schema,https://github.com/berlinonline/ckanext-berlin_dataset_schema,2,0,No releases,No releases,1,0,3,False
+2026-09-12,berlinonline/ckanext-berlinauth,https://github.com/berlinonline/ckanext-berlinauth,1,0,No releases,No releases,0,0,3,False
+2026-09-12,CodeForAfrica/ckanext-opengovharvester,https://github.com/CodeForAfrica/ckanext-opengovharvester,0,0,No releases,No releases,0,0,0,False
+2026-09-12,XVTSolutions/ckanext-vdojtheme,https://github.com/XVTSolutions/ckanext-vdojtheme,0,1,v1.0,2014-05-01,1,0,1,False
+2026-09-12,XVTSolutions/ckanext-review,https://github.com/XVTSolutions/ckanext-review,0,1,v1.0,2014-04-30,0,1,2,False
+2026-09-12,XVTSolutions/ckanext-xvt,https://github.com/XVTSolutions/ckanext-xvt,0,0,No releases,No releases,0,0,0,False
+2026-09-12,TIBHannover/ckanext-system-stats,https://github.com/TIBHannover/ckanext-system-stats,0,0,No releases,No releases,0,0,2,False
+2026-09-12,TIBHannover/ckanext-dcatapcrc,https://github.com/TIBHannover/ckanext-dcatapcrc,0,0,No releases,No releases,0,1,2,False
+2026-09-12,TIBHannover/ckanext-sfb-search-extension,https://github.com/TIBHannover/ckanext-sfb-search-extension,0,0,No releases,No releases,1,0,1,False
+2026-09-12,TIBHannover/ckanext-resource-custom-metadata,https://github.com/TIBHannover/ckanext-resource-custom-metadata,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-data-comparision,https://github.com/TIBHannover/ckanext-data-comparision,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-dataset-transfer,https://github.com/TIBHannover/ckanext-dataset-transfer,0,0,No releases,No releases,0,0,2,False
+2026-09-12,TIBHannover/ckanext-user-manual,https://github.com/TIBHannover/ckanext-user-manual,0,1,1.0.0,2025-01-20,0,0,3,False
+2026-09-12,TIBHannover/ckanext-system-stats-old,https://github.com/TIBHannover/ckanext-system-stats-old,0,0,No releases,No releases,0,0,0,False
+2026-09-12,TIBHannover/ckanext-crc-trr-298,https://github.com/TIBHannover/ckanext-crc-trr-298,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-crc1368,https://github.com/TIBHannover/ckanext-crc1368,0,0,No releases,No releases,1,0,1,False
+2026-09-12,TIBHannover/ckanext-crc1153,https://github.com/TIBHannover/ckanext-crc1153,0,1,0.1.0,2026-03-09,1,0,3,False
+2026-09-12,TIBHannover/ckanext_sfb_layout,https://github.com/TIBHannover/ckanext_sfb_layout,0,0,No releases,No releases,1,0,1,False
+2026-09-12,TIBHannover/ckanext-oai-jsonld-harvester,https://github.com/TIBHannover/ckanext-oai-jsonld-harvester,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-data-comparison,https://github.com/TIBHannover/ckanext-data-comparison,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-sfb-search,https://github.com/TIBHannover/ckanext-sfb-search,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-close-for-guests,https://github.com/TIBHannover/ckanext-close-for-guests,1,11,1.1.7,2025-11-26,1,1,4,False
+2026-09-12,TIBHannover/ckanext-dataset-metadata-automation,https://github.com/TIBHannover/ckanext-dataset-metadata-automation,0,1,1.0.0,2025-01-20,0,0,2,False
+2026-09-12,TIBHannover/ckanext-custom-dataset-metadata,https://github.com/TIBHannover/ckanext-custom-dataset-metadata,0,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-bioschemaharvester,https://github.com/TIBHannover/ckanext-bioschemaharvester,0,1,v0.1.5,2024-07-25,0,0,1,False
+2026-09-12,TIBHannover/ckanext-feature-image,https://github.com/TIBHannover/ckanext-feature-image,0,2,1.0.1,2024-12-16,0,1,3,False
+2026-09-12,TIBHannover/ckanext-cancel-dataset-creation,https://github.com/TIBHannover/ckanext-cancel-dataset-creation,0,1,1.0.0,2024-12-17,0,0,3,False
+2026-09-12,TIBHannover/ckanext-organization-group,https://github.com/TIBHannover/ckanext-organization-group,0,1,1.0.0,2024-12-16,0,0,3,False
+2026-09-12,TIBHannover/ckanext-upgrade-dataset,https://github.com/TIBHannover/ckanext-upgrade-dataset,0,5,v.1.1.3,2021-09-16,0,0,1,False
+2026-09-12,GSA/ckanext-metrics_dashboard,https://github.com/GSA/ckanext-metrics_dashboard,3,0,No releases,No releases,1,0,6,False
+2026-09-12,GSA/ckanext-react_usmetadata,https://github.com/GSA/ckanext-react_usmetadata,3,0,No releases,No releases,0,1,1,False
+2026-09-12,aptivate/ckanext-crisis,https://github.com/aptivate/ckanext-crisis,0,0,No releases,No releases,0,0,6,False
+2026-09-12,aptivate/ckanext-countrygroup,https://github.com/aptivate/ckanext-countrygroup,0,0,No releases,No releases,1,0,6,False
+2026-09-12,qld-gov-au/ckanext-publications-qld-theme,https://github.com/qld-gov-au/ckanext-publications-qld-theme,1,38,2.1.1,2026-08-25,0,3,15,False
+2026-09-12,vrk-kpa/ckanext-sixodp_showcasesubmit,https://github.com/vrk-kpa/ckanext-sixodp_showcasesubmit,0,0,No releases,No releases,0,1,3,False
+2026-09-12,vrk-kpa/ckanext-drupal8,https://github.com/vrk-kpa/ckanext-drupal8,1,0,No releases,No releases,0,1,4,False
+2026-09-12,OpenGov-OpenData/ckanext-ai-assistants,https://github.com/OpenGov-OpenData/ckanext-ai-assistants,0,0,No releases,No releases,1,1,2,False
+2026-09-12,OpenGov-OpenData/ckanext-harvestnotification,https://github.com/OpenGov-OpenData/ckanext-harvestnotification,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-og_datatablesview,https://github.com/OpenGov-OpenData/ckanext-og_datatablesview,0,0,No releases,No releases,0,1,4,False
+2026-09-12,OpenGov-OpenData/ckanext-castate_od_schema,https://github.com/OpenGov-OpenData/ckanext-castate_od_schema,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-custom-schema,https://github.com/OpenGov-OpenData/ckanext-custom-schema,0,0,No releases,No releases,0,0,5,False
+2026-09-12,NaturalHistoryMuseum/ckanext-solr-heatmap,https://github.com/NaturalHistoryMuseum/ckanext-solr-heatmap,1,2,v0.0.2,2017-12-08,0,0,3,False
+2026-09-12,geosolutions-it/ckanext-grace-period,https://github.com/geosolutions-it/ckanext-grace-period,1,0,No releases,No releases,1,3,2,False
+2026-09-12,geosolutions-it/ckanext-geosolutions-ui,https://github.com/geosolutions-it/ckanext-geosolutions-ui,1,0,No releases,No releases,0,1,2,False
+2026-09-12,keitaroinc/ckanext-onicse-theme,https://github.com/keitaroinc/ckanext-onicse-theme,1,0,No releases,No releases,1,0,4,False
+2026-09-12,keitaroinc/ckanext-bulkdownload,https://github.com/keitaroinc/ckanext-bulkdownload,0,0,No releases,No releases,0,0,1,False
+2026-09-12,keitaroinc/ckanext-kepa,https://github.com/keitaroinc/ckanext-kepa,0,0,No releases,No releases,0,2,2,False
+2026-09-12,keitaroinc/ckanext-big-resources,https://github.com/keitaroinc/ckanext-big-resources,0,0,No releases,No releases,0,0,1,False
+2026-09-12,keitaroinc/ckanext-cleanup,https://github.com/keitaroinc/ckanext-cleanup,0,0,No releases,No releases,1,0,1,False
+2026-09-12,keitaroinc/ckanext-approvalworkflow,https://github.com/keitaroinc/ckanext-approvalworkflow,2,0,No releases,No releases,4,0,3,False
+2026-09-12,keitaroinc/ckanext-questionnaire,https://github.com/keitaroinc/ckanext-questionnaire,0,2,v1.1,2023-02-10,1,0,4,False
+2026-09-12,keitaroinc/ckanext-colorado,https://github.com/keitaroinc/ckanext-colorado,0,0,No releases,No releases,0,0,4,False
+2026-09-12,keitaroinc/ckanext-edsnews,https://github.com/keitaroinc/ckanext-edsnews,0,0,No releases,No releases,0,0,3,False
+2026-09-12,keitaroinc/ckanext-calendar,https://github.com/keitaroinc/ckanext-calendar,0,0,No releases,No releases,0,0,6,False
+2026-09-12,keitaroinc/ckanext-edsmetadata,https://github.com/keitaroinc/ckanext-edsmetadata,0,0,No releases,No releases,0,0,2,False
+2026-09-12,keitaroinc/ckanext-dataguide,https://github.com/keitaroinc/ckanext-dataguide,0,0,No releases,No releases,0,0,3,False
+2026-09-12,keitaroinc/ckanext-datasetreplication,https://github.com/keitaroinc/ckanext-datasetreplication,0,0,No releases,No releases,0,0,3,False
+2026-09-12,keitaroinc/ckanext-dataquality,https://github.com/keitaroinc/ckanext-dataquality,0,0,No releases,No releases,0,0,3,False
+2026-09-12,keitaroinc/ckanext-dataextractor,https://github.com/keitaroinc/ckanext-dataextractor,1,0,No releases,No releases,1,0,3,False
+2026-09-12,keitaroinc/ckanext-eds,https://github.com/keitaroinc/ckanext-eds,0,0,No releases,No releases,0,0,3,False
+2026-09-12,keitaroinc/ckanext-organogram,https://github.com/keitaroinc/ckanext-organogram,0,2,v0.2,2018-06-29,0,0,1,False
+2026-09-12,keitaroinc/ckanext-mk_dcatap,https://github.com/keitaroinc/ckanext-mk_dcatap,0,0,No releases,No releases,1,0,1,False
+2026-09-12,keitaroinc/ckanext-purge,https://github.com/keitaroinc/ckanext-purge,0,0,No releases,No releases,1,0,1,False
+2026-09-12,ckan/ckanext-dataset-series,https://github.com/ckan/ckanext-dataset-series,2,0,No releases,No releases,1,2,3,False
+2026-09-12,DataShades/ckanext-scss,https://github.com/DataShades/ckanext-scss,1,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-sk-demo,https://github.com/DataShades/ckanext-sk-demo,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-s3-exporter,https://github.com/DataShades/ckanext-s3-exporter,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-pygments,https://github.com/DataShades/ckanext-pygments,0,0,No releases,No releases,2,0,2,False
+2026-09-12,DataShades/ckanext-alias,https://github.com/DataShades/ckanext-alias,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-tour,https://github.com/DataShades/ckanext-tour,0,0,No releases,No releases,2,0,2,False
+2026-09-12,DataShades/ckanext-federated-index,https://github.com/DataShades/ckanext-federated-index,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-search-schema,https://github.com/DataShades/ckanext-search-schema,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-vip-portal,https://github.com/DataShades/ckanext-vip-portal,1,0,No releases,No releases,1,0,2,False
+2026-09-12,DataShades/ckanext-search-preset,https://github.com/DataShades/ckanext-search-preset,1,0,No releases,No releases,1,0,2,False
+2026-09-12,DataShades/ckanext-example_static,https://github.com/DataShades/ckanext-example_static,0,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-shopping-cart,https://github.com/DataShades/ckanext-shopping-cart,1,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-transmute,https://github.com/DataShades/ckanext-transmute,0,0,No releases,No releases,1,0,2,False
+2026-09-12,DataShades/ckanext-iso19115,https://github.com/DataShades/ckanext-iso19115,2,0,No releases,No releases,1,0,4,False
+2026-09-12,DataShades/ckanext-latex,https://github.com/DataShades/ckanext-latex,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-google_user,https://github.com/DataShades/ckanext-google_user,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-hierarchy_search,https://github.com/DataShades/ckanext-hierarchy_search,1,0,No releases,No releases,0,0,3,False
+2026-09-12,DataShades/ckanext-datavic-stats,https://github.com/DataShades/ckanext-datavic-stats,1,0,No releases,No releases,0,0,2,False
+2026-09-12,DataShades/ckanext-disable_related,https://github.com/DataShades/ckanext-disable_related,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-kobo,https://github.com/okfn/ckanext-kobo,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-fiwarelabs,https://github.com/okfn/ckanext-fiwarelabs,0,0,No releases,No releases,0,0,2,False
+2026-09-12,okfn/ckanext-cadastaroles,https://github.com/okfn/ckanext-cadastaroles,0,0,No releases,No releases,0,1,1,False
+2026-09-12,okfn/ckanext-simple,https://github.com/okfn/ckanext-simple,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-standard,https://github.com/okfn/ckanext-standard,0,0,No releases,No releases,0,1,3,False
+2026-09-12,okfn/ckanext-barnet,https://github.com/okfn/ckanext-barnet,1,0,No releases,No releases,1,2,6,False
+2026-09-12,okfn/ckanext-usertesting,https://github.com/okfn/ckanext-usertesting,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-recline,https://github.com/okfn/ckanext-recline,0,0,No releases,No releases,1,1,1,False
+2026-09-12,okfn/ckanext-nsw,https://github.com/okfn/ckanext-nsw,0,0,No releases,No releases,1,0,5,False
+2026-09-12,okfn/ckanext-aerc,https://github.com/okfn/ckanext-aerc,0,0,No releases,No releases,1,0,1,False
+2026-09-12,okfn/ckanext-demo-classic,https://github.com/okfn/ckanext-demo-classic,0,0,No releases,No releases,1,0,1,False
+2026-09-12,okfn/ckanext-deliverance,https://github.com/okfn/ckanext-deliverance,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-datano,https://github.com/okfn/ckanext-datano,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-datanl,https://github.com/okfn/ckanext-datanl,0,0,No releases,No releases,0,0,2,False
+2026-09-12,datopian/ckanext-idda,https://github.com/datopian/ckanext-idda,0,0,No releases,No releases,0,0,2,False
+2026-09-12,datopian/ckanext-sse,https://github.com/datopian/ckanext-sse,0,12,v1.1.1,2024-09-24,0,2,5,False
+2026-09-12,fabricads2012/ckanext-autorizacoes,https://github.com/fabricads2012/ckanext-autorizacoes,0,0,No releases,No releases,0,0,0,False
+2026-09-12,geosolutions-it/ckanext-grouplabel,https://github.com/geosolutions-it/ckanext-grouplabel,0,0,No releases,No releases,0,0,1,False
+2026-09-12,CivityNL/ckanext-fairdatapoint,https://github.com/CivityNL/ckanext-fairdatapoint,3,3,0.0.3,2024-03-22,1,4,6,False
+2026-09-12,rossjones/ckanext-dgutests,https://github.com/rossjones/ckanext-dgutests,0,0,No releases,No releases,1,0,1,False
+2026-09-12,TIBHannover/ckanext-multiuploader,https://github.com/TIBHannover/ckanext-multiuploader,5,15,2.0.15-test,2026-02-03,2,3,4,False
+2026-09-12,phlpat/ckanext-ssoauth,https://github.com/phlpat/ckanext-ssoauth,0,0,No releases,No releases,0,0,2,False
+2026-09-12,hkmshb/ckanext-ehaportal,https://github.com/hkmshb/ckanext-ehaportal,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SmdhMdep/ckanext-granularvisibility,https://github.com/SmdhMdep/ckanext-granularvisibility,0,0,No releases,No releases,0,0,3,False
+2026-09-12,luca-martinelli-09/ckanext-cdstheme,https://github.com/luca-martinelli-09/ckanext-cdstheme,0,0,No releases,No releases,1,0,1,False
+2026-09-12,ecolabdata/ckanext-dsfr,https://github.com/ecolabdata/ckanext-dsfr,1,0,No releases,No releases,1,15,6,False
+2026-09-12,starsinmypockets/ckanext-montreal,https://github.com/starsinmypockets/ckanext-montreal,0,0,No releases,No releases,0,0,1,False
+2026-09-12,nickwesson/ckanext-govuk,https://github.com/nickwesson/ckanext-govuk,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ksmc/ckanext-activitiestracker,https://github.com/ksmc/ckanext-activitiestracker,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SAERI-Datacenter/ckanext-docs,https://github.com/SAERI-Datacenter/ckanext-docs,0,0,No releases,No releases,0,0,2,False
+2026-09-12,pduchesne/ckanext-annotations,https://github.com/pduchesne/ckanext-annotations,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ConocimientoAbierto/ckanext-evaluator,https://github.com/ConocimientoAbierto/ckanext-evaluator,0,0,No releases,No releases,1,0,2,False
+2026-09-12,CodeForAfrica/ckanext-embed,https://github.com/CodeForAfrica/ckanext-embed,1,0,No releases,No releases,0,2,1,False
+2026-09-12,jiankaiwang/ckanext-cdccushomepage,https://github.com/jiankaiwang/ckanext-cdccushomepage,0,0,No releases,No releases,0,0,1,False
+2026-09-12,alejandrofcarrera/ckanext-geolinkeddata,https://github.com/alejandrofcarrera/ckanext-geolinkeddata,0,0,No releases,No releases,0,0,1,False
+2026-09-12,frictionlessdata/ckanext-wprdcpilot,https://github.com/frictionlessdata/ckanext-wprdcpilot,0,0,No releases,No releases,0,0,2,False
+2026-09-12,sergitrilles/ckanext-oct,https://github.com/sergitrilles/ckanext-oct,0,0,No releases,No releases,0,0,1,False
+2026-09-12,NaturalHistoryMuseum/ckanext-map,https://github.com/NaturalHistoryMuseum/ckanext-map,1,2,v0.0.2,2018-01-04,0,2,5,False
+2026-09-12,PublicaMundi/ckanext-helloresource,https://github.com/PublicaMundi/ckanext-helloresource,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ogdch/ckanext-snl,https://github.com/ogdch/ckanext-snl,0,7,v2.0.3,2014-09-24,0,2,4,False
+2026-09-12,jlouhio/ckanext-datahubsuomi,https://github.com/jlouhio/ckanext-datahubsuomi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,microcomp/ckanext-audit,https://github.com/microcomp/ckanext-audit,0,0,No releases,No releases,0,0,1,False
+2026-09-12,openresearchdata/ckanext-salsah,https://github.com/openresearchdata/ckanext-salsah,0,0,No releases,No releases,0,1,4,False
+2026-09-12,benscott/ckanext-cacheapi,https://github.com/benscott/ckanext-cacheapi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,usgin/ckanext-nrrc,https://github.com/usgin/ckanext-nrrc,0,0,No releases,No releases,0,5,3,False
+2026-09-12,okfn/ckanext-exception,https://github.com/okfn/ckanext-exception,0,0,No releases,No releases,0,0,1,False
+2026-09-12,vaquer/ckanext-mxopeness,https://github.com/vaquer/ckanext-mxopeness,1,0,No releases,No releases,0,1,1,False
+2026-09-12,thobley/ckanext-extrafield,https://github.com/thobley/ckanext-extrafield,0,0,No releases,No releases,0,0,0,False
+2026-09-12,opendatamonitor/ckanext-genericapiharvest,https://github.com/opendatamonitor/ckanext-genericapiharvest,0,0,No releases,No releases,0,0,2,False
+2026-09-12,keitaroinc/ckanext-lighthorse,https://github.com/keitaroinc/ckanext-lighthorse,0,0,No releases,No releases,0,0,1,False
+2026-09-12,amirbuldan/ckanext-publikasi,https://github.com/amirbuldan/ckanext-publikasi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,kvichos/ckanext-graspos,https://github.com/kvichos/ckanext-graspos,0,0,No releases,No releases,0,0,0,False
+2026-09-12,apteksdi/ckanext-schemingdcat,https://github.com/apteksdi/ckanext-schemingdcat,0,0,No releases,No releases,0,0,1,False
+2026-09-12,gisman/ckanext-urlsearch,https://github.com/gisman/ckanext-urlsearch,0,0,No releases,No releases,0,0,0,False
+2026-09-12,hkwi/ckanext-pen,https://github.com/hkwi/ckanext-pen,0,0,No releases,No releases,0,0,2,False
+2026-09-12,fbellati/ckanext-branding,https://github.com/fbellati/ckanext-branding,1,0,No releases,No releases,0,1,1,False
+2026-09-12,momarious/ckanext-momarious,https://github.com/momarious/ckanext-momarious,0,0,No releases,No releases,0,0,0,False
+2026-09-12,datopian/ckanext-datopian,https://github.com/datopian/ckanext-datopian,0,1,v1.0.0,2022-02-02,2,1,2,False
+2026-09-12,kmbn/ckanext-operandum,https://github.com/kmbn/ckanext-operandum,0,0,No releases,No releases,0,0,1,False
+2026-09-12,geosolutions-it/ckanext-geosolutions,https://github.com/geosolutions-it/ckanext-geosolutions,0,0,No releases,No releases,0,0,1,False
+2026-09-12,fwoerister/ckanext-reclinecitationview,https://github.com/fwoerister/ckanext-reclinecitationview,0,0,No releases,No releases,0,0,1,False
+2026-09-12,marsdd/ckanext-marsavin,https://github.com/marsdd/ckanext-marsavin,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SFB-ELAINE/ckanext-paraview,https://github.com/SFB-ELAINE/ckanext-paraview,0,0,No releases,No releases,0,0,1,False
+2026-09-12,jayenashar/ckanext-datansw,https://github.com/jayenashar/ckanext-datansw,0,0,No releases,No releases,0,0,9,False
+2026-09-12,fjelltopp/ckanext-validator,https://github.com/fjelltopp/ckanext-validator,0,0,No releases,No releases,0,0,2,False
+2026-09-12,keitaroinc/ckanext-systeminfo,https://github.com/keitaroinc/ckanext-systeminfo,0,0,No releases,No releases,0,0,3,False
+2026-09-12,keitaroinc/ckanext-password,https://github.com/keitaroinc/ckanext-password,1,0,No releases,No releases,0,0,3,False
+2026-09-12,ccca-dc/ckanext-basket,https://github.com/ccca-dc/ckanext-basket,1,0,No releases,No releases,0,0,4,False
+2026-09-12,metaodi/ckanext-graphql,https://github.com/metaodi/ckanext-graphql,0,0,No releases,No releases,2,0,1,False
+2026-09-12,fernandobac03/ckanext-recordviewer,https://github.com/fernandobac03/ckanext-recordviewer,0,0,No releases,No releases,0,0,0,False
+2026-09-12,bcgov/ckanext-galileo,https://github.com/bcgov/ckanext-galileo,1,0,No releases,No releases,0,0,2,False
+2026-09-12,mdkan/ckanext-admin,https://github.com/mdkan/ckanext-admin,0,0,No releases,No releases,0,0,3,False
+2026-09-12,Clairewjlee/ckanext-categories,https://github.com/Clairewjlee/ckanext-categories,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ogdch/ckanext-swisstopo,https://github.com/ogdch/ckanext-swisstopo,0,4,v1.0.3,2014-02-20,1,0,4,False
+2026-09-12,eccenca/ckanext-diachron,https://github.com/eccenca/ckanext-diachron,0,0,No releases,No releases,0,0,1,False
+2026-09-12,PublicaMundi/ckanext-interlinking,https://github.com/PublicaMundi/ckanext-interlinking,1,0,No releases,No releases,1,1,3,False
+2026-09-12,okfn/ckanext-esdstandards,https://github.com/okfn/ckanext-esdstandards,1,0,No releases,No releases,0,3,1,False
+2026-09-12,AnnaGerber/ckanext-hideorgs,https://github.com/AnnaGerber/ckanext-hideorgs,0,0,No releases,No releases,0,0,1,False
+2026-09-12,hwaring/ckanext-opendatabc,https://github.com/hwaring/ckanext-opendatabc,0,0,No releases,No releases,0,0,0,False
+2026-09-12,lepidaspa/ckanext-rernew,https://github.com/lepidaspa/ckanext-rernew,0,0,No releases,No releases,0,0,1,False
+2026-09-12,vaquer/ckanext-mxtheme,https://github.com/vaquer/ckanext-mxtheme,1,0,No releases,No releases,1,1,1,False
+2026-09-12,open-data/ckanext-autodoc,https://github.com/open-data/ckanext-autodoc,1,0,No releases,No releases,0,1,1,False
+2026-09-12,UoA-eResearch/ckanext-ezid,https://github.com/UoA-eResearch/ckanext-ezid,0,0,No releases,No releases,1,0,1,False
+2026-09-12,mmoyles87/ckanext-twofactorauth,https://github.com/mmoyles87/ckanext-twofactorauth,0,0,No releases,No releases,0,0,1,False
+2026-09-12,boxkite/ckanext-donneesqctheme,https://github.com/boxkite/ckanext-donneesqctheme,0,0,No releases,No releases,0,13,3,False
+2026-09-12,microcomp/ckanext-sla,https://github.com/microcomp/ckanext-sla,0,0,No releases,No releases,0,0,3,False
+2026-09-12,cphsolutionslab/ckanext-metadataharvest,https://github.com/cphsolutionslab/ckanext-metadataharvest,1,0,No releases,No releases,0,0,0,False
+2026-09-12,sirmmo/ckanext-rer,https://github.com/sirmmo/ckanext-rer,0,0,No releases,No releases,0,0,1,False
+2026-09-12,alantygel/ckanext-featurednumber,https://github.com/alantygel/ckanext-featurednumber,0,0,No releases,No releases,0,0,1,False
+2026-09-12,opendatatrentino/ckanext-patcategories,https://github.com/opendatatrentino/ckanext-patcategories,0,0,No releases,No releases,0,0,1,False
+2026-09-12,AKSW/ckanext-metaconf,https://github.com/AKSW/ckanext-metaconf,0,0,No releases,No releases,0,10,1,False
+2026-09-12,open-data/ckanext-fgp,https://github.com/open-data/ckanext-fgp,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-expressimages,https://github.com/okfn/ckanext-expressimages,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-salford,https://github.com/okfn/ckanext-salford,1,0,No releases,No releases,1,1,4,False
+2026-09-12,manuelpalacin/ckanext-datasetvalidation,https://github.com/manuelpalacin/ckanext-datasetvalidation,0,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-thumbnailer,https://github.com/DataShades/ckanext-thumbnailer,0,0,No releases,No releases,0,1,1,False
+2026-09-12,DataShades/ckanext-nswdesignsystem,https://github.com/DataShades/ckanext-nswdesignsystem,3,0,No releases,No releases,3,0,5,False
+2026-09-12,NextGeoss/ckanext-opensearch,https://github.com/NextGeoss/ckanext-opensearch,0,34,v2.9.0,2022-12-20,1,1,5,False
+2026-09-12,JoNoteJoMaMa/ckanext-statscharts,https://github.com/JoNoteJoMaMa/ckanext-statscharts,0,0,No releases,No releases,0,0,1,False
+2026-09-12,agmorev/ckanext-apidocs,https://github.com/agmorev/ckanext-apidocs,1,0,No releases,No releases,0,0,2,False
+2026-09-12,Drexel-UHC/ckanext-pagessearch,https://github.com/Drexel-UHC/ckanext-pagessearch,0,1,1.0.0,2023-06-01,0,0,1,False
+2026-09-12,roberto667/ckanext-ckantheme,https://github.com/roberto667/ckanext-ckantheme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,saikarthikp9/ckanext-customizer,https://github.com/saikarthikp9/ckanext-customizer,1,0,No releases,No releases,1,0,1,False
+2026-09-12,simeonackermann/ckanext-rdfstoreimporter,https://github.com/simeonackermann/ckanext-rdfstoreimporter,0,0,No releases,No releases,0,0,1,False
+2026-09-12,keitaroinc/ckanext-saudinodp,https://github.com/keitaroinc/ckanext-saudinodp,0,0,No releases,No releases,0,0,2,False
+2026-09-12,f-osorio/ckanext-clamdscanner,https://github.com/f-osorio/ckanext-clamdscanner,0,0,No releases,No releases,0,0,0,False
+2026-09-12,TIBHannover/ckanext-semtag,https://github.com/TIBHannover/ckanext-semtag,0,0,No releases,No releases,1,5,2,False
+2026-09-12,kolesarj/ckanext-aafcesas,https://github.com/kolesarj/ckanext-aafcesas,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SAEONData/ckanext-accesscontrol,https://github.com/SAEONData/ckanext-accesscontrol,0,10,v1.0.0-beta,2020-06-12,0,4,1,False
+2026-09-12,keitaroinc/ckanext-experience,https://github.com/keitaroinc/ckanext-experience,0,0,No releases,No releases,0,0,2,False
+2026-09-12,NextGeoss/ckanext-admintools,https://github.com/NextGeoss/ckanext-admintools,0,0,No releases,No releases,0,0,1,False
+2026-09-12,jahow/ckanext-georchestra,https://github.com/jahow/ckanext-georchestra,0,0,No releases,No releases,1,0,1,False
+2026-09-12,ElixirTeSS/ckanext-tessrelations,https://github.com/ElixirTeSS/ckanext-tessrelations,0,0,No releases,No releases,0,0,2,False
+2026-09-12,okfn/ckanext-express,https://github.com/okfn/ckanext-express,0,0,No releases,No releases,0,0,2,False
+2026-09-12,XVTSolutions/ckanext-suspend,https://github.com/XVTSolutions/ckanext-suspend,0,1,v1.0,2014-04-06,0,0,2,False
+2026-09-12,ElixirTeSS/ckanext-tess,https://github.com/ElixirTeSS/ckanext-tess,0,0,No releases,No releases,1,0,3,False
+2026-09-12,microcomp/ckanext-applications,https://github.com/microcomp/ckanext-applications,0,0,No releases,No releases,0,0,4,False
+2026-09-12,merkelct/ckanext-slack,https://github.com/merkelct/ckanext-slack,0,0,No releases,No releases,0,0,2,False
+2026-09-12,DataShades/ckanext-message,https://github.com/DataShades/ckanext-message,0,0,No releases,No releases,1,0,0,False
+2026-09-12,DataShades/ckanext-twitterview,https://github.com/DataShades/ckanext-twitterview,0,0,No releases,No releases,0,0,1,False
+2026-09-12,armin11/ckanext-transparencyderp,https://github.com/armin11/ckanext-transparencyderp,0,0,No releases,No releases,0,0,1,False
+2026-09-12,adrianfish/ckanext-eismetadatapusher,https://github.com/adrianfish/ckanext-eismetadatapusher,0,0,No releases,No releases,0,0,1,False
+2026-09-12,kata-csc/ckanext-statreports,https://github.com/kata-csc/ckanext-statreports,1,0,No releases,No releases,0,0,2,False
+2026-09-12,Nithyavasudevan/ckanext-glasgow,https://github.com/Nithyavasudevan/ckanext-glasgow,0,0,No releases,No releases,1,0,3,False
+2026-09-12,uq-eresearch/ckanext-midja,https://github.com/uq-eresearch/ckanext-midja,0,0,No releases,No releases,0,0,2,False
+2026-09-12,datagvat/ckanext-dgvat,https://github.com/datagvat/ckanext-dgvat,1,0,No releases,No releases,0,0,0,False
+2026-09-12,ogdch/ckanext-transharvest,https://github.com/ogdch/ckanext-transharvest,0,2,v1.0.1,2014-02-20,1,1,3,False
+2026-09-12,ogdch/ckanext-zhstat,https://github.com/ogdch/ckanext-zhstat,0,2,v1.0.1,2014-02-20,0,0,5,False
+2026-09-12,okfn/ckanext-colombia,https://github.com/okfn/ckanext-colombia,0,0,No releases,No releases,1,0,2,False
+2026-09-12,keitaroinc/ckanext-saasportal,https://github.com/keitaroinc/ckanext-saasportal,0,0,No releases,No releases,0,0,1,False
+2026-09-12,urkonn/ckanext-slugs,https://github.com/urkonn/ckanext-slugs,0,0,No releases,No releases,0,0,1,False
+2026-09-12,XVTSolutions/ckanext-metameta,https://github.com/XVTSolutions/ckanext-metameta,0,0,No releases,No releases,0,0,0,False
+2026-09-12,XVTSolutions/ckanext-vdojstats,https://github.com/XVTSolutions/ckanext-vdojstats,0,1,v1.0,2014-04-22,0,0,2,False
+2026-09-12,gislab-augsburg/ckanext-glab,https://github.com/gislab-augsburg/ckanext-glab,0,0,No releases,No releases,0,0,1,False
+2026-09-12,keitaroinc/ckanext-noresource,https://github.com/keitaroinc/ckanext-noresource,0,0,No releases,No releases,0,1,2,False
+2026-09-12,zemantic/ckanext-srilanka,https://github.com/zemantic/ckanext-srilanka,0,0,No releases,No releases,0,3,1,False
+2026-09-12,keitaroinc/ckanext-radius,https://github.com/keitaroinc/ckanext-radius,0,0,No releases,No releases,0,0,3,False
+2026-09-12,citylinedata/ckanext-cl,https://github.com/citylinedata/ckanext-cl,0,0,No releases,No releases,0,0,1,False
+2026-09-12,thejuliekramer/ckanext-inventorytheme,https://github.com/thejuliekramer/ckanext-inventorytheme,0,0,No releases,No releases,0,10,1,False
+2026-09-12,turbomanson/ckanext-nhdp,https://github.com/turbomanson/ckanext-nhdp,0,0,No releases,No releases,1,0,1,False
+2026-09-12,gina-alaska/ckanext-glynx,https://github.com/gina-alaska/ckanext-glynx,0,0,No releases,No releases,0,0,5,False
+2026-09-12,bertvannuffelen/ckanext-odvl,https://github.com/bertvannuffelen/ckanext-odvl,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SAEONData/ckanext-jsonpatch,https://github.com/SAEONData/ckanext-jsonpatch,0,6,v1.0.0,2020-06-12,0,1,1,False
+2026-09-12,lfalvarez/ckanext-arde,https://github.com/lfalvarez/ckanext-arde,0,0,No releases,No releases,0,0,1,False
+2026-09-12,UoA-eResearch/ckanext-cer,https://github.com/UoA-eResearch/ckanext-cer,0,0,No releases,No releases,0,0,0,False
+2026-09-12,ccca-dc/ckanext-filtersearch,https://github.com/ccca-dc/ckanext-filtersearch,0,1,v1.0,2017-10-02,0,0,4,False
+2026-09-12,geosolutions-it/ckanext-extras,https://github.com/geosolutions-it/ckanext-extras,1,0,No releases,No releases,0,0,1,False
+2026-09-12,jiankaiwang/ckanext-download,https://github.com/jiankaiwang/ckanext-download,1,0,No releases,No releases,0,0,1,False
+2026-09-12,ccca-dc/ckanext-localimp,https://github.com/ccca-dc/ckanext-localimp,0,1,v1.0,2017-07-11,0,0,3,False
+2026-09-12,Quatral/ckanext-vds,https://github.com/Quatral/ckanext-vds,0,0,No releases,No releases,0,0,2,False
+2026-09-12,okfn/ckanext-nrgi,https://github.com/okfn/ckanext-nrgi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,sciamlab/ckanext-datigovit,https://github.com/sciamlab/ckanext-datigovit,0,0,No releases,No releases,0,3,3,False
+2026-09-12,openresearchdata/ckanext-openbis,https://github.com/openresearchdata/ckanext-openbis,1,0,No releases,No releases,1,0,1,False
+2026-09-12,WilJoey/ckanext-ksgeo,https://github.com/WilJoey/ckanext-ksgeo,0,0,No releases,No releases,0,0,1,False
+2026-09-12,geosolutions-it/ckanext-odn,https://github.com/geosolutions-it/ckanext-odn,1,0,No releases,No releases,0,0,1,False
+2026-09-12,ogdch/ckanext-neat,https://github.com/ogdch/ckanext-neat,0,0,No releases,No releases,0,0,0,False
+2026-09-12,City-of-Bloomington/ckanext-cob,https://github.com/City-of-Bloomington/ckanext-cob,0,1,0.1.0,2019-02-21,0,1,5,False
+2026-09-12,microcomp/ckanext-notifications,https://github.com/microcomp/ckanext-notifications,0,0,No releases,No releases,0,0,3,False
+2026-09-12,OpenDataPortal-AT/ckanext-odpat,https://github.com/OpenDataPortal-AT/ckanext-odpat,1,0,No releases,No releases,0,1,1,False
+2026-09-12,opennorth/ckanext-whiterock,https://github.com/opennorth/ckanext-whiterock,1,0,No releases,No releases,1,0,1,False
+2026-09-12,csipiemonte/ckanext-apertocomunetorinoit,https://github.com/csipiemonte/ckanext-apertocomunetorinoit,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-toolbelt,https://github.com/DataShades/ckanext-toolbelt,0,0,No releases,No releases,3,2,3,False
+2026-09-12,Mat-O-Lab/ckanext-csvwmapandtransform,https://github.com/Mat-O-Lab/ckanext-csvwmapandtransform,1,5,v1.1.0,2026-06-24,1,0,1,False
+2026-09-12,berlinonline/ckanext-datasetsnippets,https://github.com/berlinonline/ckanext-datasetsnippets,1,0,No releases,No releases,1,0,3,False
+2026-09-12,DataShades/ckanext-wysiwyg,https://github.com/DataShades/ckanext-wysiwyg,0,0,No releases,No releases,0,0,1,False
+2026-09-12,L-Har/ckanext-wms,https://github.com/L-Har/ckanext-wms,0,0,No releases,No releases,0,0,1,False
+2026-09-12,national-data-platform/ckanext-ndpcatalogadditions,https://github.com/national-data-platform/ckanext-ndpcatalogadditions,0,2,v0.1.3,2025-07-07,0,0,1,False
+2026-09-12,katucker/ckanext-dapr,https://github.com/katucker/ckanext-dapr,0,0,No releases,No releases,0,0,1,False
+2026-09-12,RTIInternational/ckanext-advancedauth,https://github.com/RTIInternational/ckanext-advancedauth,0,0,No releases,No releases,0,0,3,False
+2026-09-12,DataShades/ckanext-ondc,https://github.com/DataShades/ckanext-ondc,0,0,No releases,No releases,0,0,3,False
+2026-09-12,BioplatformsAustralia/ckanext-laissezpasser,https://github.com/BioplatformsAustralia/ckanext-laissezpasser,0,0,No releases,No releases,0,0,1,False
+2026-09-12,wake-ua/ckanext-wakeua,https://github.com/wake-ua/ckanext-wakeua,0,0,No releases,No releases,0,0,2,False
+2026-09-12,keitaroinc/ckanext-suggest,https://github.com/keitaroinc/ckanext-suggest,2,0,No releases,No releases,1,0,1,False
+2026-09-12,bhavin2897/ckanext-wikidata,https://github.com/bhavin2897/ckanext-wikidata,0,0,No releases,No releases,0,0,1,False
+2026-09-12,geosolutions-it/ckanext-dataverse,https://github.com/geosolutions-it/ckanext-dataverse,1,0,No releases,No releases,0,2,2,False
+2026-09-12,samibaig/ckanext-twdht,https://github.com/samibaig/ckanext-twdht,0,0,No releases,No releases,0,0,2,False
+2026-09-12,GeoinformationSystems/ckanext-klimakonform,https://github.com/GeoinformationSystems/ckanext-klimakonform,1,0,No releases,No releases,0,0,3,False
+2026-09-12,eHealthAfrica/ckanext-biskit,https://github.com/eHealthAfrica/ckanext-biskit,1,8,v1.0.7,2021-04-21,0,2,5,False
+2026-09-12,OpenDataCordoba/ckanext-odc,https://github.com/OpenDataCordoba/ckanext-odc,0,0,No releases,No releases,0,0,1,False
+2026-09-12,knaw-huc/ckanext-facet,https://github.com/knaw-huc/ckanext-facet,0,0,No releases,No releases,0,0,1,False
+2026-09-12,mat3rial-dev/ckanext-yycdatacollective,https://github.com/mat3rial-dev/ckanext-yycdatacollective,1,0,No releases,No releases,0,2,1,False
+2026-09-12,costibleotu/ckanext-githubfeed,https://github.com/costibleotu/ckanext-githubfeed,0,0,No releases,No releases,0,0,2,False
+2026-09-12,ccca-dc/ckanext-thredds,https://github.com/ccca-dc/ckanext-thredds,1,1,v1.0,2017-11-22,1,0,4,False
+2026-09-12,CodeForAfrica/ckanext-kyelatheme,https://github.com/CodeForAfrica/ckanext-kyelatheme,1,0,No releases,No releases,0,0,0,False
+2026-09-12,ccca-dc/ckanext-galleryview,https://github.com/ccca-dc/ckanext-galleryview,0,1,v1.0,2017-02-21,0,0,3,False
+2026-09-12,fernandobac03/ckanext-runtimeconfig,https://github.com/fernandobac03/ckanext-runtimeconfig,0,0,No releases,No releases,0,0,1,False
+2026-09-12,milwaukeedata/ckanext-userprivs,https://github.com/milwaukeedata/ckanext-userprivs,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datagovuk/ckanext-schemadotorg,https://github.com/datagovuk/ckanext-schemadotorg,1,0,No releases,No releases,1,0,1,False
+2026-09-12,okfn/ckanext-hideorganizations,https://github.com/okfn/ckanext-hideorganizations,0,0,No releases,No releases,1,0,1,False
+2026-09-12,XVTSolutions/ckanext-trak,https://github.com/XVTSolutions/ckanext-trak,1,0,No releases,No releases,0,0,1,False
+2026-09-12,ubdc-IT/ckanext-ubdcschema,https://github.com/ubdc-IT/ckanext-ubdcschema,0,0,No releases,No releases,0,0,1,False
+2026-09-12,memaldi/ckanext-git,https://github.com/memaldi/ckanext-git,0,0,No releases,No releases,0,0,1,False
+2026-09-12,joetsoi/ckanext-jsondatastore,https://github.com/joetsoi/ckanext-jsondatastore,0,0,No releases,No releases,0,0,1,False
+2026-09-12,etalab/ckanext-youckan,https://github.com/etalab/ckanext-youckan,1,0,No releases,No releases,0,1,1,False
+2026-09-12,DataShades/ckanext-mailcraft,https://github.com/DataShades/ckanext-mailcraft,0,0,No releases,No releases,5,0,3,False
+2026-09-12,City-of-Helsinki/ckanext-hoi,https://github.com/City-of-Helsinki/ckanext-hoi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,bukharim1/ckanext-afucn,https://github.com/bukharim1/ckanext-afucn,0,0,No releases,No releases,0,0,1,False
+2026-09-12,thehyve/ckanext-configpermission,https://github.com/thehyve/ckanext-configpermission,1,0,No releases,No releases,0,0,2,False
+2026-09-12,Mat-O-Lab/ckanext-csvtocsvw,https://github.com/Mat-O-Lab/ckanext-csvtocsvw,0,4,v1.0.4,2026-03-19,1,1,1,False
+2026-09-12,pabrojast/ckanext-colab,https://github.com/pabrojast/ckanext-colab,0,0,No releases,No releases,0,0,1,False
+2026-09-12,BioplatformsAustralia/ckanext-cilogin,https://github.com/BioplatformsAustralia/ckanext-cilogin,1,0,No releases,No releases,1,0,1,False
+2026-09-12,fjelltopp/ckanext-useraffiliation,https://github.com/fjelltopp/ckanext-useraffiliation,0,0,No releases,No releases,0,0,2,False
+2026-09-12,b-weintraub/ckanext-stac,https://github.com/b-weintraub/ckanext-stac,1,0,No releases,No releases,1,0,2,False
+2026-09-12,BioplatformsAustralia/ckanext-bpatogalaxy,https://github.com/BioplatformsAustralia/ckanext-bpatogalaxy,1,0,No releases,No releases,0,0,1,False
+2026-09-12,keitaroinc/ckanext-villageearth,https://github.com/keitaroinc/ckanext-villageearth,0,0,No releases,No releases,0,0,2,False
+2026-09-12,amercader/ckanext-testext,https://github.com/amercader/ckanext-testext,0,0,No releases,No releases,0,0,1,False
+2026-09-12,unckan/ckanext-datasetpreview,https://github.com/unckan/ckanext-datasetpreview,0,1,0.2.31,2020-08-29,0,2,1,False
+2026-09-12,jasonmotylinski/ckanext-datatablesview,https://github.com/jasonmotylinski/ckanext-datatablesview,0,0,No releases,No releases,0,0,0,False
+2026-09-12,tobinus/ckanext-dataontosearch,https://github.com/tobinus/ckanext-dataontosearch,0,2,0.0.6,2019-04-30,0,0,1,False
+2026-09-12,derilinx/ckanext-losd,https://github.com/derilinx/ckanext-losd,1,0,No releases,No releases,1,0,3,False
+2026-09-12,HELIX-GR/ckanext-helixtheme,https://github.com/HELIX-GR/ckanext-helixtheme,0,0,No releases,No releases,0,0,2,False
+2026-09-12,NextGeoss/ckanext-orleans,https://github.com/NextGeoss/ckanext-orleans,0,0,No releases,No releases,0,0,1,False
+2026-09-12,thobley/ckanext-delwpdata,https://github.com/thobley/ckanext-delwpdata,0,0,No releases,No releases,0,0,0,False
+2026-09-12,ccca-dc/ckanext-iauth,https://github.com/ccca-dc/ckanext-iauth,0,1,v1.0,2017-11-15,0,0,3,False
+2026-09-12,keitaroinc/ckanext-datasetrelations,https://github.com/keitaroinc/ckanext-datasetrelations,0,0,No releases,No releases,0,0,4,False
+2026-09-12,merkelct/ckanext-frontpage,https://github.com/merkelct/ckanext-frontpage,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenTransportDataProject/ckanext-sintef,https://github.com/OpenTransportDataProject/ckanext-sintef,0,0,No releases,No releases,0,0,2,False
+2026-09-12,adrianfish/ckanext-eismetadatafields,https://github.com/adrianfish/ckanext-eismetadatafields,0,0,No releases,No releases,0,0,1,False
+2026-09-12,routetopa/ckanext-openid,https://github.com/routetopa/ckanext-openid,1,0,No releases,No releases,0,1,3,False
+2026-09-12,Honlan/ckanext-mytheme,https://github.com/Honlan/ckanext-mytheme,0,0,No releases,No releases,1,0,1,False
+2026-09-12,rossjones/ckanext-liverpool,https://github.com/rossjones/ckanext-liverpool,0,0,No releases,No releases,0,1,1,False
+2026-09-12,kapucko/ckanext-dataset,https://github.com/kapucko/ckanext-dataset,1,0,No releases,No releases,0,0,2,False
+2026-09-12,vrk-kpa/ckanext-fluentall,https://github.com/vrk-kpa/ckanext-fluentall,0,0,No releases,No releases,0,0,1,False
+2026-09-12,NicolaiLolansen/ckanext-updatedatastore,https://github.com/NicolaiLolansen/ckanext-updatedatastore,0,0,No releases,No releases,0,0,1,False
+2026-09-12,iotaorg/ckanext-iota,https://github.com/iotaorg/ckanext-iota,0,0,No releases,No releases,1,0,1,False
+2026-09-12,okfn/ckanext-queue,https://github.com/okfn/ckanext-queue,1,0,No releases,No releases,1,1,1,False
+2026-09-12,abulte/ckanext-countapicalls,https://github.com/abulte/ckanext-countapicalls,1,0,No releases,No releases,0,1,1,False
+2026-09-12,SenseTecnic/ckanext-wotkit,https://github.com/SenseTecnic/ckanext-wotkit,0,0,No releases,No releases,0,3,4,False
+2026-09-12,okfn/ckanext-pakistan,https://github.com/okfn/ckanext-pakistan,0,0,No releases,No releases,1,1,6,False
+2026-09-12,PublicaMundi/ckanext-helloworld,https://github.com/PublicaMundi/ckanext-helloworld,0,0,No releases,No releases,1,0,1,False
+2026-09-12,jgsmith/ckanext-dhdata,https://github.com/jgsmith/ckanext-dhdata,0,0,No releases,No releases,0,0,0,False
+2026-09-12,thejimmyg/ckanext-parkinsons,https://github.com/thejimmyg/ckanext-parkinsons,0,0,No releases,No releases,0,0,1,False
+2026-09-12,dbca-wa/ckanext-dbca,https://github.com/dbca-wa/ckanext-dbca,1,0,No releases,No releases,0,8,2,False
+2026-09-12,open-data-toronto/ckanext-iotrans,https://github.com/open-data-toronto/ckanext-iotrans,1,6,v1.2.3,2023-03-24,0,1,3,False
+2026-09-12,CivityNL/ckanext-portal,https://github.com/CivityNL/ckanext-portal,0,0,No releases,No releases,0,0,4,False
+2026-09-12,fjelltopp/ckanext-spectrum,https://github.com/fjelltopp/ckanext-spectrum,0,0,No releases,No releases,0,0,3,False
+2026-09-12,Mazen-B/ckanext-gitimport,https://github.com/Mazen-B/ckanext-gitimport,1,0,No releases,No releases,0,0,1,False
+2026-09-12,GovDataOfficial/ckanext-searchindexhook,https://github.com/GovDataOfficial/ckanext-searchindexhook,0,19,6.8.0,2026-09-09,1,0,3,False
+2026-09-12,cuprit-gbr/ckanext-thesauri,https://github.com/cuprit-gbr/ckanext-thesauri,1,0,No releases,No releases,0,0,1,False
+2026-09-12,Trusts-eu/ckanext-vocabularies,https://github.com/Trusts-eu/ckanext-vocabularies,0,0,No releases,No releases,0,0,1,False
+2026-09-12,SmdhMdep/ckanext-usertracking,https://github.com/SmdhMdep/ckanext-usertracking,1,0,No releases,No releases,0,0,4,False
+2026-09-12,MrMedAli/ckanext-long,https://github.com/MrMedAli/ckanext-long,0,0,No releases,No releases,0,0,1,False
+2026-09-12,mango7j/ckanext-odao,https://github.com/mango7j/ckanext-odao,1,0,No releases,No releases,0,0,1,False
+2026-09-12,CiudadesAbiertas/ckanext-abrircon,https://github.com/CiudadesAbiertas/ckanext-abrircon,1,0,No releases,No releases,0,0,1,False
+2026-09-12,stream-project/ckanext-streamtheme,https://github.com/stream-project/ckanext-streamtheme,0,0,No releases,No releases,0,0,2,False
+2026-09-12,markmo/ckanext-azurefilestore,https://github.com/markmo/ckanext-azurefilestore,0,0,No releases,No releases,1,1,1,False
+2026-09-12,conwetlab/ckanext-fiware_header,https://github.com/conwetlab/ckanext-fiware_header,1,0,No releases,No releases,2,0,1,False
+2026-09-12,N-Krenn/ckanext-linkorgs,https://github.com/N-Krenn/ckanext-linkorgs,0,0,No releases,No releases,0,0,1,False
+2026-09-12,nerevu/ckanext-heroku,https://github.com/nerevu/ckanext-heroku,0,0,No releases,No releases,0,0,1,False
+2026-09-12,brunoqs/ckanext-ufla,https://github.com/brunoqs/ckanext-ufla,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataDotUG/ckanext-ddug,https://github.com/DataDotUG/ckanext-ddug,0,0,No releases,No releases,0,7,1,False
+2026-09-12,valentin0h/ckanext-termtranslate,https://github.com/valentin0h/ckanext-termtranslate,0,0,No releases,No releases,1,0,1,False
+2026-09-12,pduchesne/ckanext-digitalwallonia,https://github.com/pduchesne/ckanext-digitalwallonia,0,0,No releases,No releases,0,0,1,False
+2026-09-12,salnhan/ckanext-contactform,https://github.com/salnhan/ckanext-contactform,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ccca-dc/ckanext-handle,https://github.com/ccca-dc/ckanext-handle,0,1,v1.0,2017-06-27,0,0,3,False
+2026-09-12,joetm/ckanext-feeds,https://github.com/joetm/ckanext-feeds,1,0,No releases,No releases,0,0,1,False
+2026-09-12,rossjones/ckanext-lua,https://github.com/rossjones/ckanext-lua,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-kenya,https://github.com/okfn/ckanext-kenya,0,0,No releases,No releases,1,0,1,False
+2026-09-12,okfn/ckanext-hampshire,https://github.com/okfn/ckanext-hampshire,0,0,No releases,No releases,1,0,2,False
+2026-09-12,vrk-kpa/ckanext-apis,https://github.com/vrk-kpa/ckanext-apis,0,0,No releases,No releases,0,0,9,False
+2026-09-12,berlinonline/ckanext-berlintheme,https://github.com/berlinonline/ckanext-berlintheme,0,0,No releases,No releases,0,0,2,False
+2026-09-12,SDM-TIB/ckanext-fedorkg,https://github.com/SDM-TIB/ckanext-fedorkg,0,29,v0.11.0,2026-07-02,0,0,1,False
+2026-09-12,ericariyanto/ckanext-pslandak,https://github.com/ericariyanto/ckanext-pslandak,0,0,No releases,No releases,0,0,1,False
+2026-09-12,vrk-kpa/ckanext-organizationapproval,https://github.com/vrk-kpa/ckanext-organizationapproval,0,0,No releases,No releases,1,1,3,False
+2026-09-12,fjelltopp/ckanext-zarr,https://github.com/fjelltopp/ckanext-zarr,0,0,No releases,No releases,0,0,2,False
+2026-09-12,ngds/ckanext-geoserver,https://github.com/ngds/ckanext-geoserver,1,0,No releases,No releases,1,1,1,False
+2026-09-12,OpenGov-OpenData/ckanext-observability,https://github.com/OpenGov-OpenData/ckanext-observability,0,0,No releases,No releases,0,0,2,False
+2026-09-12,berlinonline/ckanext-sisharvester,https://github.com/berlinonline/ckanext-sisharvester,0,0,No releases,No releases,0,0,1,False
+2026-09-12,victoryem/ckanext-pero,https://github.com/victoryem/ckanext-pero,0,0,No releases,No releases,0,0,1,False
+2026-09-12,CivityNL/ckanext-tracker,https://github.com/CivityNL/ckanext-tracker,0,0,No releases,No releases,0,1,4,False
+2026-09-12,hakannson/ckanext-datacitation,https://github.com/hakannson/ckanext-datacitation,0,0,No releases,No releases,0,0,1,False
+2026-09-12,boykoc/ckanext-adal,https://github.com/boykoc/ckanext-adal,0,0,No releases,No releases,0,0,1,False
+2026-09-12,lynxlab/ckanext-lait,https://github.com/lynxlab/ckanext-lait,0,5,v0.1.4,2020-09-09,0,0,2,False
+2026-09-12,SFB-ELAINE/ckanext-papaya,https://github.com/SFB-ELAINE/ckanext-papaya,0,0,No releases,No releases,0,0,1,False
+2026-09-12,okfn/ckanext-aiglobal,https://github.com/okfn/ckanext-aiglobal,1,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-metatags,https://github.com/DataShades/ckanext-metatags,0,0,No releases,No releases,0,0,1,False
+2026-09-12,geosolutions-it/ckanext-gsreport,https://github.com/geosolutions-it/ckanext-gsreport,1,0,No releases,No releases,0,0,1,False
+2026-09-12,nleond/ckanext-helix,https://github.com/nleond/ckanext-helix,0,0,No releases,No releases,0,0,6,False
+2026-09-12,stadt-karlsruhe/ckanext-importer,https://github.com/stadt-karlsruhe/ckanext-importer,1,0,No releases,No releases,0,0,2,False
+2026-09-12,merkelct/ckanext-akanaharvester,https://github.com/merkelct/ckanext-akanaharvester,0,0,No releases,No releases,0,0,2,False
+2026-09-12,ccca-dc/ckanext-resourceversions,https://github.com/ccca-dc/ckanext-resourceversions,0,1,v1.0,2017-08-03,0,0,3,False
+2026-09-12,fernandobac03/ckanext-mdfromowl,https://github.com/fernandobac03/ckanext-mdfromowl,0,0,No releases,No releases,0,0,2,False
+2026-09-12,salnhan/ckanext-additionalfacets,https://github.com/salnhan/ckanext-additionalfacets,0,0,No releases,No releases,0,0,1,False
+2026-09-12,routetopa/ckanext-statsapi,https://github.com/routetopa/ckanext-statsapi,0,0,No releases,No releases,0,0,1,False
+2026-09-12,muccg/ckanext-chevrontheme,https://github.com/muccg/ckanext-chevrontheme,0,0,No releases,No releases,0,0,0,False
+2026-09-12,jiankaiwang/ckanext-cdcmainlib,https://github.com/jiankaiwang/ckanext-cdcmainlib,0,0,No releases,No releases,0,0,1,False
+2026-09-12,CodeForAfrica/ckanext-followy,https://github.com/CodeForAfrica/ckanext-followy,1,0,No releases,No releases,1,3,1,False
+2026-09-12,okfn/ckanext-singapore,https://github.com/okfn/ckanext-singapore,1,0,No releases,No releases,1,0,1,False
+2026-09-12,reneenoble/ckanext-iframeview,https://github.com/reneenoble/ckanext-iframeview,0,0,No releases,No releases,0,0,0,False
+2026-09-12,microcomp/ckanext-sql,https://github.com/microcomp/ckanext-sql,0,0,No releases,No releases,0,0,1,False
+2026-09-12,cphsolutionslab/ckanext-cphopendata,https://github.com/cphsolutionslab/ckanext-cphopendata,0,0,No releases,No releases,1,0,1,False
+2026-09-12,kapucko/ckanext-edem,https://github.com/kapucko/ckanext-edem,1,0,No releases,No releases,0,0,1,False
+2026-09-12,kangmoesss/ckanext-oauth2-py3,https://github.com/kangmoesss/ckanext-oauth2-py3,0,0,No releases,No releases,2,0,1,False
+2026-09-12,asc-csa/ckanext-asc-csa-scheming,https://github.com/asc-csa/ckanext-asc-csa-scheming,1,0,No releases,No releases,2,1,4,False
+2026-09-12,DataShades/ckanext-let-me-in,https://github.com/DataShades/ckanext-let-me-in,0,0,No releases,No releases,3,0,3,False
+2026-09-12,EnviDat/ckanext-package_converter,https://github.com/EnviDat/ckanext-package_converter,1,1,v1.0.0,2017-07-14,2,0,3,False
+2026-09-12,opendatazurich/ckanext-stadtzh-harvest,https://github.com/opendatazurich/ckanext-stadtzh-harvest,0,8,v1.2.3,2026-02-18,2,2,7,False
+2026-09-12,open-data-toronto/ckanext-datastore-profiler,https://github.com/open-data-toronto/ckanext-datastore-profiler,1,0,No releases,No releases,2,4,6,False
+2026-09-12,CSCfi/fairdata-ckanext-etsin,https://github.com/CSCfi/fairdata-ckanext-etsin,0,0,No releases,No releases,2,0,7,False
+2026-09-12,derilinx/ckanext-dgi-public,https://github.com/derilinx/ckanext-dgi-public,0,0,No releases,No releases,3,0,0,False
+2026-09-12,ckan/ckanext-fdt-sqlalchemy,https://github.com/ckan/ckanext-fdt-sqlalchemy,0,0,No releases,No releases,2,0,1,False
+2026-09-12,edincubator/ckanext-edi_theme,https://github.com/edincubator/ckanext-edi_theme,0,0,No releases,No releases,3,0,1,False
+2026-09-12,okfn/ckanext-dsmtheme_example,https://github.com/okfn/ckanext-dsmtheme_example,0,0,No releases,No releases,2,0,1,False
+2026-09-12,USEPA/ckanext-linked-storage,https://github.com/USEPA/ckanext-linked-storage,2,0,No releases,No releases,2,1,1,False
+2026-09-12,TIBHannover/ckanext-email-notification,https://github.com/TIBHannover/ckanext-email-notification,0,2,1.1.0,2024-12-16,2,0,2,False
+2026-09-12,vulekamali/ckanext-satreasury,https://github.com/vulekamali/ckanext-satreasury,1,0,No releases,No releases,2,9,4,False
+2026-09-12,fwoerister/ckanext-mongodatastore,https://github.com/fwoerister/ckanext-mongodatastore,0,4,v0.4,2020-10-13,2,0,1,False
+2026-09-12,rossjones/ckanext-pubsub,https://github.com/rossjones/ckanext-pubsub,1,0,No releases,No releases,2,0,1,False
+2026-09-12,openspending/ckanext-budgets,https://github.com/openspending/ckanext-budgets,1,0,No releases,No releases,2,1,0,False
+2026-09-12,Psykar/ckanext-ands,https://github.com/Psykar/ckanext-ands,0,0,No releases,No releases,2,0,1,False
+2026-09-12,opendata-swiss/ckanext-dcatapchharvest,https://github.com/opendata-swiss/ckanext-dcatapchharvest,1,6,1.0.6,2026-04-10,2,0,6,False
+2026-09-12,okfn/ckanext-htsql,https://github.com/okfn/ckanext-htsql,1,0,No releases,No releases,2,2,1,False
+2026-09-12,wardi/ckanext-fileedit,https://github.com/wardi/ckanext-fileedit,1,0,No releases,No releases,2,1,1,False
+2026-09-12,cbgaindia/ckanext-budgetviz,https://github.com/cbgaindia/ckanext-budgetviz,1,0,No releases,No releases,2,2,3,False
+2026-09-12,jpmccu/ckanext-arrayexpress,https://github.com/jpmccu/ckanext-arrayexpress,1,0,No releases,No releases,2,0,1,False
+2026-09-12,hwaring/ckanext-licenses,https://github.com/hwaring/ckanext-licenses,1,0,No releases,No releases,2,0,1,False
+2026-09-12,rossjones/ckanext-statsd,https://github.com/rossjones/ckanext-statsd,0,0,No releases,No releases,2,0,1,False
+2026-09-12,kata-csc/ckanext-rems,https://github.com/kata-csc/ckanext-rems,1,0,No releases,No releases,2,0,5,False
+2026-09-12,okfn/ckanext-iceland,https://github.com/okfn/ckanext-iceland,0,0,No releases,No releases,2,0,2,False
+2026-09-12,okfn/ckanext-dgutheme,https://github.com/okfn/ckanext-dgutheme,0,0,No releases,No releases,2,0,0,False
+2026-09-12,berlinonline/ckanext-fisbroker,https://github.com/berlinonline/ckanext-fisbroker,0,0,No releases,No releases,2,2,2,False
+2026-09-12,BU-Spark/ckanext-spark,https://github.com/BU-Spark/ckanext-spark,0,0,No releases,No releases,2,2,7,False
+2026-09-12,USEPA/ckanext-plotly,https://github.com/USEPA/ckanext-plotly,3,0,No releases,No releases,2,1,1,False
+2026-09-12,DataSpace-Mobility/ckanext-dataspace,https://github.com/DataSpace-Mobility/ckanext-dataspace,1,0,No releases,No releases,2,3,1,False
+2026-09-12,ciudadanointeligente/ckanext-forms,https://github.com/ciudadanointeligente/ckanext-forms,0,0,No releases,No releases,2,0,1,False
+2026-09-12,opendatatrentino/ckanext-patstatweb,https://github.com/opendatatrentino/ckanext-patstatweb,0,0,No releases,No releases,3,0,3,False
+2026-09-12,okfn/ckanext-moderatededits,https://github.com/okfn/ckanext-moderatededits,1,0,No releases,No releases,2,0,2,False
+2026-09-12,thenets/ckanext-dadosabertos,https://github.com/thenets/ckanext-dadosabertos,1,0,No releases,No releases,2,0,2,False
+2026-09-12,okfn/ckanext-follower,https://github.com/okfn/ckanext-follower,0,0,No releases,No releases,2,0,1,False
+2026-09-12,DataShades/ckanext-unfold,https://github.com/DataShades/ckanext-unfold,1,0,No releases,No releases,7,1,4,False
+2026-09-12,EnviDat/ckanext-passwordless,https://github.com/EnviDat/ckanext-passwordless,0,0,No releases,No releases,2,0,2,False
+2026-09-12,Chealer/ckanext-categroupy,https://github.com/Chealer/ckanext-categroupy,0,1,v0.1,2020-04-21,2,2,1,False
+2026-09-12,depositar/ckanext-ark,https://github.com/depositar/ckanext-ark,0,6,v1.0.5,2026-04-21,2,0,1,False
+2026-09-12,etri-odp/ckanext-jena,https://github.com/etri-odp/ckanext-jena,2,0,No releases,No releases,2,0,2,False
+2026-09-12,ciudadanointeligente/ckanext-junar,https://github.com/ciudadanointeligente/ckanext-junar,0,0,No releases,No releases,2,0,1,False
+2026-09-12,berlinonline/ckanext-dcatde_berlin,https://github.com/berlinonline/ckanext-dcatde_berlin,0,0,No releases,No releases,2,0,2,False
+2026-09-12,EnviDat/ckanext-envidat_schema,https://github.com/EnviDat/ckanext-envidat_schema,1,0,No releases,No releases,3,0,1,False
+2026-09-12,data-govt-nz/ckanext-dia,https://github.com/data-govt-nz/ckanext-dia,0,1,1.1.0,2018-12-10,3,1,7,False
+2026-09-12,CENDARI/ckanext-dariahshibboleth,https://github.com/CENDARI/ckanext-dariahshibboleth,0,0,No releases,No releases,3,1,1,False
+2026-09-12,frictionlessdata/ckanext-datapackage,https://github.com/frictionlessdata/ckanext-datapackage,0,4,v0.2.4,2024-06-04,4,2,2,False
+2026-09-12,berlinonline/ckanext-berlin,https://github.com/berlinonline/ckanext-berlin,0,0,No releases,No releases,3,0,1,False
+2026-09-12,NextGeoss/ckanext-nextgeoss,https://github.com/NextGeoss/ckanext-nextgeoss,0,16,v0.1.15,2020-10-20,3,5,3,False
+2026-09-12,okfn/ckanext-drupal,https://github.com/okfn/ckanext-drupal,0,0,No releases,No releases,3,0,1,False
+2026-09-12,lightbase/ckanext-datadaemon,https://github.com/lightbase/ckanext-datadaemon,1,0,No releases,No releases,3,0,1,False
+2026-09-12,berlinonline/ckanext-validationapi,https://github.com/berlinonline/ckanext-validationapi,0,0,No releases,No releases,3,0,2,False
+2026-09-12,microcomp/ckanext-torrent,https://github.com/microcomp/ckanext-torrent,0,0,No releases,No releases,3,0,2,False
+2026-09-12,okfn/ckanext-feedcontent,https://github.com/okfn/ckanext-feedcontent,1,0,No releases,No releases,3,1,1,False
+2026-09-12,ecolabdata/ckanext-ecospheres,https://github.com/ecolabdata/ckanext-ecospheres,0,0,No releases,No releases,3,23,3,False
+2026-09-12,geosolutions-it/ckanext-geonode,https://github.com/geosolutions-it/ckanext-geonode,0,0,No releases,No releases,4,6,2,False
+2026-09-12,okfn/ckanext-ghana,https://github.com/okfn/ckanext-ghana,0,0,No releases,No releases,3,0,3,False
+2026-09-12,opendatamonitor/ckanext-harmonisation,https://github.com/opendatamonitor/ckanext-harmonisation,1,0,No releases,No releases,3,3,3,False
+2026-09-12,okfn/ckanext-demo,https://github.com/okfn/ckanext-demo,1,0,No releases,No releases,3,0,8,False
+2026-09-12,shemogumbe/ckanext-dataviewanalytics,https://github.com/shemogumbe/ckanext-dataviewanalytics,0,0,No releases,No releases,3,2,1,False
+2026-09-12,apteksdi/ckanext-sdi,https://github.com/apteksdi/ckanext-sdi,1,0,No releases,No releases,4,1,3,False
+2026-09-12,depositar/ckanext-wikidatakeyword,https://github.com/depositar/ckanext-wikidatakeyword,0,0,No releases,No releases,3,0,1,False
+2026-09-12,dataoverheid/ckanext-donl,https://github.com/dataoverheid/ckanext-donl,0,1,v2.1,2015-09-04,3,0,2,False
+2026-09-12,Pooya-Oladazimi/ckanext-my-first-cool-extension,https://github.com/Pooya-Oladazimi/ckanext-my-first-cool-extension,1,0,No releases,No releases,0,0,1,False
+2026-09-12,qld-gov-au/ckanext-harvester-data-qld-geoscience,https://github.com/qld-gov-au/ckanext-harvester-data-qld-geoscience,2,11,v0.2.0,2026-07-14,0,6,6,False
+2026-09-12,cbgaindia/ckanext-openbudgetsin_theme,https://github.com/cbgaindia/ckanext-openbudgetsin_theme,0,0,No releases,No releases,4,16,6,False
+2026-09-12,salzburgerland/ckanext-salzburgerland_tourismus_theme,https://github.com/salzburgerland/ckanext-salzburgerland_tourismus_theme,2,0,No releases,No releases,1,0,1,False
+2026-09-12,CSIRO-enviro-informatics/ckanext-user_opt_in,https://github.com/CSIRO-enviro-informatics/ckanext-user_opt_in,2,1,v0.1,2018-09-17,1,0,3,False
+2026-09-12,mmoyles87/ckanext-oauth2provider,https://github.com/mmoyles87/ckanext-oauth2provider,2,0,No releases,No releases,1,0,1,False
+2026-09-12,abgov/ckanext-geomapviewer,https://github.com/abgov/ckanext-geomapviewer,0,0,No releases,No releases,4,0,0,False
+2026-09-12,srkunze/ckanext-semantic,https://github.com/srkunze/ckanext-semantic,1,0,No releases,No releases,4,3,0,False
+2026-09-12,alexbyrnes/ckanext-mongodb,https://github.com/alexbyrnes/ckanext-mongodb,0,0,No releases,No releases,4,1,1,False
+2026-09-12,etalab/ckanext-fedmsg,https://github.com/etalab/ckanext-fedmsg,0,0,No releases,No releases,4,1,0,False
+2026-09-12,NaturalHistoryMuseum/ckanext-dev,https://github.com/NaturalHistoryMuseum/ckanext-dev,1,0,No releases,No releases,4,0,3,False
+2026-09-12,keitaroinc/ckanext-datagovmk,https://github.com/keitaroinc/ckanext-datagovmk,0,120,prod.v0.0.47,2021-05-04,4,1,16,False
+2026-09-12,okfn/ckanext-csw,https://github.com/okfn/ckanext-csw,0,0,No releases,No releases,3,0,2,False
+2026-09-12,alabs/ckanext-carchi_theme,https://github.com/alabs/ckanext-carchi_theme,2,0,No releases,No releases,1,3,3,False
+2026-09-12,dadosgovbr/ckanext-dadosgovbr-2014,https://github.com/dadosgovbr/ckanext-dadosgovbr-2014,2,0,No releases,No releases,2,0,4,False
+2026-09-12,qld-gov-au/ckanext-odi-certificates,https://github.com/qld-gov-au/ckanext-odi-certificates,2,4,1.0.3,2023-03-08,0,3,5,False
+2026-09-12,TIBHannover/ckanext-tif-imageview,https://github.com/TIBHannover/ckanext-tif-imageview,4,3,1.1.0,2024-12-13,1,0,2,False
+2026-09-12,data-govt-nz/ckanext-protected_resources,https://github.com/data-govt-nz/ckanext-protected_resources,2,1,0.1.0,2018-07-23,1,4,3,False
+2026-09-12,nispc/ckanext-data_recommendation,https://github.com/nispc/ckanext-data_recommendation,2,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-js-tweaks,https://github.com/DataShades/ckanext-js-tweaks,2,0,No releases,No releases,0,0,4,False
+2026-09-12,WPRDC/ckanext-legacy-wprdctheme,https://github.com/WPRDC/ckanext-legacy-wprdctheme,1,0,No releases,No releases,0,0,2,False
+2026-09-12,dpp-dev/ckanext-latvian-theme,https://github.com/dpp-dev/ckanext-latvian-theme,2,0,No releases,No releases,2,0,2,False
+2026-09-12,DataShades/ckanext-ds-stats,https://github.com/DataShades/ckanext-ds-stats,2,0,No releases,No releases,0,0,2,False
+2026-09-12,datarefuge/ckanext-datarefuge_theme,https://github.com/datarefuge/ckanext-datarefuge_theme,1,0,No releases,No releases,5,0,0,False
+2026-09-12,dathere/ckanext-openapi_viewer,https://github.com/dathere/ckanext-openapi_viewer,2,0,No releases,No releases,0,2,2,False
+2026-09-12,amercader/ckanext-glasgow_theme,https://github.com/amercader/ckanext-glasgow_theme,3,0,No releases,No releases,0,0,2,False
+2026-09-12,DataShades/ckanext-admin-panel,https://github.com/DataShades/ckanext-admin-panel,0,0,No releases,No releases,7,2,3,False
+2026-09-12,PopulateTools/ckanext-ansible-workflow,https://github.com/PopulateTools/ckanext-ansible-workflow,1,0,No releases,No releases,5,0,0,False
+2026-09-12,salsadigitalauorg/ckanext-vocabulary-services,https://github.com/salsadigitalauorg/ckanext-vocabulary-services,2,25,4.2.0,2025-06-13,0,0,7,False
+2026-09-12,datasketch/ckanext-cdmx,https://github.com/datasketch/ckanext-cdmx,3,0,No releases,No releases,1,0,2,False
+2026-09-12,ogdch/ckanext-zhgis,https://github.com/ogdch/ckanext-zhgis,2,5,v1.4,2015-07-16,0,0,4,False
+2026-09-12,XVTSolutions/ckanext-clone,https://github.com/XVTSolutions/ckanext-clone,2,0,No releases,No releases,0,0,0,False
+2026-09-12,apteksdi/ckanext-sdbi,https://github.com/apteksdi/ckanext-sdbi,3,0,No releases,No releases,1,0,2,False
+2026-09-12,BioplatformsAustralia/ckanext-bulk,https://github.com/BioplatformsAustralia/ckanext-bulk,2,0,No releases,No releases,1,2,5,False
+2026-09-12,okfn/ckanext-groupadmin,https://github.com/okfn/ckanext-groupadmin,1,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-heroslider,https://github.com/OpenGov-OpenData/ckanext-heroslider,1,0,No releases,No releases,0,1,1,False
+2026-09-12,NextGeoss/ckanext-nextgeossharvest,https://github.com/NextGeoss/ckanext-nextgeossharvest,1,27,v0.8.1,2022-11-18,5,11,7,False
+2026-09-12,6aika/ckanext-reminder,https://github.com/6aika/ckanext-reminder,2,0,No releases,No releases,1,2,3,False
+2026-09-12,dpc-sdp/ckanext-datasetform,https://github.com/dpc-sdp/ckanext-datasetform,2,0,No releases,No releases,0,0,10,False
+2026-09-12,ckan/ckanext-excelforms,https://github.com/ckan/ckanext-excelforms,3,0,No releases,No releases,1,2,12,False
+2026-09-12,davidr-PA/ckanext-lemr,https://github.com/davidr-PA/ckanext-lemr,2,0,No releases,No releases,1,0,2,False
+2026-09-12,ogdch/ckanext-fso,https://github.com/ogdch/ckanext-fso,2,4,v1.0.3,2014-02-20,1,2,5,False
+2026-09-12,CSIRO-enviro-informatics/ckanext-digitalassetfields,https://github.com/CSIRO-enviro-informatics/ckanext-digitalassetfields,2,1,v0.1,2018-12-05,0,0,4,False
+2026-09-12,datacats/ckanext-ottawa,https://github.com/datacats/ckanext-ottawa,1,0,No releases,No releases,1,1,1,False
+2026-09-12,okfn/ckanext-lcrnz,https://github.com/okfn/ckanext-lcrnz,2,0,No releases,No releases,0,1,5,False
+2026-09-12,open-data/ckanext-history,https://github.com/open-data/ckanext-history,2,0,No releases,No releases,1,0,1,False
+2026-09-12,pdekraker-epa/ckanext-relationshipdisplay,https://github.com/pdekraker-epa/ckanext-relationshipdisplay,2,0,No releases,No releases,0,0,1,False
+2026-09-12,Engerrs/ckanext-spatialingestor,https://github.com/Engerrs/ckanext-spatialingestor,1,0,No releases,No releases,0,0,0,False
+2026-09-12,18F/ckanext-formats,https://github.com/18F/ckanext-formats,7,0,No releases,No releases,1,1,1,False
+2026-09-12,zbw/ckanext-edawax,https://github.com/zbw/ckanext-edawax,2,0,No releases,No releases,1,0,3,False
+2026-09-12,datagovuk/ckanext-redmine,https://github.com/datagovuk/ckanext-redmine,2,0,No releases,No releases,0,0,1,False
+2026-09-12,depositar/ckanext-citation,https://github.com/depositar/ckanext-citation,2,0,No releases,No releases,0,0,1,False
+2026-09-12,gov-il/datagovil-ckanext,https://github.com/gov-il/datagovil-ckanext,2,0,No releases,No releases,0,0,1,False
+2026-09-12,vaquer/ckanext-dkan,https://github.com/vaquer/ckanext-dkan,2,0,No releases,No releases,0,0,1,False
+2026-09-12,TIBHannover/ckanext-videoviewer,https://github.com/TIBHannover/ckanext-videoviewer,2,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-excelimport,https://github.com/DataShades/ckanext-excelimport,2,0,No releases,No releases,1,1,1,False
+2026-09-12,DataShades/ckanext-textcaptcha,https://github.com/DataShades/ckanext-textcaptcha,2,0,No releases,No releases,0,0,2,False
+2026-09-12,okfn/ckanext-panama,https://github.com/okfn/ckanext-panama,1,0,No releases,No releases,0,0,2,False
+2026-09-12,okfn/ckanext-sgdata,https://github.com/okfn/ckanext-sgdata,2,0,No releases,No releases,1,2,4,False
+2026-09-12,GSA/ckanext-datagovcatalog,https://github.com/GSA/ckanext-datagovcatalog,4,0,No releases,No releases,0,3,9,False
+2026-09-12,zelima/ckanext-lincolnshire,https://github.com/zelima/ckanext-lincolnshire,1,0,No releases,No releases,0,0,2,False
+2026-09-12,OpenGov-OpenData/ckanext-datasetpermissioning,https://github.com/OpenGov-OpenData/ckanext-datasetpermissioning,1,0,No releases,No releases,1,0,2,False
+2026-09-12,joetsoi/ckanext-astro,https://github.com/joetsoi/ckanext-astro,2,0,No releases,No releases,0,1,1,False
+2026-09-12,joetm/ckanext-revisiontab,https://github.com/joetm/ckanext-revisiontab,2,0,No releases,No releases,0,0,1,False
+2026-09-12,NuCivic/ckanext-cmap,https://github.com/NuCivic/ckanext-cmap,1,0,No releases,No releases,6,0,2,False
+2026-09-12,open-data/ckanext-openapiview,https://github.com/open-data/ckanext-openapiview,1,0,No releases,No releases,6,2,2,False
+2026-09-12,okfn/ckanext-datacatalogs,https://github.com/okfn/ckanext-datacatalogs,0,0,No releases,No releases,6,0,2,False
+2026-09-12,NaturalHistoryMuseum/ckanext-datasolr,https://github.com/NaturalHistoryMuseum/ckanext-datasolr,1,6,v1.0.5,2018-02-28,6,0,4,False
+2026-09-12,transparencia-mg/ckanext-datapackage-creator,https://github.com/transparencia-mg/ckanext-datapackage-creator,2,0,No releases,No releases,2,2,3,False
+2026-09-12,PacificCommunity/ckanext-spc-pdh,https://github.com/PacificCommunity/ckanext-spc-pdh,2,0,No releases,No releases,2,2,10,False
+2026-09-12,dangsg/ckanext-mysql2mongodb,https://github.com/dangsg/ckanext-mysql2mongodb,3,0,No releases,No releases,0,0,1,False
+2026-09-12,conwetlab/ckanext-datastore_restful,https://github.com/conwetlab/ckanext-datastore_restful,1,0,No releases,No releases,2,0,2,False
+2026-09-12,ngds/ckanext-ogcpreview-bku03232018,https://github.com/ngds/ckanext-ogcpreview-bku03232018,3,0,No releases,No releases,1,1,4,False
+2026-09-12,DataShades/ckanext-drupal_menu_sync,https://github.com/DataShades/ckanext-drupal_menu_sync,3,0,No releases,No releases,0,0,1,False
+2026-09-12,ozwillo/ckanext-ozwillo-organization-api,https://github.com/ozwillo/ckanext-ozwillo-organization-api,2,0,No releases,No releases,0,0,4,False
+2026-09-12,okfn/ckanext-facetcollapse,https://github.com/okfn/ckanext-facetcollapse,2,2,0.1.1,2023-06-27,2,3,4,False
+2026-09-12,jorabra/ckanext-simplesso,https://github.com/jorabra/ckanext-simplesso,1,0,No releases,No releases,2,0,1,False
+2026-09-12,milicp/ckanext-semre,https://github.com/milicp/ckanext-semre,2,1,ckanext-semre-v1.0,2015-06-05,2,1,1,False
+2026-09-12,ckan/ckanext-dsaudit,https://github.com/ckan/ckanext-dsaudit,2,0,No releases,No releases,2,1,2,False
+2026-09-12,TIBHannover/ckanext-dwgviewer,https://github.com/TIBHannover/ckanext-dwgviewer,2,0,No releases,No releases,3,0,1,False
+2026-09-12,nhsengland/ckanext-introjs,https://github.com/nhsengland/ckanext-introjs,5,0,No releases,No releases,2,0,1,False
+2026-09-12,PopulateTools/ckanext-topics,https://github.com/PopulateTools/ckanext-topics,2,0,No releases,No releases,2,0,2,False
+2026-09-12,zbw/ckanext-dara,https://github.com/zbw/ckanext-dara,2,0,No releases,No releases,3,3,2,False
+2026-09-12,shidax/ckanext_notification,https://github.com/shidax/ckanext_notification,2,0,No releases,No releases,2,1,1,False
+2026-09-12,datagovuk/ckanext-dgu-local,https://github.com/datagovuk/ckanext-dgu-local,3,0,No releases,No releases,1,0,2,False
+2026-09-12,TerriaJS/ckanext-terria_view,https://github.com/TerriaJS/ckanext-terria_view,3,0,No releases,No releases,0,1,0,False
+2026-09-12,USEPA/ckanext-collaborator_orgs,https://github.com/USEPA/ckanext-collaborator_orgs,5,0,No releases,No releases,1,0,1,False
+2026-09-12,perecanet/ckanext-stomallorca_theme,https://github.com/perecanet/ckanext-stomallorca_theme,3,7,v0.0.8,2023-11-07,0,0,2,False
+2026-09-12,tum-gis/ckanext-grouphierarchy-sddi,https://github.com/tum-gis/ckanext-grouphierarchy-sddi,3,8,1.1.4,2024-04-17,1,2,6,False
+2026-09-12,SICTIAM/ckanext-resource-location,https://github.com/SICTIAM/ckanext-resource-location,2,0,No releases,No releases,0,0,1,False
+2026-09-12,ozwillo/ckanext-ozwillo-pyoidc,https://github.com/ozwillo/ckanext-ozwillo-pyoidc,2,0,No releases,No releases,0,0,5,False
+2026-09-12,OpenDataGIS/ckanext-facet_scheming,https://github.com/OpenDataGIS/ckanext-facet_scheming,7,3,2.0.0a,2023-07-28,0,0,2,False
+2026-09-12,datasketch/ckanext-pdae_theme,https://github.com/datasketch/ckanext-pdae_theme,3,0,No releases,No releases,1,0,1,False
+2026-09-12,DataShades/ckanext-extend-search,https://github.com/DataShades/ckanext-extend-search,3,0,No releases,No releases,0,0,1,False
+2026-09-12,opendatazurich/ckanext-stadtzh-theme,https://github.com/opendatazurich/ckanext-stadtzh-theme,1,14,v1.3.3,2026-02-25,4,1,9,False
+2026-09-12,DataShades/ckanext-recaptcha,https://github.com/DataShades/ckanext-recaptcha,3,0,No releases,No releases,0,1,1,False
+2026-09-12,geosolutions-it/ckanext-tableauview,https://github.com/geosolutions-it/ckanext-tableauview,3,0,No releases,No releases,0,1,1,False
+2026-09-12,okfn/ckanext-wordpresser,https://github.com/okfn/ckanext-wordpresser,1,0,No releases,No releases,12,1,4,False
+2026-09-12,CodeandoMexico/ckanext-openrefine,https://github.com/CodeandoMexico/ckanext-openrefine,3,0,No releases,No releases,1,1,3,False
+2026-09-12,DataShades/ckanext-searchfed,https://github.com/DataShades/ckanext-searchfed,3,0,No releases,No releases,0,0,7,False
+2026-09-12,ilri/ckanext-dataportal,https://github.com/ilri/ckanext-dataportal,3,0,No releases,No releases,0,0,1,False
+2026-09-12,DEFRA/ckanext-defrareports,https://github.com/DEFRA/ckanext-defrareports,3,0,No releases,No releases,0,2,2,False
+2026-09-12,Cadasta/ckanext-project,https://github.com/Cadasta/ckanext-project,3,0,No releases,No releases,1,14,4,False
+2026-09-12,ccca-dc/ckanext-ccca,https://github.com/ccca-dc/ckanext-ccca,3,1,v1.0,2017-11-24,0,0,5,False
+2026-09-12,WorldBank-Transport/ckanext-resourcemeta,https://github.com/WorldBank-Transport/ckanext-resourcemeta,3,0,No releases,No releases,0,0,1,False
+2026-09-12,mateuszneumann/ckanext-ceon,https://github.com/mateuszneumann/ckanext-ceon,3,0,No releases,No releases,0,0,3,False
+2026-09-12,DataShades/ckanext-metaexport,https://github.com/DataShades/ckanext-metaexport,3,0,No releases,No releases,1,1,7,False
+2026-09-12,datagovuk/ckanext-linkfinder,https://github.com/datagovuk/ckanext-linkfinder,1,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-githubrepopreview,https://github.com/DataShades/ckanext-githubrepopreview,2,0,No releases,No releases,4,2,0,False
+2026-09-12,alantygel/ckanext-semantictags,https://github.com/alantygel/ckanext-semantictags,2,0,No releases,No releases,3,0,1,False
+2026-09-12,BioplatformsAustralia/ckanext-bpatheme,https://github.com/BioplatformsAustralia/ckanext-bpatheme,3,0,No releases,No releases,3,0,9,False
+2026-09-12,reedv/ckanext-publicrestrictiondatasets,https://github.com/reedv/ckanext-publicrestrictiondatasets,2,0,No releases,No releases,3,4,1,False
+2026-09-12,okfn/ckanext-storage,https://github.com/okfn/ckanext-storage,2,0,No releases,No releases,3,0,4,False
+2026-09-12,datopian/ckanext-honduras,https://github.com/datopian/ckanext-honduras,1,2,0.0.18,2019-09-25,3,12,5,False
+2026-09-12,ckan/ckanext-oauth2waad,https://github.com/ckan/ckanext-oauth2waad,4,0,No releases,No releases,1,4,3,False
+2026-09-12,ngds/ckanext-datastorecsw-bku03232018,https://github.com/ngds/ckanext-datastorecsw-bku03232018,4,0,No releases,No releases,0,2,2,False
+2026-09-12,qld-gov-au/ckanext-data-qld-theme,https://github.com/qld-gov-au/ckanext-data-qld-theme,4,11,4.0.1,2022-03-16,0,0,15,False
+2026-09-12,ngds/ckanext-mapsearch-bku03232018,https://github.com/ngds/ckanext-mapsearch-bku03232018,4,0,No releases,No releases,1,3,4,False
+2026-09-12,dpc-sdp/ckanext_datavic_odp_schema,https://github.com/dpc-sdp/ckanext_datavic_odp_schema,5,0,No releases,No releases,0,0,16,False
+2026-09-12,OCHA-DAP/ckanext-powerview,https://github.com/OCHA-DAP/ckanext-powerview,2,3,0.1.0,2020-03-19,4,0,2,False
+2026-09-12,Helsingin-kaupungin-tietokeskus/ckanext-hrifi,https://github.com/Helsingin-kaupungin-tietokeskus/ckanext-hrifi,2,0,No releases,No releases,4,0,0,False
+2026-09-12,govro/ckanext-romania_theme,https://github.com/govro/ckanext-romania_theme,4,0,No releases,No releases,1,3,4,False
+2026-09-12,salsadigitalauorg/ckanext-restricted-access,https://github.com/salsadigitalauorg/ckanext-restricted-access,6,0,No releases,No releases,0,1,2,False
+2026-09-12,tum-gis/ckanext-relation-sddi,https://github.com/tum-gis/ckanext-relation-sddi,4,8,1.1.2,2025-05-13,1,0,7,False
+2026-09-12,DataShades/ckanext-harvest-basket,https://github.com/DataShades/ckanext-harvest-basket,2,0,No releases,No releases,7,1,4,False
+2026-09-12,mutantsan/ckanext-zippreview,https://github.com/mutantsan/ckanext-zippreview,4,0,No releases,No releases,0,0,0,False
+2026-09-12,Helsingin-kaupungin-tietokeskus/ckanext-multiedit,https://github.com/Helsingin-kaupungin-tietokeskus/ckanext-multiedit,3,0,No releases,No releases,1,1,0,False
+2026-09-12,developmentseed/ckanext-authkey,https://github.com/developmentseed/ckanext-authkey,2,0,No releases,No releases,0,0,2,False
+2026-09-12,open-data/ckanext-stcndm,https://github.com/open-data/ckanext-stcndm,3,1,0.44,2016-03-22,0,7,7,False
+2026-09-12,asc-csa/ckanext-asc-csa,https://github.com/asc-csa/ckanext-asc-csa,5,5,v1.0,2021-08-13,10,25,7,False
+2026-09-12,EUDAT-B2FIND/ckanext-timeline,https://github.com/EUDAT-B2FIND/ckanext-timeline,4,0,No releases,No releases,1,0,3,False
+2026-09-12,OpenGov-OpenData/ckanext-extensionstheme,https://github.com/OpenGov-OpenData/ckanext-extensionstheme,1,0,No releases,No releases,1,0,1,False
+2026-09-12,gfenoy/ckanext-wps,https://github.com/gfenoy/ckanext-wps,4,0,No releases,No releases,1,1,1,False
+2026-09-12,kolesarj/ckanext-aafc,https://github.com/kolesarj/ckanext-aafc,3,0,No releases,No releases,0,0,1,False
+2026-09-12,enterstudio/ckanext-datagovau,https://github.com/enterstudio/ckanext-datagovau,4,0,No releases,No releases,0,0,8,False
+2026-09-12,CityOfPhiladelphia/ckanext-highlight-related-items,https://github.com/CityOfPhiladelphia/ckanext-highlight-related-items,3,0,No releases,No releases,3,0,2,False
+2026-09-12,datalocale/ckanext-datalocale,https://github.com/datalocale/ckanext-datalocale,3,0,No releases,No releases,2,3,2,False
+2026-09-12,ckan/ckanext-datapusherext,https://github.com/ckan/ckanext-datapusherext,3,0,No releases,No releases,0,0,4,False
+2026-09-12,dpc-sdp/ckanext_datavic_odp_theme,https://github.com/dpc-sdp/ckanext_datavic_odp_theme,6,0,No releases,No releases,1,0,16,False
+2026-09-12,ngds/ckanext-metadata-bku03232018,https://github.com/ngds/ckanext-metadata-bku03232018,5,0,No releases,No releases,1,10,5,False
+2026-09-12,EUDAT-B2FIND/ckanext-oaipmh-server,https://github.com/EUDAT-B2FIND/ckanext-oaipmh-server,5,1,v1.0.0,2025-06-30,3,1,13,False
+2026-09-12,okfn/ckanext-rdf,https://github.com/okfn/ckanext-rdf,2,0,No releases,No releases,6,2,3,False
+2026-09-12,okfn/ckanext-inspire,https://github.com/okfn/ckanext-inspire,2,0,No releases,No releases,6,2,4,False
+2026-09-12,XVTSolutions/ckanext-extend_search,https://github.com/XVTSolutions/ckanext-extend_search,5,1,v1.0,2014-04-17,2,0,2,False
+2026-09-12,tdt/ckanext-tdt,https://github.com/tdt/ckanext-tdt,2,3,0.2.1,2013-12-12,7,0,3,False
+2026-09-12,dpc-sdp/ckanext-datavic-harvester,https://github.com/dpc-sdp/ckanext-datavic-harvester,5,0,No releases,No releases,0,0,14,False
+2026-09-12,salsadigitalauorg/ckanext-datastore-refresh,https://github.com/salsadigitalauorg/ckanext-datastore-refresh,5,0,No releases,No releases,0,2,2,False
+2026-09-12,okfn/ckanext-vegaview,https://github.com/okfn/ckanext-vegaview,2,0,No releases,No releases,7,4,1,False
+2026-09-12,REEEP/ckanext-climate-tagger,https://github.com/REEEP/ckanext-climate-tagger,2,0,No releases,No releases,9,2,3,False
+2026-09-12,DEFRA/ckanext-defra,https://github.com/DEFRA/ckanext-defra,3,0,No releases,No releases,3,0,2,False
+2026-09-12,okfn/ckanext-tsbsatellites,https://github.com/okfn/ckanext-tsbsatellites,3,0,No releases,No releases,3,3,7,False
+2026-09-12,GSA/ckanext-extlink,https://github.com/GSA/ckanext-extlink,4,0,No releases,No releases,3,0,1,False
+2026-09-12,redlink-gmbh/ckanext-redlink,https://github.com/redlink-gmbh/ckanext-redlink,3,0,No releases,No releases,3,0,3,False
+2026-09-12,okfn/ckanext-importlib,https://github.com/okfn/ckanext-importlib,3,0,No releases,No releases,3,0,1,False
+2026-09-12,DataShades/ckanext-acl,https://github.com/DataShades/ckanext-acl,5,0,No releases,No releases,1,1,1,False
+2026-09-12,jakubklimek/ckanext-odczdataset,https://github.com/jakubklimek/ckanext-odczdataset,5,0,No releases,No releases,0,1,2,False
+2026-09-12,CodeForAfrica/ckanext-socialite,https://github.com/CodeForAfrica/ckanext-socialite,5,0,No releases,No releases,1,0,2,False
+2026-09-12,geosolutions-it/ckanext-shibboleth,https://github.com/geosolutions-it/ckanext-shibboleth,5,0,No releases,No releases,0,1,1,False
+2026-09-12,dpc-sdp/ckanext-datavic-iar-theme,https://github.com/dpc-sdp/ckanext-datavic-iar-theme,6,0,No releases,No releases,0,0,14,False
+2026-09-12,ckan/ckanext-persona,https://github.com/ckan/ckanext-persona,3,0,No releases,No releases,2,4,1,False
+2026-09-12,govro/ckanext-inventory,https://github.com/govro/ckanext-inventory,4,0,No releases,No releases,2,14,1,False
+2026-09-12,ozwillo/ckanext-ozwillo-theme,https://github.com/ozwillo/ckanext-ozwillo-theme,4,0,No releases,No releases,1,4,7,False
+2026-09-12,okfde/ckanext-offenedaten,https://github.com/okfde/ckanext-offenedaten,3,0,No releases,No releases,4,29,13,False
+2026-09-12,PublicaMundi/ckanext-vectorstorer,https://github.com/PublicaMundi/ckanext-vectorstorer,3,0,No releases,No releases,4,0,3,False
+2026-09-12,aliwaqas333/ckanext-kpodp_theme,https://github.com/aliwaqas333/ckanext-kpodp_theme,3,0,No releases,No releases,6,2,3,False
+2026-09-12,wardi/ckanext-geocodejob,https://github.com/wardi/ckanext-geocodejob,3,0,No releases,No releases,1,0,1,False
+2026-09-12,dpc-sdp/ckanext-datavicmain,https://github.com/dpc-sdp/ckanext-datavicmain,7,0,No releases,No releases,0,0,17,False
+2026-09-12,Edouard-Legoupil/ckanext-unhcr,https://github.com/Edouard-Legoupil/ckanext-unhcr,5,0,No releases,No releases,1,0,4,False
+2026-09-12,neogeo-technologies/ckanext-idgotheme,https://github.com/neogeo-technologies/ckanext-idgotheme,6,24,1.16,2023-06-12,0,1,6,False
+2026-09-12,GSA/ckanext-googleanalyticsbasic,https://github.com/GSA/ckanext-googleanalyticsbasic,4,1,Release1.27,2015-03-16,1,0,8,False
+2026-09-12,opendatatrentino/ckanext-datitrentinoit,https://github.com/opendatatrentino/ckanext-datitrentinoit,5,0,No releases,No releases,1,0,2,False
+2026-09-12,amercader/ckanext-embeddings,https://github.com/amercader/ckanext-embeddings,4,2,v0.1.1,2024-05-22,18,2,2,False
+2026-09-12,okfn/ckanext-ecportal,https://github.com/okfn/ckanext-ecportal,3,0,No releases,No releases,5,0,9,False
+2026-09-12,datopian/ckanext-datastore-bigquery,https://github.com/datopian/ckanext-datastore-bigquery,2,0,No releases,No releases,10,3,6,False
+2026-09-12,okfn/ckanext-socrata,https://github.com/okfn/ckanext-socrata,4,4,2.0.3a,2018-09-28,3,2,4,False
+2026-09-12,opendata-swiss/ckanext-switzerland-ng,https://github.com/opendata-swiss/ckanext-switzerland-ng,5,6,1.0.7,2026-09-09,4,0,14,False
+2026-09-12,NaturalHistoryMuseum/ckanext-ckanpackager,https://github.com/NaturalHistoryMuseum/ckanext-ckanpackager,3,23,v3.0.0,2023-07-18,6,0,5,False
+2026-09-12,ckan/ckanext-repo,https://github.com/ckan/ckanext-repo,4,0,No releases,No releases,3,0,3,False
+2026-09-12,CodeForAfrica/ckanext-notify,https://github.com/CodeForAfrica/ckanext-notify,5,0,No releases,No releases,2,10,2,False
+2026-09-12,nhsengland/ckanext-nhsengland,https://github.com/nhsengland/ckanext-nhsengland,6,0,No releases,No releases,3,6,5,False
+2026-09-12,datagovuk/ckanext-certificates,https://github.com/datagovuk/ckanext-certificates,5,0,No releases,No releases,1,1,2,False
+2026-09-12,gsi-cyberjapan/ckanext-basemaps,https://github.com/gsi-cyberjapan/ckanext-basemaps,4,0,No releases,No releases,4,0,0,False
+2026-09-12,OpenGov-OpenData/ckanext-cartodbmap,https://github.com/OpenGov-OpenData/ckanext-cartodbmap,2,0,No releases,No releases,9,5,2,False
+2026-09-12,keitaroinc/ckanext-knowledgehub,https://github.com/keitaroinc/ckanext-knowledgehub,2,0,No releases,No releases,9,4,17,False
+2026-09-12,conwetlab/ckanext-wirecloud_view,https://github.com/conwetlab/ckanext-wirecloud_view,6,3,v1.1.0,2018-07-20,2,2,4,False
+2026-09-12,alexandrainst/ckanext-realtime,https://github.com/alexandrainst/ckanext-realtime,2,0,No releases,No releases,28,5,0,False
+2026-09-12,geosolutions-it/ckanext-azure-auth,https://github.com/geosolutions-it/ckanext-azure-auth,6,0,No releases,No releases,5,3,6,False
+2026-09-12,VilledeMontreal/ckanext-montreal-archive,https://github.com/VilledeMontreal/ckanext-montreal-archive,5,0,No releases,No releases,5,2,8,False
+2026-09-12,bcgov/ckanext-openapiviewer,https://github.com/bcgov/ckanext-openapiviewer,4,8,3.1.2,2018-03-12,7,0,8,False
+2026-09-12,ngds/ckanext-geoserver-bku03232018,https://github.com/ngds/ckanext-geoserver-bku03232018,6,0,No releases,No releases,5,6,4,False
+2026-09-12,DataShades/ckanext-workflow,https://github.com/DataShades/ckanext-workflow,6,0,No releases,No releases,3,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-bostonschema,https://github.com/OpenGov-OpenData/ckanext-bostonschema,3,0,No releases,No releases,3,0,7,False
+2026-09-12,rossjones/ckanext-gdoc,https://github.com/rossjones/ckanext-gdoc,6,0,No releases,No releases,3,0,2,False
+2026-09-12,datagovuk/ckanext-os,https://github.com/datagovuk/ckanext-os,4,0,No releases,No releases,9,1,5,False
+2026-09-12,okfn/ckanext-pdeu,https://github.com/okfn/ckanext-pdeu,4,0,No releases,No releases,9,8,8,False
+2026-09-12,qld-gov-au/ckanext-qgov,https://github.com/qld-gov-au/ckanext-qgov,4,40,7.4.4,2026-09-01,4,0,10,False
+2026-09-12,telefonicaid/ckanext-ngsiview,https://github.com/telefonicaid/ckanext-ngsiview,14,0,No releases,No releases,1,9,1,False
+2026-09-12,DanePubliczneGovPl/ckanext-danepubliczne,https://github.com/DanePubliczneGovPl/ckanext-danepubliczne,2,0,No releases,No releases,10,67,4,False
+2026-09-12,alantygel/ckanext-tagmanager,https://github.com/alantygel/ckanext-tagmanager,4,0,No releases,No releases,10,2,2,False
+2026-09-12,conwetlab/ckanext-storepublisher,https://github.com/conwetlab/ckanext-storepublisher,6,8,v0.3.2,2015-11-25,3,0,3,False
+2026-09-12,datopian/ckanext-aircan,https://github.com/datopian/ckanext-aircan,4,8,v2.0.1,2026-07-18,7,9,8,False
+2026-09-12,datopian/ckanext-datasetapproval,https://github.com/datopian/ckanext-datasetapproval,13,0,No releases,No releases,5,6,2,False
+2026-09-12,okfn/ckanext-lacounts,https://github.com/okfn/ckanext-lacounts,5,93,0.0.1b5,2019-06-02,8,23,5,False
+2026-09-12,kata-csc/ckanext-kata,https://github.com/kata-csc/ckanext-kata,4,3,v4.3.1,2017-06-06,8,3,13,False
+2026-09-12,DataShades/ckanext-cloudconnector,https://github.com/DataShades/ckanext-cloudconnector,5,0,No releases,No releases,8,2,2,False
+2026-09-12,open-data/ckanext-recombinant,https://github.com/open-data/ckanext-recombinant,7,0,No releases,No releases,3,4,12,False
+2026-09-12,datacats/ckanext-geopusher,https://github.com/datacats/ckanext-geopusher,5,0,No releases,No releases,15,1,2,False
+2026-09-12,keitaroinc/ckanext-cas,https://github.com/keitaroinc/ckanext-cas,9,0,No releases,No releases,4,1,4,False
+2026-09-12,transparenzportalhamburg/ckanext-fulltext,https://github.com/transparenzportalhamburg/ckanext-fulltext,6,0,No releases,No releases,8,3,2,False
+2026-09-12,IATI/ckanext-iati,https://github.com/IATI/ckanext-iati,6,6,v1.1.9,2018-03-26,11,53,35,False
+2026-09-12,okfn/ckanext-mx,https://github.com/okfn/ckanext-mx,7,0,No releases,No releases,6,0,3,False
+2026-09-12,data-govt-nz/ckanext-dia_theme,https://github.com/data-govt-nz/ckanext-dia_theme,8,8,2.0.1,2019-07-31,7,4,11,False
+2026-09-12,opendata-swiss/ckanext-switzerland,https://github.com/opendata-swiss/ckanext-switzerland,6,0,No releases,No releases,9,7,9,False
+2026-09-12,okfn/ckanext-example,https://github.com/okfn/ckanext-example,7,0,No releases,No releases,9,3,6,False
+2026-09-12,ckan/ckanext-s3archive,https://github.com/ckan/ckanext-s3archive,9,0,No releases,No releases,8,4,2,False
+2026-09-12,datawagovau/ckanext-datawagovautheme,https://github.com/datawagovau/ckanext-datawagovautheme,8,1,v1.0,2015-10-29,7,23,5,False
+2026-09-12,ngds/ckanext-ngds-bku03232018,https://github.com/ngds/ckanext-ngds-bku03232018,13,0,No releases,No releases,5,69,17,False
+2026-09-12,okfn/ckanext-datahub,https://github.com/okfn/ckanext-datahub,5,0,No releases,No releases,11,29,12,False
+2026-09-12,cfpb/ckanext-cfpb-extrafields,https://github.com/cfpb/ckanext-cfpb-extrafields,10,3,v1.1.1,2016-08-10,4,5,9,False
+2026-09-12,SENATICS/ckanext-opendatagovpy,https://github.com/SENATICS/ckanext-opendatagovpy,7,0,No releases,No releases,13,0,3,False
+2026-09-12,datacats/ckanext-webhooks,https://github.com/datacats/ckanext-webhooks,7,0,No releases,No releases,14,6,2,False
+2026-09-12,ckan/ckanext-intro,https://github.com/ckan/ckanext-intro,9,0,No releases,No releases,6,1,1,False
+2026-09-12,OpenGov-OpenData/ckanext-cob_theme,https://github.com/OpenGov-OpenData/ckanext-cob_theme,11,0,No releases,No releases,7,0,4,False
+2026-09-12,datadotworld/ckanext-datadotworld,https://github.com/datadotworld/ckanext-datadotworld,9,0,No releases,No releases,12,3,6,False
+2026-09-12,costibleotu/ckanext-dataportaltheme,https://github.com/costibleotu/ckanext-dataportaltheme,26,0,No releases,No releases,1,0,4,False
+2026-09-12,open-data/ckanext-wet-boew,https://github.com/open-data/ckanext-wet-boew,10,0,No releases,No releases,9,7,8,False
+2026-09-12,milicp/ckanext-lire,https://github.com/milicp/ckanext-lire,10,1,ckanext-lire-v1.0,2015-06-06,7,6,1,False
+2026-09-12,AppGeo/ckanext-agsview,https://github.com/AppGeo/ckanext-agsview,9,0,No releases,No releases,10,8,2,False
+2026-09-12,geosolutions-it/ckanext-geonetwork,https://github.com/geosolutions-it/ckanext-geonetwork,13,0,No releases,No releases,11,5,1,False
+2026-09-12,PublicaMundi/ckanext-publicamundi,https://github.com/PublicaMundi/ckanext-publicamundi,11,0,No releases,No releases,13,54,5,False
+2026-09-12,azavea/ckanext-odp_theme,https://github.com/azavea/ckanext-odp_theme,11,1,CKAN-2.2,2017-10-10,14,7,6,False
+2026-09-12,CodeForAfrica/ckanext-openafrica,https://github.com/CodeForAfrica/ckanext-openafrica,13,0,No releases,No releases,10,12,7,False
+2026-09-12,alphagov/ckanext-datagovuk,https://github.com/alphagov/ckanext-datagovuk,16,76,v1.19.4,2026-09-09,12,19,38,False
+2026-09-12,cmuphillycapstone/ckanext-dictionary,https://github.com/cmuphillycapstone/ckanext-dictionary,15,0,No releases,No releases,10,9,3,False
+2026-09-12,liip/ckanext-ddi,https://github.com/liip/ckanext-ddi,14,1,v1.0.0,2015-07-08,13,3,4,False
+2026-09-12,geosolutions-it/ckanext-dcatapit,https://github.com/geosolutions-it/ckanext-dcatapit,19,0,No releases,No releases,11,18,3,False
+2026-09-12,frictionlessdata/ckanext-datapackager,https://github.com/frictionlessdata/ckanext-datapackager,15,1,v1.1.0,2022-08-17,37,21,9,False
+2026-09-12,ckan/ckanext-datastorer,https://github.com/ckan/ckanext-datastorer,16,0,No releases,No releases,22,16,13,False
+2026-09-12,ckan/ckanext-basiccharts,https://github.com/ckan/ckanext-basiccharts,28,0,No releases,No releases,12,18,8,False
+2026-09-12,bcgov/ckanext-bcgov,https://github.com/bcgov/ckanext-bcgov,22,50,2.0.1,2021-11-05,26,183,26,False
+2026-09-12,ckan/ckanext-mapviews,https://github.com/ckan/ckanext-mapviews,22,0,No releases,No releases,27,16,6,False
+2026-09-12,datagovuk/ckanext-dgu,https://github.com/datagovuk/ckanext-dgu,30,0,No releases,No releases,33,72,19,False
+2026-09-12,open-data/ckanext-canada,https://github.com/open-data/ckanext-canada,37,0,No releases,No releases,64,16,22,False
+2026-09-12,toll/ckanext-tolltheme,https://github.com/toll/ckanext-tolltheme,0,0,No releases,No releases,0,1,3,True
+2026-09-12,depositar/ckanext-data-depositario,https://github.com/depositar/ckanext-data-depositario,4,48,6.8.1,2026-09-08,6,0,5,True
+2026-09-12,kartoza/ckanext-dalrrd-emc-dcpr,https://github.com/kartoza/ckanext-dalrrd-emc-dcpr,5,2,v0.0.1-rc,2022-10-23,4,44,7,True
+2026-09-12,unckan/ckanext-dbquery,https://github.com/unckan/ckanext-dbquery,0,1,0.1.0,2025-02-14,0,1,2,False
+2026-09-12,okfn/ckanext-activityinfo,https://github.com/okfn/ckanext-activityinfo,0,0,No releases,No releases,0,5,1,False
+2026-09-12,DataShades/ckanext-check-link,https://github.com/DataShades/ckanext-check-link,2,0,No releases,No releases,0,1,3,False
+2026-09-12,okfn/ckanext-announcements,https://github.com/okfn/ckanext-announcements,0,3,0.1.4,2025-01-07,1,1,2,False
+2026-09-12,NorwegianRefugeeCouncil/ckanext-api-tracking,https://github.com/NorwegianRefugeeCouncil/ckanext-api-tracking,2,7,0.5.1,2025-03-05,6,5,5,False
+2026-09-12,open-data/ckanext-citeproc,https://github.com/open-data/ckanext-citeproc,1,0,No releases,No releases,0,0,1,False
+2026-09-12,unckan/ckanext-push-errors,https://github.com/unckan/ckanext-push-errors,0,0,No releases,No releases,4,4,2,False
+2026-09-12,unckan/ckanext-superset,https://github.com/unckan/ckanext-superset,1,0,No releases,No releases,1,12,2,False
+2026-09-12,NaturalHistoryMuseum/ckanext-contact,https://github.com/NaturalHistoryMuseum/ckanext-contact,24,20,v2.4.4,2025-06-09,5,4,5,False
+2026-09-12,OpenGov-OpenData/ckanext-discourse,https://github.com/OpenGov-OpenData/ckanext-discourse,13,0,No releases,No releases,13,9,4,False
+2026-09-12,bcgov/ckanext-sso,https://github.com/bcgov/ckanext-sso,11,0,No releases,No releases,6,3,9,False
+2026-09-12,aptivate/ckanext-hdx_package,https://github.com/aptivate/ckanext-hdx_package,0,0,No releases,No releases,0,0,6,False
+2026-09-12,aptivate/ckanext-hdx_search,https://github.com/aptivate/ckanext-hdx_search,0,0,No releases,No releases,0,0,5,False
+2026-09-12,mgandarela/ckanext-hdx_theme,https://github.com/mgandarela/ckanext-hdx_theme,0,0,No releases,No releases,0,0,1,False
+2026-09-12,aptivate/ckanext-hdx_users,https://github.com/aptivate/ckanext-hdx_users,0,0,No releases,No releases,0,0,5,False
+2026-09-12,datopian/ckanext-requestdata,https://github.com/datopian/ckanext-requestdata,9,28,v2.1.7,2017-08-30,6,3,11,False
+2026-09-12,data-govt-nz/ckanext-security,https://github.com/data-govt-nz/ckanext-security,42,6,4.1.1,2024-03-02,27,18,15,False
+2026-09-12,vrk-kpa/ckanext-ytp-request,https://github.com/vrk-kpa/ckanext-ytp-request,5,0,No releases,No releases,2,3,5,False
+2026-09-12,DataShades/ckanext-event-audit,https://github.com/DataShades/ckanext-event-audit,0,0,No releases,No releases,1,0,2,False
+2026-09-12,DataShades/ckanext-files,https://github.com/DataShades/ckanext-files,2,14,v1.3.4,2026-09-11,16,2,3,False
+2026-09-12,DataShades/ckanext-flakes,https://github.com/DataShades/ckanext-flakes,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-or_facet,https://github.com/DataShades/ckanext-or_facet,1,0,No releases,No releases,0,0,2,False
+2026-09-12,DataShades/ckanext-saml,https://github.com/DataShades/ckanext-saml,1,0,No releases,No releases,4,1,5,False
+2026-09-12,mutantsan/ckanext-search-autocomplete,https://github.com/mutantsan/ckanext-search-autocomplete,5,0,No releases,No releases,0,0,2,False
+2026-09-12,DataShades/ckanext-snap,https://github.com/DataShades/ckanext-snap,0,0,No releases,No releases,0,0,1,False
+2026-09-12,DataShades/ckanext-fpx,https://github.com/DataShades/ckanext-fpx,1,0,No releases,No releases,2,0,1,False
+2026-09-12,DataShades/ckanext-ingest,https://github.com/DataShades/ckanext-ingest,1,0,No releases,No releases,0,2,2,False
+2026-09-12,TkTech/ckanext-cloudstorage,https://github.com/TkTech/ckanext-cloudstorage,55,0,No releases,No releases,37,23,7,False
+2026-09-12,OpenGov-OpenData/ckanext-custom_harvest,https://github.com/OpenGov-OpenData/ckanext-custom_harvest,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datacats/ckanext-featuredviews,https://github.com/datacats/ckanext-featuredviews,8,0,No releases,No releases,10,4,2,False
+2026-09-12,OpenGov-OpenData/ckanext-heroslideradmin,https://github.com/OpenGov-OpenData/ckanext-heroslideradmin,0,0,No releases,No releases,0,0,2,False
+2026-09-12,OpenGov-OpenData/ckanext-in_app_reporting,https://github.com/OpenGov-OpenData/ckanext-in_app_reporting,0,0,No releases,No releases,0,0,2,False
+2026-09-12,whythawk/ckanext-odata,https://github.com/whythawk/ckanext-odata,29,0,No releases,No releases,8,0,4,False
+2026-09-12,geosolutions-it/ckanext-multilang,https://github.com/geosolutions-it/ckanext-multilang,8,0,No releases,No releases,2,8,4,False
+2026-09-12,OpenGov-OpenData/ckanext-opendata_theme,https://github.com/OpenGov-OpenData/ckanext-opendata_theme,3,0,No releases,No releases,0,0,6,False
+2026-09-12,geosolutions-it/ckanext-categorie,https://github.com/geosolutions-it/ckanext-categorie,0,0,No releases,No releases,0,0,1,False
+2026-09-12,jesusredondo/ckanext-federgob,https://github.com/jesusredondo/ckanext-federgob,7,0,No releases,No releases,1,3,2,False
+2026-09-12,DataShades/ckanext-msal,https://github.com/DataShades/ckanext-msal,2,0,No releases,No releases,1,1,3,False
+2026-09-12,ongov/ckanext-ontario_theme,https://github.com/ongov/ckanext-ontario_theme,16,32,v3.0.21,2026-05-21,8,17,17,False
+2026-09-12,ckan/ckanext-validation,https://github.com/ckan/ckanext-validation,33,4,2.2.0,2024-12-16,30,46,12,True
+2026-09-12,O2br/ckanext-temacultura,https://github.com/O2br/ckanext-temacultura,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ckan/ckanext-archiver,https://github.com/ckan/ckanext-archiver,42,0,No releases,No releases,21,23,21,False
+2026-09-12,qld-gov-au/ckanext-csrf-filter,https://github.com/qld-gov-au/ckanext-csrf-filter,6,15,2.0.1,2025-12-01,0,2,4,False
+2026-09-12,qld-gov-au/ckanext-data-qld,https://github.com/qld-gov-au/ckanext-data-qld,8,68,8.2.3,2026-08-26,2,4,22,False
+2026-09-12,DataShades/ckanext-oidc-pkce,https://github.com/DataShades/ckanext-oidc-pkce,8,1,v0.4.1,2025-08-18,5,1,7,False
+2026-09-12,ckan/ckanext-qa,https://github.com/ckan/ckanext-qa,56,0,No releases,No releases,27,28,27,False
+2026-09-12,ckan/ckanext-report,https://github.com/ckan/ckanext-report,35,0,No releases,No releases,18,7,8,False
+2026-09-12,qld-gov-au/ckanext-resource-type-validation,https://github.com/qld-gov-au/ckanext-resource-type-validation,2,15,1.0.14,2026-08-28,5,1,5,False
+2026-09-12,qld-gov-au/ckanext-resource-visibility,https://github.com/qld-gov-au/ckanext-resource-visibility,0,6,2.1.2,2025-02-06,0,0,5,False
+2026-09-12,qld-gov-au/ckanext-ssm-config,https://github.com/qld-gov-au/ckanext-ssm-config,2,5,0.1.2,2026-08-28,1,0,4,False
+2026-09-12,qld-gov-au/ckanext-validation-schema-generator,https://github.com/qld-gov-au/ckanext-validation-schema-generator,0,6,2.0.1,2025-09-26,0,10,4,False
+2026-09-12,vrk-kpa/ckanext-ytp-comments,https://github.com/vrk-kpa/ckanext-ytp-comments,10,0,No releases,No releases,2,8,2,False
+2026-09-12,damalaga/ckanext-malaga,https://github.com/damalaga/ckanext-malaga,2,0,No releases,No releases,4,2,1,False
+2026-09-12,cioos-siooc/ckanext-cioos_harvest,https://github.com/cioos-siooc/ckanext-cioos_harvest,1,0,No releases,No releases,0,5,2,False
+2026-09-12,cioos-siooc/ckanext-cioos_theme,https://github.com/cioos-siooc/ckanext-cioos_theme,3,0,No releases,No releases,0,8,9,False
+2026-09-12,okfn/ckanext-hidegroups,https://github.com/okfn/ckanext-hidegroups,5,0,No releases,No releases,3,2,1,False
+2026-09-12,ccancellieri/ckanext-jsonschema,https://github.com/ccancellieri/ckanext-jsonschema,2,0,No releases,No releases,5,1,5,False
+2026-09-12,ccancellieri/ckanext-publisher,https://github.com/ccancellieri/ckanext-publisher,0,0,No releases,No releases,0,0,3,False
+2026-09-12,ccancellieri/ckanext-scheming_dcat,https://github.com/ccancellieri/ckanext-scheming_dcat,0,0,No releases,No releases,0,0,3,False
+2026-09-12,ccancellieri/ckanext-terriajs,https://github.com/ccancellieri/ckanext-terriajs,0,0,No releases,No releases,0,0,5,False
+2026-09-12,ckan/ckanext-dashboard,https://github.com/ckan/ckanext-dashboard,19,0,No releases,No releases,29,7,6,False
+2026-09-12,mominimtiaz786/ckanext-example_theme,https://github.com/mominimtiaz786/ckanext-example_theme,2,0,No releases,No releases,0,0,1,False
+2026-09-12,eradan/ckanext-toscana-harvest,https://github.com/eradan/ckanext-toscana-harvest,1,0,No releases,No releases,1,0,0,False
+2026-09-12,GSA/ckanext-datagovtheme,https://github.com/GSA/ckanext-datagovtheme,26,0,No releases,No releases,22,5,24,False
+2026-09-12,GSA/ckanext-geodatagov,https://github.com/GSA/ckanext-geodatagov,47,0,No releases,No releases,42,18,29,False
+2026-09-12,open-data/ckanext-repeating,https://github.com/open-data/ckanext-repeating,23,0,No releases,No releases,3,0,3,False
+2026-09-12,NaturalHistoryMuseum/ckanext-ldap,https://github.com/NaturalHistoryMuseum/ckanext-ldap,40,32,v4.1.2,2025-08-11,34,12,16,False
+2026-09-12,EnviDat/ckanext-composite,https://github.com/EnviDat/ckanext-composite,19,0,No releases,No releases,5,2,7,False
+2026-09-12,DataShades/ckanext-comments,https://github.com/DataShades/ckanext-comments,8,0,No releases,No releases,5,3,2,False
+2026-09-12,datagovuk/ckanext-datapreview,https://github.com/datagovuk/ckanext-datapreview,6,0,No releases,No releases,8,0,3,False
+2026-09-12,openresearchdata/ckanext-oaipmh,https://github.com/openresearchdata/ckanext-oaipmh,14,0,No releases,No releases,4,4,5,False
+2026-09-12,ckan/ckanext-rq,https://github.com/ckan/ckanext-rq,3,0,No releases,No releases,3,3,2,False
+2026-09-12,CodeForAfrica/ckanext-social,https://github.com/CodeForAfrica/ckanext-social,3,0,No releases,No releases,0,3,4,False
+2026-09-12,datagovuk/ckanext-taxonomy,https://github.com/datagovuk/ckanext-taxonomy,4,0,No releases,No releases,6,3,2,False
+2026-09-12,DataShades/ckanext-clamav,https://github.com/DataShades/ckanext-clamav,3,0,No releases,No releases,1,3,3,False
+2026-09-12,EUDAT-B2FIND/ckanext-datesearch,https://github.com/EUDAT-B2FIND/ckanext-datesearch,12,0,No releases,No releases,5,1,2,False
+2026-09-12,MarijaKnezevic/ckanext-scheme-sddi,https://github.com/MarijaKnezevic/ckanext-scheme-sddi,3,2,0.0.2,2025-02-18,0,0,2,False
+2026-09-12,MarijaKnezevic/ckanext-theme-sddi,https://github.com/MarijaKnezevic/ckanext-theme-sddi,3,5,0.0.4-twin4clim,2026-02-23,0,2,2,False
+2026-09-12,bcgov/ckanext-bcgov-schema,https://github.com/bcgov/ckanext-bcgov-schema,3,0,No releases,No releases,3,3,13,False
+2026-09-12,bcgov/ckanext-edc-rss,https://github.com/bcgov/ckanext-edc-rss,0,3,v2.0.1,2023-05-19,0,5,7,False
+2026-09-12,ioos/ckanext-ioos-theme,https://github.com/ioos/ckanext-ioos-theme,14,8,1.6,2021-02-08,8,17,9,False
+2026-09-12,ckan/ckanext-disqus,https://github.com/ckan/ckanext-disqus,20,0,No releases,No releases,13,10,13,False
+2026-09-12,MandanaMoshref/ckanext-userautoaddgroup,https://github.com/MandanaMoshref/ckanext-userautoaddgroup,1,0,No releases,No releases,0,0,1,False
+2026-09-12,etri-odp/ckanext-resourceauthorizer,https://github.com/etri-odp/ckanext-resourceauthorizer,6,0,No releases,No releases,10,1,2,False
+2026-09-12,keitaroinc/ckanext-resourcedictionary,https://github.com/keitaroinc/ckanext-resourcedictionary,5,1,v1.0.0,2021-04-15,7,1,1,False
+2026-09-12,vrk-kpa/ckanext-forcetranslation,https://github.com/vrk-kpa/ckanext-forcetranslation,0,0,No releases,No releases,0,0,2,False
+2026-09-12,vrk-kpa/ckanext-markdown_editor,https://github.com/vrk-kpa/ckanext-markdown_editor,0,0,No releases,No releases,1,0,1,False
+2026-09-12,gtxizang/ckanext-openapi-view,https://github.com/gtxizang/ckanext-openapi-view,0,0,No releases,No releases,0,0,0,False
+2026-09-12,etalab/ckanext-sentry,https://github.com/etalab/ckanext-sentry,12,0,No releases,No releases,1,1,1,False
+2026-09-12,okfn/ckanext-sitesearch,https://github.com/okfn/ckanext-sitesearch,4,0,No releases,No releases,6,3,3,False
+2026-09-12,vrk-kpa/ckanext-xroad_integration,https://github.com/vrk-kpa/ckanext-xroad_integration,2,0,No releases,No releases,0,0,5,False
+2026-09-12,EnviDat/ckanext-envidat_theme,https://github.com/EnviDat/ckanext-envidat_theme,0,0,No releases,No releases,4,0,4,False
+2026-09-12,EnviDat/ckanext-passwordless_api,https://github.com/EnviDat/ckanext-passwordless_api,0,0,No releases,No releases,2,0,2,False
+2026-09-12,htagTsc/ckanext-custom_theme,https://github.com/htagTsc/ckanext-custom_theme,1,4,1.0.3,2021-10-29,0,0,1,False
+2026-09-12,taijiang-tw/ckanext-dga-stats,https://github.com/taijiang-tw/ckanext-dga-stats,7,0,No releases,No releases,0,0,2,False
+2026-09-12,cphsolutionslab/ckanext-dataproxy,https://github.com/cphsolutionslab/ckanext-dataproxy,14,0,No releases,No releases,11,8,3,False
+2026-09-12,ckan/ckanext-drupal7,https://github.com/ckan/ckanext-drupal7,7,0,No releases,No releases,5,0,2,False
+2026-09-12,georgepm/ckanext-sparql,https://github.com/georgepm/ckanext-sparql,7,0,No releases,No releases,6,5,2,False
+2026-09-12,keitaroinc/ckanext-keycloak,https://github.com/keitaroinc/ckanext-keycloak,12,3,v2.1,2023-10-13,11,1,8,False
+2026-09-12,national-data-platform/ckanext-ndp,https://github.com/national-data-platform/ckanext-ndp,0,1,v0.1.0,2023-11-07,0,0,1,False
+2026-09-12,datopian/ckanext-gdpr,https://github.com/datopian/ckanext-gdpr,1,0,No releases,No releases,2,2,1,False
+2026-09-12,GovDataOfficial/ckanext-dcatde,https://github.com/GovDataOfficial/ckanext-dcatde,11,54,6.12.0,2026-09-09,10,6,6,False
+2026-09-12,NaturalHistoryMuseum/ckanext-userdatasets,https://github.com/NaturalHistoryMuseum/ckanext-userdatasets,8,17,v2.2.1,2025-07-08,2,0,4,False
+2026-09-12,hasadna/ckanext-datacity,https://github.com/hasadna/ckanext-datacity,0,0,No releases,No releases,1,3,2,False
+2026-09-12,keitaroinc/ckanext-visualize,https://github.com/keitaroinc/ckanext-visualize,11,1,v1.0.0,2021-04-15,20,4,8,False
+2026-09-12,fraunhoferfokus/ckanext-govdatade,https://github.com/fraunhoferfokus/ckanext-govdatade,6,0,No releases,No releases,4,0,6,False
+2026-09-12,CodeandoMexico/ckanext-datamx_theme,https://github.com/CodeandoMexico/ckanext-datamx_theme,4,0,No releases,No releases,4,6,5,False
+2026-09-12,jayvardhan/ckanext-opencity,https://github.com/jayvardhan/ckanext-opencity,0,0,No releases,No releases,0,0,1,False
+2026-09-12,6aika/ckanext-collection,https://github.com/6aika/ckanext-collection,2,0,No releases,No releases,1,3,1,False
+2026-09-12,ckan/ckanext-editable-config,https://github.com/ckan/ckanext-editable-config,0,0,No releases,No releases,1,0,1,False
+2026-09-12,bopen/ckanext-mapsearch,https://github.com/bopen/ckanext-mapsearch,1,0,No releases,No releases,5,0,4,False
+2026-09-12,belgium-its-steering-committee/ckanext-benap,https://github.com/belgium-its-steering-committee/ckanext-benap,1,64,6.1.8,2026-05-26,4,1,12,False
+2026-09-12,belgium-its-steering-committee/ckanext-dcat-be-napits,https://github.com/belgium-its-steering-committee/ckanext-dcat-be-napits,0,0,No releases,No releases,0,7,1,False
+2026-09-12,belgium-its-steering-committee/ckanext-mailchimp,https://github.com/belgium-its-steering-committee/ckanext-mailchimp,0,8,3.1.0,2025-10-16,0,2,4,False
+2026-09-12,DCOR-dev/ckanext-dc_log_view,https://github.com/DCOR-dev/ckanext-dc_log_view,0,0,No releases,No releases,0,0,2,False
+2026-09-12,DCOR-dev/ckanext-dc_serve,https://github.com/DCOR-dev/ckanext-dc_serve,0,0,No releases,No releases,0,0,2,False
+2026-09-12,DCOR-dev/ckanext-dc_view,https://github.com/DCOR-dev/ckanext-dc_view,0,0,No releases,No releases,2,2,2,False
+2026-09-12,DCOR-dev/ckanext-dcor_depot,https://github.com/DCOR-dev/ckanext-dcor_depot,0,0,No releases,No releases,0,0,2,False
+2026-09-12,DCOR-dev/ckanext-dcor_schemas,https://github.com/DCOR-dev/ckanext-dcor_schemas,0,0,No releases,No releases,0,10,2,False
+2026-09-12,DCOR-dev/ckanext-dcor_theme,https://github.com/DCOR-dev/ckanext-dcor_theme,0,0,No releases,No releases,1,0,2,False
+2026-09-12,TIBHannover/ckanext-footer,https://github.com/TIBHannover/ckanext-footer,0,1,v.0.2.1,2023-11-29,0,4,1,False
+2026-09-12,okfn/ckanext-oauth,https://github.com/okfn/ckanext-oauth,1,0,No releases,No releases,3,0,1,False
+2026-09-12,datosgobar/ckanext-series-explorer,https://github.com/datosgobar/ckanext-series-explorer,0,0,No releases,No releases,0,0,1,False
+2026-09-12,datosgobar/ckanext-spatial-widget-ar,https://github.com/datosgobar/ckanext-spatial-widget-ar,0,0,No releases,No releases,0,0,2,False
+2026-09-12,EUDAT-B2FIND/ckanext-b2find,https://github.com/EUDAT-B2FIND/ckanext-b2find,4,6,v3.1.0,2025-06-30,5,1,6,False
+2026-09-12,ckan/ckanext-apihelper,https://github.com/ckan/ckanext-apihelper,9,0,No releases,No releases,10,2,2,False
+2026-09-12,OriHoch/ckanext-file_uploader_ui,https://github.com/OriHoch/ckanext-file_uploader_ui,3,0,No releases,No releases,0,2,1,False
+2026-09-12,OriHoch/ckanext-upload_via_email,https://github.com/OriHoch/ckanext-upload_via_email,0,10,v0.1.4,2022-06-22,0,1,1,False
+2026-09-12,CSTARS/ckanext-ecosis,https://github.com/CSTARS/ckanext-ecosis,0,0,No releases,No releases,0,35,1,False
+2026-09-12,JiscSD/ckanext-cookie-banner,https://github.com/JiscSD/ckanext-cookie-banner,0,0,No releases,No releases,0,0,1,False
+2026-09-12,JiscSD/ckanext-customised_fields_from_tag_vocabulary,https://github.com/JiscSD/ckanext-customised_fields_from_tag_vocabulary,0,0,No releases,No releases,1,0,2,False
+2026-09-12,JiscSD/ckanext-dataset_geo_display,https://github.com/JiscSD/ckanext-dataset_geo_display,0,0,No releases,No releases,0,0,1,False
+2026-09-12,JiscSD/ckanext-matomo-js,https://github.com/JiscSD/ckanext-matomo-js,0,0,No releases,No releases,0,0,1,False
+2026-09-12,JiscSD/ckanext-ukds_custom_dcat_profiles,https://github.com/JiscSD/ckanext-ukds_custom_dcat_profiles,0,0,No releases,No releases,0,0,1,False
+2026-09-12,JiscSD/ckanext-ukdstheme,https://github.com/JiscSD/ckanext-ukdstheme,1,0,No releases,No releases,0,0,4,False
+2026-09-12,DataShades/ckanext-duo,https://github.com/DataShades/ckanext-duo,0,0,No releases,No releases,0,0,2,False
+2026-09-12,okfn/ckanext-collaborators,https://github.com/okfn/ckanext-collaborators,2,0,No releases,No releases,4,5,4,False
+2026-09-12,stadt-karlsruhe/ckanext-extractor,https://github.com/stadt-karlsruhe/ckanext-extractor,15,0,No releases,No releases,19,4,2,False
+2026-09-12,cphsolutionslab/ckanext-customuserprivileges,https://github.com/cphsolutionslab/ckanext-customuserprivileges,1,0,No releases,No releases,2,1,0,False
+2026-09-12,datopian/ckanext-authz-service,https://github.com/datopian/ckanext-authz-service,8,2,v0.2.0,2021-05-12,9,9,4,False
+2026-09-12,datopian/ckanext-blob-storage,https://github.com/datopian/ckanext-blob-storage,6,24,v0.9.0,2023-01-03,15,12,12,False
+2026-09-12,fjelltopp/ckanext-emailasusername,https://github.com/fjelltopp/ckanext-emailasusername,2,4,v1.2.1,2023-02-07,2,0,6,False
+2026-09-12,fjelltopp/ckanext-fork,https://github.com/fjelltopp/ckanext-fork,0,0,No releases,No releases,0,0,3,False
+2026-09-12,fjelltopp/ckanext-unaids,https://github.com/fjelltopp/ckanext-unaids,3,0,No releases,No releases,1,3,14,False
+2026-09-12,datopian/ckanext-versions,https://github.com/datopian/ckanext-versions,7,23,v0.2.0,2022-11-09,10,9,11,False
+2026-09-12,DataShades/ckanext-composite-search,https://github.com/DataShades/ckanext-composite-search,2,2,v0.4.2,2025-09-16,1,0,2,False
+2026-09-12,DataShades/ckanext-core-fix,https://github.com/DataShades/ckanext-core-fix,0,0,No releases,No releases,1,0,2,False
+2026-09-12,DataShades/ckanext-login-throttle,https://github.com/DataShades/ckanext-login-throttle,0,0,No releases,No releases,0,0,2,False
+2026-09-12,DataShades/ckanext-resource_indexer,https://github.com/DataShades/ckanext-resource_indexer,1,0,No releases,No releases,1,0,2,False
+2026-09-12,DataShades/ckanext-search-tweaks,https://github.com/DataShades/ckanext-search-tweaks,3,1,v0.2.6,2021-06-30,2,0,3,False
+2026-09-12,camptocamp/ckanext-theme,https://github.com/camptocamp/ckanext-theme,0,0,No releases,No releases,2,0,4,False
+2026-09-12,ckan/ckanext-eurovoc,https://github.com/ckan/ckanext-eurovoc,2,0,No releases,No releases,2,1,4,False
+2026-09-12,CodeandoMexico/ckanext-widgets,https://github.com/CodeandoMexico/ckanext-widgets,2,0,No releases,No releases,0,6,1,False
+2026-09-12,cityofsurrey/ckanext-surrey,https://github.com/cityofsurrey/ckanext-surrey,4,0,No releases,No releases,1,1,6,False
+2026-09-12,AjuntamentdeBarcelona/ckanext-federagobes,https://github.com/AjuntamentdeBarcelona/ckanext-federagobes,0,0,No releases,No releases,6,3,2,False
+2026-09-12,AjuntamentdeBarcelona/ckanext-odatabcn,https://github.com/AjuntamentdeBarcelona/ckanext-odatabcn,0,0,No releases,No releases,10,1,4,False
+2026-09-12,glujan04/ckanext-ceh-comment,https://github.com/glujan04/ckanext-ceh-comment,0,0,No releases,No releases,0,1,0,False
+2026-09-12,abdelrahman146/ckanext-highlighting,https://github.com/abdelrahman146/ckanext-highlighting,0,0,No releases,No releases,0,0,0,False
+2026-09-12,whiskyechobravo/ckanext-desq,https://github.com/whiskyechobravo/ckanext-desq,0,0,No releases,No releases,0,0,1,False
+2026-09-12,keitaroinc/ckanext-bulkupload,https://github.com/keitaroinc/ckanext-bulkupload,0,0,No releases,No releases,0,0,1,False
+2026-09-12,keitaroinc/ckanext-xcaret,https://github.com/keitaroinc/ckanext-xcaret,0,0,No releases,No releases,0,0,2,False
+2026-09-12,jargonautical/ckanext-tdp,https://github.com/jargonautical/ckanext-tdp,0,0,No releases,No releases,0,0,1,False
+2026-09-12,domoritz/ckanext-krzn,https://github.com/domoritz/ckanext-krzn,2,0,No releases,No releases,0,0,1,False
+2026-09-12,DetroitData/ckanext-detroit-data,https://github.com/DetroitData/ckanext-detroit-data,0,4,v1.1.0,2024-04-09,0,0,1,False
+2026-09-12,keitaroinc/ckanext-montreal-theme,https://github.com/keitaroinc/ckanext-montreal-theme,3,0,No releases,No releases,0,1,11,False
+2026-09-12,keitaroinc/ckanext-password-policy,https://github.com/keitaroinc/ckanext-password-policy,4,0,No releases,No releases,3,0,3,False
+2026-09-12,rostock/ckanext-hro_dcatapde,https://github.com/rostock/ckanext-hro_dcatapde,1,19,3.0.1,2026-04-30,3,0,1,False
+2026-09-12,rostock/ckanext-hro_theme,https://github.com/rostock/ckanext-hro_theme,1,16,3.0.1,2026-04-30,3,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-virginia_schema,https://github.com/OpenGov-OpenData/ckanext-virginia_schema,1,0,No releases,No releases,0,0,4,False
+2026-09-12,openresearchdata/ckanext-ord-hierarchy,https://github.com/openresearchdata/ckanext-ord-hierarchy,2,0,No releases,No releases,4,2,4,False
+2026-09-12,NaturalHistoryMuseum/ckanext-list,https://github.com/NaturalHistoryMuseum/ckanext-list,1,19,v2.2.0,2026-04-08,0,3,4,False
+2026-09-12,derilinx/ckanext-dietstars,https://github.com/derilinx/ckanext-dietstars,2,0,No releases,No releases,0,0,7,False
+2026-09-12,maulikkamdar/ckanext-feedback,https://github.com/maulikkamdar/ckanext-feedback,3,0,No releases,No releases,2,1,1,False
+2026-09-12,deniszgonjanin/ckanext-geojsonview,https://github.com/deniszgonjanin/ckanext-geojsonview,1,0,No releases,No releases,1,0,1,False
+2026-09-12,datopian/ckanext-opendatani,https://github.com/datopian/ckanext-opendatani,4,15,v1.0.0,2021-10-08,4,7,18,False
+2026-09-12,promptlylabs/ckanext-oidc,https://github.com/promptlylabs/ckanext-oidc,0,1,0.1.0,2025-10-21,0,0,1,False
+2026-09-12,devartis/ckanext-andinotemplate,https://github.com/devartis/ckanext-andinotemplate,5,0,No releases,No releases,0,0,1,False
+2026-09-12,anibalpacheco/ckanext-agesic,https://github.com/anibalpacheco/ckanext-agesic,0,0,No releases,No releases,0,0,0,False
+2026-09-12,chdigiorno/ckanext-gcbaandinotheme,https://github.com/chdigiorno/ckanext-gcbaandinotheme,3,0,No releases,No releases,0,0,2,False
+2026-09-12,dadosgovbr/ckanext-dadosgovbr,https://github.com/dadosgovbr/ckanext-dadosgovbr,5,9,v0.5-beta,2018-01-07,17,1,5,False
+2026-09-12,dadosgovbr/ckanext-dadosgovbrschema,https://github.com/dadosgovbr/ckanext-dadosgovbrschema,2,0,No releases,No releases,1,0,1,False
+2026-09-12,tanmatt/ckanext-google_tag_manager,https://github.com/tanmatt/ckanext-google_tag_manager,0,0,No releases,No releases,0,0,3,False
+2026-09-12,supreshc-persistent/ckanext-cataloginventory,https://github.com/supreshc-persistent/ckanext-cataloginventory,0,0,No releases,No releases,0,0,1,False
+2026-09-12,OpenGov-OpenData/ckanext-chhs_schema,https://github.com/OpenGov-OpenData/ckanext-chhs_schema,0,0,No releases,No releases,1,0,2,False
+2026-09-12,NaturalHistoryMuseum/ckanext-twitter,https://github.com/NaturalHistoryMuseum/ckanext-twitter,6,16,v2.2.9,2024-05-14,0,0,3,False
+2026-09-12,nhsengland/ckanext-adfs,https://github.com/nhsengland/ckanext-adfs,11,0,No releases,No releases,7,2,3,False
+2026-09-12,OpenGov-OpenData/ckanext-cnra_schema,https://github.com/OpenGov-OpenData/ckanext-cnra_schema,2,0,No releases,No releases,0,0,4,False
+2026-09-12,datopian/ckanext-orgportals,https://github.com/datopian/ckanext-orgportals,4,14,v0.1.7-tayside,2018-09-20,6,3,5,False
+2026-09-12,nasaharvest/ckanext-harvestportal,https://github.com/nasaharvest/ckanext-harvestportal,0,0,No releases,No releases,0,0,2,False
+2026-09-12,mdkan/ckanext-metadata,https://github.com/mdkan/ckanext-metadata,0,0,No releases,No releases,0,0,0,False
+2026-09-12,NaturalHistoryMuseum/ckanext-attribution,https://github.com/NaturalHistoryMuseum/ckanext-attribution,0,25,v1.2.14,2025-06-09,0,7,3,False
+2026-09-12,NaturalHistoryMuseum/ckanext-gallery,https://github.com/NaturalHistoryMuseum/ckanext-gallery,4,24,v3.0.7,2026-04-08,4,2,7,False
+2026-09-12,NaturalHistoryMuseum/ckanext-gbif,https://github.com/NaturalHistoryMuseum/ckanext-gbif,1,19,v2.1.12,2025-06-09,4,0,5,False
+2026-09-12,NaturalHistoryMuseum/ckanext-graph,https://github.com/NaturalHistoryMuseum/ckanext-graph,2,16,v2.1.12,2025-06-09,3,1,4,False
+2026-09-12,NaturalHistoryMuseum/ckanext-iiif,https://github.com/NaturalHistoryMuseum/ckanext-iiif,0,17,v4.0.1,2025-06-09,2,1,3,False
+2026-09-12,NaturalHistoryMuseum/ckanext-nhm,https://github.com/NaturalHistoryMuseum/ckanext-nhm,3,174,v7.8.1,2026-09-01,31,63,9,True
+2026-09-12,NaturalHistoryMuseum/ckanext-query-dois,https://github.com/NaturalHistoryMuseum/ckanext-query-dois,0,30,v6.0.4,2026-03-17,0,7,5,False
+2026-09-12,NaturalHistoryMuseum/ckanext-sketchfab,https://github.com/NaturalHistoryMuseum/ckanext-sketchfab,1,14,v2.1.11,2025-06-09,2,0,3,False
+2026-09-12,vrk-kpa/ckanext-statistics,https://github.com/vrk-kpa/ckanext-statistics,0,0,No releases,No releases,0,0,3,False
+2026-09-12,NaturalHistoryMuseum/ckanext-status,https://github.com/NaturalHistoryMuseum/ckanext-status,1,18,v2.4.4,2025-06-09,1,0,3,False
+2026-09-12,NaturalHistoryMuseum/ckanext-versioned-datastore,https://github.com/NaturalHistoryMuseum/ckanext-versioned-datastore,3,81,v6.9.4,2026-07-27,10,21,4,True
+2026-09-12,NaturalHistoryMuseum/ckanext-versioned-tiledmap,https://github.com/NaturalHistoryMuseum/ckanext-versioned-tiledmap,0,22,v2.3.4,2025-06-09,0,3,6,False
+2026-09-12,NaturalHistoryMuseum/ckanext-video,https://github.com/NaturalHistoryMuseum/ckanext-video,4,14,v2.1.11,2025-06-09,2,1,3,False
+2026-09-12,NaturalHistoryMuseum/ckanext-webview,https://github.com/NaturalHistoryMuseum/ckanext-webview,0,13,v1.1.11,2025-06-09,1,0,3,False
+2026-09-12,salsadigitalauorg/ckanext-clone-dataset,https://github.com/salsadigitalauorg/ckanext-clone-dataset,0,22,4.2.0,2025-05-13,0,0,4,False
+2026-09-12,salsadigitalauorg/ckanext-fortify,https://github.com/salsadigitalauorg/ckanext-fortify,3,24,4.3.0,2026-05-06,0,1,4,False
+2026-09-12,salsadigitalauorg/ckanext-invalid-uris,https://github.com/salsadigitalauorg/ckanext-invalid-uris,1,23,4.2.1,2026-05-28,1,0,4,False
+2026-09-12,opendatazurich/ckanext-stadtzh_losdharvest,https://github.com/opendatazurich/ckanext-stadtzh_losdharvest,2,4,v1.0.13,2025-08-28,1,3,7,False
+2026-09-12,skeenatrust/ckanext-skt_theme,https://github.com/skeenatrust/ckanext-skt_theme,2,0,No releases,No releases,0,0,2,False
+2026-09-12,Improvement-Service/ckanext-wfs_checker,https://github.com/Improvement-Service/ckanext-wfs_checker,0,0,No releases,No releases,0,0,1,False
+2026-09-12,Psykar/ckanext-aaf,https://github.com/Psykar/ckanext-aaf,1,0,No releases,No releases,1,0,1,False
+2026-09-12,ckan/ckanext-searchhistory,https://github.com/ckan/ckanext-searchhistory,4,0,No releases,No releases,4,3,2,False
+2026-09-12,ckan/ckanext-issues,https://github.com/ckan/ckanext-issues,32,0,No releases,No releases,14,22,10,False
+2026-09-12,DataShades/ckanext-permissions,https://github.com/DataShades/ckanext-permissions,1,0,No releases,No releases,5,1,2,False
+2026-09-12,Yesser-GitHub/ckanext-odp,https://github.com/Yesser-GitHub/ckanext-odp,0,0,No releases,No releases,0,0,2,False
+2026-09-12,GSA/ckanext-saml2,https://github.com/GSA/ckanext-saml2,34,0,No releases,No releases,2,6,13,False
+2026-09-12,keitaroinc/ckanext-sokigo,https://github.com/keitaroinc/ckanext-sokigo,1,0,No releases,No releases,0,0,3,False
+2026-09-12,SAERI-Datacenter/ckanext-saerischema,https://github.com/SAERI-Datacenter/ckanext-saerischema,1,1,v0.1,2019-02-05,1,0,2,False
+2026-09-12,SAERI-Datacenter/ckanext-saeritheme,https://github.com/SAERI-Datacenter/ckanext-saeritheme,3,0,No releases,No releases,1,0,2,False
+2026-09-12,OpenUpSA/ckanext-discourse-sso,https://github.com/OpenUpSA/ckanext-discourse-sso,2,0,No releases,No releases,1,0,1,False
+2026-09-12,justicehub-in/ckanext-emailauth,https://github.com/justicehub-in/ckanext-emailauth,0,0,No releases,No releases,0,4,2,False
+2026-09-12,justicehub-in/ckanext-justicehub_theme,https://github.com/justicehub-in/ckanext-justicehub_theme,1,1,alpha-1.1.0,2021-04-12,1,6,6,False
+2026-09-12,justicehub-in/ckanext-moderation,https://github.com/justicehub-in/ckanext-moderation,0,0,No releases,No releases,1,0,2,False
+2026-09-12,metropoleruhr/ckanext-rvr,https://github.com/metropoleruhr/ckanext-rvr,3,0,No releases,No releases,0,0,2,False
+2026-09-12,ISITBODIK/ckanext-bodik_theme,https://github.com/ISITBODIK/ckanext-bodik_theme,1,0,No releases,No releases,0,0,2,False
+2026-09-12,DataShades/ckanext-charts,https://github.com/DataShades/ckanext-charts,8,1,v1.9.0,2025-04-24,13,1,7,False
+2026-09-12,datagovuk/ckanext-ga-report,https://github.com/datagovuk/ckanext-ga-report,24,0,No releases,No releases,10,4,4,False
+2026-09-12,okfn/ckanext-sa,https://github.com/okfn/ckanext-sa,2,0,No releases,No releases,1,0,8,False
+2026-09-12,DataShades/ckanext-statsresources,https://github.com/DataShades/ckanext-statsresources,0,0,No releases,No releases,0,0,1,False
+2026-09-12,stadt-karlsruhe/ckanext-citehelp,https://github.com/stadt-karlsruhe/ckanext-citehelp,0,0,No releases,No releases,0,0,2,False
+2026-09-12,ondics/ckanext-solr-query-config,https://github.com/ondics/ckanext-solr-query-config,1,0,No releases,No releases,0,0,2,False
+2026-09-12,Quatral/ckanext-contact_us,https://github.com/Quatral/ckanext-contact_us,1,0,No releases,No releases,1,0,2,False
+2026-09-12,DataShades/ckanext-logs,https://github.com/DataShades/ckanext-logs,0,0,No releases,No releases,0,0,1,False
+2026-09-12,opendata-swiss/ckanext-harvester_dashboard,https://github.com/opendata-swiss/ckanext-harvester_dashboard,0,1,1.0.1,2026-05-19,0,0,4,False
+2026-09-12,ogdch/ckanext-ogdch,https://github.com/ogdch/ckanext-ogdch,2,3,v1.0.2,2014-02-20,4,0,4,False
+2026-09-12,code-schleswig-holstein/ckanext-odsh,https://github.com/code-schleswig-holstein/ckanext-odsh,0,0,No releases,No releases,0,0,1,False
+2026-09-12,ViderumGlobal/ckanext-dataexplorer,https://github.com/ViderumGlobal/ckanext-dataexplorer,4,0,No releases,No releases,0,0,1,False
+2026-09-12,datopian/ckanext-datapub,https://github.com/datopian/ckanext-datapub,4,10,v0.2.0,2021-04-02,5,1,6,False
+2026-09-12,joetm/ckanext-uploadbutton,https://github.com/joetm/ckanext-uploadbutton,1,0,No releases,No releases,0,0,0,False
+2026-09-12,tlmat-unican/ckanext-dcat-ap-edp-mqa,https://github.com/tlmat-unican/ckanext-dcat-ap-edp-mqa,1,0,No releases,No releases,0,1,1,False
+2026-09-12,tlmat-unican/ckanext-oai-pmh-server,https://github.com/tlmat-unican/ckanext-oai-pmh-server,1,0,No releases,No releases,0,0,1,False
+2026-09-12,GSA/ckanext-dcat_usmetadata,https://github.com/GSA/ckanext-dcat_usmetadata,8,0,No releases,No releases,5,31,20,False
+2026-09-12,FuhuXia/ckanext-pgsearch,https://github.com/FuhuXia/ckanext-pgsearch,1,0,No releases,No releases,0,0,1,False
+2026-09-12,GSA/ckanext-usmetadata,https://github.com/GSA/ckanext-usmetadata,25,7,Release1.30,2015-06-16,28,1,17,False
+2026-09-12,DataShades/ckanext-create_typed_package,https://github.com/DataShades/ckanext-create_typed_package,3,0,No releases,No releases,5,1,4,False
+2026-09-12,DataShades/ckanext-drupal-api,https://github.com/DataShades/ckanext-drupal-api,3,0,No releases,No releases,1,0,5,False
+2026-09-12,DataShades/ckanext-drupal-idp,https://github.com/DataShades/ckanext-drupal-idp,2,0,No releases,No releases,0,1,2,False
+2026-09-12,aptivate/ckanext-syndicate,https://github.com/aptivate/ckanext-syndicate,15,3,v2.0.0,2021-09-14,4,1,9,False
+2026-09-12,DataShades/ckanext-accessrequests,https://github.com/DataShades/ckanext-accessrequests,3,0,No releases,No releases,0,0,6,False
+2026-09-12,abgov/ckanext-ab_scheming,https://github.com/abgov/ckanext-ab_scheming,3,1,v0.1.4,2016-09-27,3,2,3,False
+2026-09-12,abgov/ckanext-open_alberta,https://github.com/abgov/ckanext-open_alberta,5,2,v0.0.1,2016-12-19,1,9,2,False
+2026-09-12,davidread/ckanext-analytics,https://github.com/davidread/ckanext-analytics,1,0,No releases,No releases,1,0,0,False
+2026-09-12,OpenDevelopmentMekong/ckanext-odm_agreement,https://github.com/OpenDevelopmentMekong/ckanext-odm_agreement,0,7,v2.2.4,2017-10-20,0,2,3,False
+2026-09-12,OpenDevelopmentMekong/ckanext-odm_laws,https://github.com/OpenDevelopmentMekong/ckanext-odm_laws,1,24,v2.2.2,2017-10-10,0,6,3,False
+2026-09-12,OpenDevelopmentMekong/ckanext-odm_library,https://github.com/OpenDevelopmentMekong/ckanext-odm_library,3,20,v2.2.1,2017-05-16,0,3,3,False
+2026-09-12,OpenDevelopmentMekong/ckanext-odm_nav,https://github.com/OpenDevelopmentMekong/ckanext-odm_nav,1,15,v3.0.3,2018-03-13,1,8,4,False
+2026-09-12,derilinx/ckanext-schema_field_groups,https://github.com/derilinx/ckanext-schema_field_groups,0,0,No releases,No releases,1,0,7,False
+2026-09-12,OpenDevelopmentMekong/ckanext-url_shorten,https://github.com/OpenDevelopmentMekong/ckanext-url_shorten,0,0,No releases,No releases,0,0,2,False
+2026-09-12,NaturalHistoryMuseum/ckanext-dataspatial,https://github.com/NaturalHistoryMuseum/ckanext-dataspatial,2,1,v0.0.1,2017-09-21,8,1,3,False
+2026-09-12,UCSUR-Pitt/ckanext-wprdctheme,https://github.com/UCSUR-Pitt/ckanext-wprdctheme,2,0,No releases,No releases,1,0,1,False
+2026-09-12,derilinx/ckanext-datastore_cleanup,https://github.com/derilinx/ckanext-datastore_cleanup,0,0,No releases,No releases,0,0,2,False
+2026-09-12,keitaroinc/ckanext-likes,https://github.com/keitaroinc/ckanext-likes,0,0,No releases,No releases,0,1,3,False
+2026-09-12,derilinx/ckanext-derilinxdcatprofile,https://github.com/derilinx/ckanext-derilinxdcatprofile,0,0,No releases,No releases,0,0,1,False
+2026-09-12,RadoRado/ckanext-extrafields,https://github.com/RadoRado/ckanext-extrafields,2,0,No releases,No releases,0,0,0,False
+2026-09-12,developmentseed/ckanext-mvt,https://github.com/developmentseed/ckanext-mvt,3,2,v0.2.1,2016-12-22,4,2,2,False
+2026-09-12,DataShades/ckanext-chatbot,https://github.com/DataShades/ckanext-chatbot,0,0,No releases,No releases,0,1,1,False
+2026-09-12,aragonopendata/ckanext-oaipmh-unizar,https://github.com/aragonopendata/ckanext-oaipmh-unizar,0,0,No releases,No releases,0,0,2,False
+2026-09-12,okfn/ckanext-apps,https://github.com/okfn/ckanext-apps,2,0,No releases,No releases,4,0,6,False
+2026-09-12,908Inc/ckanext-forum,https://github.com/908Inc/ckanext-forum,0,0,No releases,No releases,0,0,8,False
+2026-09-12,NicolaiLolansen/ckanext-cprvalidation,https://github.com/NicolaiLolansen/ckanext-cprvalidation,2,0,No releases,No releases,0,0,1,False
+2026-09-12,datopian/ckanext-noanonaccess,https://github.com/datopian/ckanext-noanonaccess,6,10,v2.0.4,2024-01-04,8,1,7,False
+2026-09-12,cphsolutionslab/ckanext-portalopendatadk,https://github.com/cphsolutionslab/ckanext-portalopendatadk,1,0,No releases,No releases,0,0,1,False
+2026-09-12,kumarvivek1752/ckanext-translate,https://github.com/kumarvivek1752/ckanext-translate,0,0,No releases,No releases,0,0,1,False
+2026-09-12,NicolaiLolansen/ckanext-updatetracking,https://github.com/NicolaiLolansen/ckanext-updatetracking,1,0,No releases,No releases,0,0,1,False
+2026-09-12,fjelltopp/ckanext-dataset-subscriptions,https://github.com/fjelltopp/ckanext-dataset-subscriptions,0,0,No releases,No releases,0,0,3,False
+2026-09-12,fjelltopp/ckanext-dms,https://github.com/fjelltopp/ckanext-dms,0,0,No releases,No releases,0,0,6,False
+2026-09-12,fjelltopp/ckanext-short-urls,https://github.com/fjelltopp/ckanext-short-urls,0,1,0.0.1,2021-10-26,1,0,4,False
+2026-09-12,aptivate/ckanext-datasetversions,https://github.com/aptivate/ckanext-datasetversions,6,1,v1.0.0,2016-07-06,8,3,7,False
+2026-09-12,yacme/ckanext-googleauth,https://github.com/yacme/ckanext-googleauth,3,1,1.0.0,2016-03-03,5,2,3,False
+2026-09-12,aptivate/ckanext-locationgroup,https://github.com/aptivate/ckanext-locationgroup,0,0,No releases,No releases,1,0,5,False
+2026-09-12,aptivate/ckanext-mapactionevent,https://github.com/aptivate/ckanext-mapactionevent,1,0,No releases,No releases,0,0,5,False
+2026-09-12,aptivate/ckanext-mapactiongeorss,https://github.com/aptivate/ckanext-mapactiongeorss,1,1,v1.0.4,2024-04-24,0,1,4,False
+2026-09-12,aptivate/ckanext-mapactionimporter,https://github.com/aptivate/ckanext-mapactionimporter,2,0,No releases,No releases,0,1,5,False
+2026-09-12,mapaction/ckanext-mapactionschemas,https://github.com/mapaction/ckanext-mapactionschemas,1,0,No releases,No releases,0,0,4,False
+2026-09-12,aptivate/ckanext-mapactiontheme,https://github.com/aptivate/ckanext-mapactiontheme,1,0,No releases,No releases,0,0,8,False
+2026-09-12,aptivate/ckanext-userautoadd,https://github.com/aptivate/ckanext-userautoadd,6,2,v1.0.1,2016-07-11,1,1,3,False
+2026-09-12,mjanez/ckanext-openapi,https://github.com/mjanez/ckanext-openapi,3,1,v1.0.0,2024-11-04,0,0,1,False
+2026-09-12,datopian/ckanext-querytool,https://github.com/datopian/ckanext-querytool,11,167,v3.0.1,2025-03-18,20,0,14,False
+2026-09-12,SDM-TIB/ckanext-downloadall,https://github.com/SDM-TIB/ckanext-downloadall,17,2,v0.3.0,2026-04-08,5,1,2,False
+2026-09-12,liip/ckanext-subscribe,https://github.com/liip/ckanext-subscribe,4,3,1.3.0,2026-02-03,2,0,3,False
+2026-09-12,ckan/ckanext-search,https://github.com/ckan/ckanext-search,0,0,No releases,No releases,6,1,1,False
+2026-09-12,AustinMastLab/ckanext-digitizationknowledge,https://github.com/AustinMastLab/ckanext-digitizationknowledge,0,0,No releases,No releases,1,8,3,False
+2026-09-12,TIBHannover/ckanext-relationship,https://github.com/TIBHannover/ckanext-relationship,1,0,No releases,No releases,0,0,4,False
+2026-09-12,TIBHannover/ckanext-theme4chem,https://github.com/TIBHannover/ckanext-theme4chem,0,0,No releases,No releases,0,4,1,False
+2026-09-12,openclimatefix-archives/ckanext-openenergy,https://github.com/openclimatefix-archives/ckanext-openenergy,2,0,No releases,No releases,3,14,1,False
+2026-09-12,maslij/ckanext-nbedit,https://github.com/maslij/ckanext-nbedit,0,0,No releases,No releases,0,0,2,False
