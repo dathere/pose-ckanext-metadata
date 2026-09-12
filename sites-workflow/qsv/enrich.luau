@@ -3,7 +3,7 @@
 BEGIN {
 -- Newest patch on each still-supported branch. Bump when CKAN ships a release,
 -- otherwise every instance silently drops out of "current".
-LATEST = {["2.11"] = "2.11.5", ["2.10"] = "2.10.10"}
+LATEST = {["2.12"] = "2.12.0", ["2.11"] = "2.11.6", ["2.10"] = "2.10.11"}
 
 MAX_BRANCH = 0
 for br in pairs(LATEST) do
