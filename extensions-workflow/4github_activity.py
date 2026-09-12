@@ -32,7 +32,8 @@ BATCH = 25
 
 FIELDS = ['repository_name', 'pushed_at', 'default_branch', 'head_committed_at',
           'branches', 'live_branches', 'forks', 'forks_ahead', 'newest_fork',
-          'newest_fork_pushed_at', 'stars', 'is_archived', 'is_fork', 'parent']
+          'newest_fork_pushed_at', 'forks_ahead_list', 'stars', 'is_archived',
+          'is_fork', 'parent']
 
 QUERY = '''  r{i}: repository(owner:"{owner}", name:"{name}") {{
     nameWithOwner isArchived isPrivate isFork stargazerCount forkCount pushedAt
@@ -210,6 +211,11 @@ def main() -> int:
                 'forks_ahead': len(ahead),
                 'newest_fork': ahead[0]['nameWithOwner'] if ahead else '',
                 'newest_fork_pushed_at': (ahead[0]['pushedAt'][:10] if ahead else ''),
+                # Every fork that is ahead, newest first, as name@date. The
+                # query asks for five, so this is bounded at five. newest_fork
+                # stays for readers that only want the head of the list.
+                'forks_ahead_list': '|'.join(
+                    f"{f['nameWithOwner']}@{f['pushedAt'][:10]}" for f in ahead),
                 'stars': node.get('stargazerCount', 0),
                 'is_archived': str(bool(node.get('isArchived'))).lower(),
                 'is_fork': str(bool(node.get('isFork'))).lower(),

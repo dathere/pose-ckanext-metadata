@@ -362,8 +362,20 @@ def build_extensions(sites: Path, ext: Path, generated: str) -> dict:
                                   'spark': [series[w][0] for w in weeks[-26:]]})
 
         if row['ahead'] and act.get('newest_fork'):
+            # Every fork that is ahead, newest first. forks_ahead_list is
+            # name@date pairs; older archives predate the column, so fall back
+            # to the single newest_fork rather than dropping the row.
+            forks = []
+            for entry in (act.get('forks_ahead_list') or '').split('|'):
+                name, _, pushed = entry.partition('@')
+                if name:
+                    forks.append({'r': name, 'a': _age(pushed, today)})
+            if not forks:
+                forks = [{'r': act['newest_fork'],
+                          'a': _age(act.get('newest_fork_pushed_at'), today)}]
             downstream.append({**row, 'nf': act['newest_fork'],
-                               'nfa': _age(act.get('newest_fork_pushed_at'), today)})
+                               'nfa': _age(act.get('newest_fork_pushed_at'), today),
+                               'forks': forks})
 
     rows.sort(key=lambda r: -r['i'])
     # Forks weighted above stars: forking means someone used the code.
