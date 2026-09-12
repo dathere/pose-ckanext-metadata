@@ -27,6 +27,20 @@ from config import CKAN_BASE_URL, SESSION_HEADERS
 
 GITHUB_RE = re.compile(r'github\.com/([\w.-]+)/([\w.-]+)', re.I)
 
+# Plugin names that ship inside CKAN itself. Matched on the exact entry-point
+# name, never a prefix: `datapusher` is core, `datapusher_plus` is a separate
+# extension and must survive the filter.
+CORE_PLUGINS = {
+    'image_view', 'text_view', 'datastore', 'stats', 'recline_view',
+    'resource_proxy', 'datapusher', 'datatables_view', 'webpage_view',
+    'activity', 'recline_map_view', 'recline_grid_view', 'recline_graph_view',
+    'tracking', 'video_view', 'audio_view', 'expire_api_token',
+}
+
+# Catalogue entries that are really the core plugins above. Filtering the plugin
+# names alone would leave these listed at zero reach.
+CORE_PACKAGES = {'ckanext-datastore', 'ckanext-stats', 'ckanext-datatablesview'}
+
 scraper = cloudscraper.create_scraper()
 scraper.headers.update(SESSION_HEADERS)
 
@@ -76,18 +90,56 @@ def families(ranking_csv: Path) -> dict:
         return {r['name']: r['family'] for r in csv.DictReader(fh) if r.get('family')}
 
 
-def resolve(plugin: str, family_map: dict, known: dict) -> str | None:
-    """Map a plugin name to the catalog package that provides it, first hit wins."""
-    for candidate in (f'ckanext-{plugin}',
-                      f"ckanext-{plugin.replace('_', '-')}",
-                      family_map.get(plugin),
-                      plugin):
+def entry_point_packages(entry_points_csv: Path, known: dict,
+                         stars: dict | None = None) -> dict:
+    """plugin -> package, from what each repository actually declares.
+
+    status_show reports ENTRY POINT names, not packages: a portal running
+    ckanext-dcat reports dcat, dcat_rdf_harvester, dcat_json_interface and
+    structured_data. Reading the declarations resolves that by fact rather than
+    by regex.
+
+    Names collide more than expected — not through GitHub forks (almost none of
+    the catalogue are) but through independent republished copies, so
+    ckanext-dcat-rev declares the same five names as ckanext-dcat. Stars break
+    the tie, which reliably picks the upstream.
+    """
+    if not entry_points_csv.exists():
+        return {}
+    repo_to_pkg = {(m.get('repo') or '').lower(): p for p, m in known.items() if m.get('repo')}
+    stars = {k.lower(): v for k, v in (stars or {}).items()}
+
+    declared = defaultdict(list)
+    with entry_points_csv.open(newline='', encoding='utf-8') as fh:
+        for row in csv.DictReader(fh):
+            repo = (row['repository_name'] or '').lower()
+            if repo in repo_to_pkg:
+                declared[row['plugin']].append(repo)
+
+    return {plugin: repo_to_pkg[max(repos, key=lambda r: (stars.get(r, 0), -len(r)))]
+            for plugin, repos in declared.items()}
+
+
+def resolve(plugin: str, family_map: dict, known: dict, entry_points: dict | None = None) -> str | None:
+    """Map a plugin name to the catalog package that provides it, first hit wins.
+
+    Order is by descending certainty: an exact package name is unambiguous, a
+    declared entry point is a statement of fact, the family regexes are a
+    backstop for repositories that declare nothing readable.
+    """
+    for candidate in (f'ckanext-{plugin}', f"ckanext-{plugin.replace('_', '-')}"):
+        if candidate in known:
+            return candidate
+    if entry_points and plugin in entry_points:
+        return entry_points[plugin]
+    for candidate in (family_map.get(plugin), plugin):
         if candidate and candidate in known:
             return candidate
     return None
 
 
-def observed_instances(instances_csv: Path, family_map: dict, known: dict) -> dict:
+def observed_instances(instances_csv: Path, family_map: dict, known: dict,
+                       entry_points: dict | None = None, skip_core: bool = False) -> dict:
     """Package name -> set of instance names seen running it.
 
     Distinct instances, not plugin hits: ckanext-dcat ships dcat,
@@ -98,14 +150,19 @@ def observed_instances(instances_csv: Path, family_map: dict, known: dict) -> di
     with instances_csv.open(newline='', encoding='utf-8') as fh:
         for row in csv.DictReader(fh):
             for plugin in filter(None, (row.get('extensions') or '').split('|')):
-                package = resolve(plugin, family_map, known)
-                if package:
+                if skip_core and plugin in CORE_PLUGINS:
+                    continue
+                package = resolve(plugin, family_map, known, entry_points)
+                if package and not (skip_core and package in CORE_PACKAGES):
                     instances[package].add(row['name'])
     return instances
 
 
-def observed_counts(derived: Path, known: dict) -> dict:
+def observed_counts(derived: Path, known: dict, entry_points_csv: Path | None = None,
+                    skip_core: bool = False, stars: dict | None = None) -> dict:
     """Package name -> number of distinct instances seen running it."""
     family_map = families(derived / 'ckan_extension_ranking.csv')
-    seen = observed_instances(derived / 'ckan_instances_clean.csv', family_map, known)
+    eps = entry_point_packages(entry_points_csv, known, stars) if entry_points_csv else {}
+    seen = observed_instances(derived / 'ckan_instances_clean.csv', family_map, known,
+                              eps, skip_core)
     return {package: len(names) for package, names in seen.items()}
