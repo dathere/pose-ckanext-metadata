@@ -64,6 +64,12 @@ jobs:
         qsv cat rows extensions-history/*.csv > "$RUNNER_TEMP/ext_history.csv"
         ./extensions-workflow/derive_ext_csvs.sh weekly "$RUNNER_TEMP/ext_history.csv" extensions-workflow/derived
 
+        # Current-state GitHub signals, committed weekly by the extensions
+        # workflow. Without them the extension tables are simply omitted.
+        cp extensions-activity/github_activity.csv extensions-activity/entry_points.csv \
+           extensions-workflow/derived/ 2>/dev/null || \
+           echo "no extensions-activity/ yet — extension tables will be skipped"
+
     - name: Join installs against upstream health
       run: |
         echo "=== Building ckan_ecosystem_health.csv ==="

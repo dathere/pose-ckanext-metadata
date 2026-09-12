@@ -66,6 +66,20 @@ jobs:
           'tstamp,repository_name,url,forks_count,total_releases,latest_release,release_date,stars,open_issues,contributors_count,discussions' \
           ../extensions-history
     
+    # GraphQL rather than more REST: one query carries 25 repositories with
+    # their pushes, branches, forks and packaging files for a cost of 1 point,
+    # so the whole catalogue costs ~120 of a 5,000/hour budget.
+    - name: Step 2b - Collect branch, fork and entry-point data
+      continue-on-error: true
+      run: |
+        echo "=== STEP 2b: Collecting GitHub activity and entry points ==="
+        cd extensions-workflow
+        python 4github_activity.py url_list.csv \
+          -o github_activity.csv --entry-points entry_points.csv
+
+        mkdir -p ../extensions-activity
+        cp github_activity.csv entry_points.csv ../extensions-activity/
+
     - name: Step 3 - Update CKAN Catalog with Metadata
       continue-on-error: true
       run: |
@@ -149,7 +163,7 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: 'chore: archive weekly CKAN extensions crawl [automated]'
-        file_pattern: 'extensions-history/*.csv'
+        file_pattern: 'extensions-history/*.csv extensions-activity/*.csv'
 
 #    - name: Step 5 - Create Table View for Extensions Resource
 #      run: |
@@ -177,6 +191,8 @@ jobs:
         path: |
           extensions-workflow/dynamic_metadata_update.csv
           extensions-workflow/existing_metadata.csv
+          extensions-workflow/github_activity.csv
+          extensions-workflow/entry_points.csv
           extensions-workflow/derived/*.csv
         retention-days: 30
     

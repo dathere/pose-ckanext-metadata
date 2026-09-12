@@ -21,9 +21,13 @@ on the dashboard and the same number in a CSV come from the same place.
 import argparse
 import collections
 import csv
+import datetime
 import json
+import os
 import sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Instances hold an index into ext_names rather than the plugin name, and only
 # the top slice gets co-install pairs — 1100 plugins squared is 1.2M pairs
@@ -257,6 +261,130 @@ def build(sites: Path, ext: Path) -> dict:
     return payload
 
 
+
+
+# ---------------------------------------------------------------- extensions
+UPKEEP = [(180, 'active'), (365, 'recent'), (730, 'quiet')]
+ATTENTION_ROWS = 40
+DOWNSTREAM_ROWS = 40
+
+
+def _age(stamp, today):
+    """Whole days between an ISO date and the crawl date, never negative.
+
+    A repository pushed after the crawl ran is a clock artifact, not a
+    prediction — the same clamp ext_enrich.luau applies to dates.
+    """
+    if not stamp:
+        return None
+    try:
+        then = datetime.date.fromisoformat(stamp[:10])
+    except ValueError:
+        return None
+    return max((today - then).days, 0)
+
+
+def _upkeep(days, archived):
+    """How recently the repository was pushed to.
+
+    Deliberately not called maintenance, and the oldest bucket is `still`
+    rather than `abandoned`: ckanext-envvars runs on 126 portals and has not
+    been touched in two years because it is finished, not because it is broken.
+    """
+    if archived:
+        return 'archived'
+    if days is None:
+        return 'unknown'
+    for limit, label in UPKEEP:
+        if days < limit:
+            return label
+    return 'still'
+
+
+def build_extensions(sites: Path, ext: Path, generated: str) -> dict:
+    """The extension-side tables: attention, livelier downstream, and the lot.
+
+    No release data is read. Most CKAN extensions never tag one, so release
+    recency measured maintenance badly enough to be misleading — ckanext-scheming
+    runs on 162 portals and has never cut a release.
+    """
+    from ecosystem import plugin_map
+
+    activity = {r['repository_name']: r for r in read(ext / 'github_activity.csv')}
+    repos = {r['repository_name']: r for r in read(ext / 'ckan_ext_repos_clean.csv')}
+    catalog = plugin_map.catalog_extensions()
+    stars = {k: num(v.get('stars')) for k, v in activity.items()}
+
+    reach = plugin_map.observed_counts(sites, catalog, ext / 'entry_points.csv',
+                                       skip_core=True, stars=stars)
+    instances = read(sites / 'ckan_instances_clean.csv')
+    reporting = sum(1 for r in instances if (r.get('extensions') or '').strip())
+    today = datetime.date.fromisoformat(generated)
+
+    # Star history for the sparkline, from whatever crawls each repo appears in.
+    history = collections.defaultdict(dict)
+    for row in read(ext / 'ckan_ext_weekly_long.csv'):
+        history[row['repository_name']][row['week']] = (
+            num(row['stars']), num(row['forks_count']), num(row['contributors_count']))
+
+    rows, attention, downstream = [], [], []
+    for package, meta in catalog.items():
+        if package in plugin_map.CORE_PACKAGES:
+            continue
+        repo = meta['repo'] or ''
+        act, base = activity.get(repo, {}), repos.get(repo, {})
+        if not (act or base):
+            continue
+
+        push = _age(act.get('pushed_at'), today)
+        archived = act.get('is_archived') == 'true'
+        got = reach.get(package, 0)
+        row = {
+            'p': package, 'r': repo, 'u': meta['url'], 'i': got,
+            'pct': round(100 * got / reporting, 1) if reporting else 0,
+            's': num(act.get('stars'), num(base.get('stars'))),
+            'f': num(act.get('forks'), num(base.get('forks_count'))),
+            'c': num(base.get('contributors_count')),
+            'up': _upkeep(push, archived), 'push': push,
+            'br': num(act.get('branches')), 'live': num(act.get('live_branches')),
+            'ahead': num(act.get('forks_ahead')),
+        }
+        rows.append(row)
+
+        series = history.get(repo, {})
+        weeks = sorted(series)
+        if len(weeks) >= 2:
+            first, last = series[weeks[0]], series[weeks[-1]]
+            d_stars, d_forks, d_people = (last[0] - first[0], last[1] - first[1],
+                                          last[2] - first[2])
+            if d_stars or d_forks or d_people:
+                attention.append({**row, 'ds': d_stars, 'df': d_forks, 'dc': d_people,
+                                  'spark': [series[w][0] for w in weeks[-26:]]})
+
+        if row['ahead'] and act.get('newest_fork'):
+            downstream.append({**row, 'nf': act['newest_fork'],
+                               'nfa': _age(act.get('newest_fork_pushed_at'), today)})
+
+    rows.sort(key=lambda r: -r['i'])
+    # Forks weighted above stars: forking means someone used the code.
+    attention.sort(key=lambda r: -(r['ds'] * 3 + r['df'] * 2 + r['dc']))
+    downstream.sort(key=lambda r: (-r['i'], r['nfa'] if r['nfa'] is not None else 10 ** 6))
+
+    return {
+        'ext_rows': rows,
+        'ext_attention': attention[:ATTENTION_ROWS],
+        'ext_downstream': downstream[:DOWNSTREAM_ROWS],
+        'ext_meta': {
+            'matched': len(rows),
+            'observed': sum(1 for r in rows if r['i']),
+            'reporting': reporting,
+            'downstream': len(downstream),
+            'archived': sum(1 for r in rows if r['up'] == 'archived'),
+            'core_plugins': sorted(plugin_map.CORE_PLUGINS),
+        },
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -267,6 +395,13 @@ def main() -> int:
 
     args.out.mkdir(parents=True, exist_ok=True)
     payload = build(args.sites_derived, args.ext_derived)
+
+    # The extension side is optional: if the activity collector has not run,
+    # the instance dashboard still publishes rather than failing.
+    if (args.ext_derived / 'github_activity.csv').exists():
+        payload |= build_extensions(args.sites_derived, args.ext_derived, payload['generated'])
+    else:
+        print('  no github_activity.csv — extension tables skipped')
 
     path = args.out / 'dashboard.json'
     # allow_nan=False so a stray NaN fails here rather than shipping a file
@@ -284,6 +419,10 @@ def main() -> int:
     if 'at_risk' in payload:
         print(f"  {len(payload['health'])} extensions joined to GitHub health, "
               f"{payload['at_risk']} at risk")
+    if 'ext_meta' in payload:
+        m = payload['ext_meta']
+        print(f"  extensions: {m['matched']} matched, {m['observed']} observed running, "
+              f"{m['downstream']} with a livelier fork, {m['archived']} archived")
     return 0
 
 
