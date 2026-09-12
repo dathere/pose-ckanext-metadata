@@ -362,8 +362,16 @@ def build_extensions(sites: Path, ext: Path, generated: str) -> dict:
                                   'spark': [series[w][0] for w in weeks[-26:]]})
 
         if row['ahead'] and act.get('newest_fork'):
-            downstream.append({**row, 'nf': act['newest_fork'],
-                               'nfa': _age(act.get('newest_fork_pushed_at'), today)})
+            # forks_ahead_list is `repo@date|repo@date`; older activity files
+            # only carry the newest fork, so fall back to that one.
+            listed = [f for f in (act.get('forks_ahead_list') or '').split('|') if '@' in f]
+            forks = [{'r': f.rsplit('@', 1)[0], 'a': _age(f.rsplit('@', 1)[1], today)}
+                     for f in listed]
+            if not forks:
+                forks = [{'r': act['newest_fork'],
+                          'a': _age(act.get('newest_fork_pushed_at'), today)}]
+            downstream.append({**row, 'forks': forks, 'nf': forks[0]['r'],
+                               'nfa': forks[0]['a']})
 
     rows.sort(key=lambda r: -r['i'])
     # Forks weighted above stars: forking means someone used the code.

@@ -31,8 +31,9 @@ from pathlib import Path
 BATCH = 25
 
 FIELDS = ['repository_name', 'pushed_at', 'default_branch', 'head_committed_at',
-          'branches', 'live_branches', 'forks', 'forks_ahead', 'newest_fork',
-          'newest_fork_pushed_at', 'stars', 'is_archived', 'is_fork', 'parent']
+          'branches', 'live_branches', 'forks', 'forks_ahead', 'forks_ahead_list',
+          'newest_fork', 'newest_fork_pushed_at', 'stars', 'is_archived', 'is_fork',
+          'parent']
 
 QUERY = '''  r{i}: repository(owner:"{owner}", name:"{name}") {{
     nameWithOwner isArchived isPrivate isFork stargazerCount forkCount pushedAt
@@ -208,6 +209,13 @@ def main() -> int:
                 'live_branches': live,
                 'forks': (node.get('forks') or {}).get('totalCount', node.get('forkCount', 0)),
                 'forks_ahead': len(ahead),
+                # Every fork that is ahead, not just the newest: the panel lists
+                # them, and a count with one name attached tells you least about
+                # the case that matters -- four organisations each carrying their
+                # own patches. Pipe-delimited `repo@YYYY-MM-DD`, the same shape
+                # the sites pipeline uses for plugin lists.
+                'forks_ahead_list': '|'.join(
+                    f"{f['nameWithOwner']}@{f['pushedAt'][:10]}" for f in ahead),
                 'newest_fork': ahead[0]['nameWithOwner'] if ahead else '',
                 'newest_fork_pushed_at': (ahead[0]['pushedAt'][:10] if ahead else ''),
                 'stars': node.get('stargazerCount', 0),
