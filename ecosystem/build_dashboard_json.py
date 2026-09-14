@@ -37,6 +37,25 @@ MAX_PAIRS = 1200
 MAX_EXTS = 400
 
 
+# The release table enrich.luau classifies against. The dashboard marks these
+# dates on the weekly axis: a column's green band drops the week CKAN ships and
+# climbs back as the fleet upgrades, which only reads as cause and effect if the
+# release itself is visible.
+RELEASES_CSV = (Path(__file__).resolve().parent.parent
+                / 'sites-workflow' / 'qsv' / 'ckan_releases.csv')
+
+
+def releases_in_window(first_week: str, last_week: str) -> list:
+    """CKAN releases that landed inside the charted span, oldest first."""
+    if not RELEASES_CSV.exists():
+        return []
+    with RELEASES_CSV.open(newline='', encoding='utf-8') as fh:
+        rows = list(csv.DictReader(fh))
+    return [{'v': r['version'], 'd': r['released']}
+            for r in sorted(rows, key=lambda r: (r['released'], r['version']))
+            if first_week <= r['released'] <= last_week]
+
+
 def read(path: Path) -> list:
     if not path.exists():
         raise SystemExit(f"✗ {path} not found — run the derive scripts first")
@@ -216,6 +235,7 @@ def build(sites: Path, ext: Path) -> dict:
         'unique_ext': len(exts),
         'unique_ext_all': len(all_plugins),
         'timeline': timeline,
+        'releases': releases_in_window(weeks[0], weeks[-1]),
         'statuses': dict(statuses),
         'branches': branches.most_common(),
         'versions': versions.most_common(),
