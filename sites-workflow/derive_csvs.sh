@@ -21,8 +21,20 @@ trap 'rm -rf "$TMP"' EXIT
 mkdir -p "$OUT"
 
 # Row level: week, host, branch, status, vkey, ext (pipe-delimited), num_extensions, reachable
+#
+# enrich.luau decides "on latest patch" against qsv/ckan_releases.csv, read as a
+# qsv lookup table. Its path is substituted in rather than hardcoded so the
+# script runs from any working directory, and so a branch that edits the release
+# table takes effect in that branch instead of waiting on a merge.
+RELEASES=${CKAN_RELEASES:-$HERE/qsv/ckan_releases.csv}
+if [ ! -f "$RELEASES" ]; then
+    echo "✗ release table not found: $RELEASES" >&2
+    exit 1
+fi
+sed "s|@CKAN_RELEASES@|$RELEASES|" "$HERE/qsv/enrich.luau" > "$TMP/enrich.luau"
+
 qsv luau map week,host,branch,status,vkey,ext,num_extensions,reachable \
-    "$HERE/qsv/enrich.luau" "$INPUT" > "$TMP/enriched.csv"
+    "$TMP/enrich.luau" "$INPUT" > "$TMP/enriched.csv"
 
 # Crawl quality per week. Two kinds of week carry no usable plugin signal and
 # both used to be charted as if they were real: the crawls before 2025-10-29,
