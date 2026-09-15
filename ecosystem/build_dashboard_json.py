@@ -56,6 +56,22 @@ def releases_in_window(first_week: str, last_week: str) -> list:
             if first_week <= r['released'] <= last_week]
 
 
+# A bucket thin enough to fingerprint one portal is not an aggregate. Counts
+# below this fold into "other", the minimum-cell-size rule that disclosure
+# control has used since Samarati and Sweeney: "one portal on 2.6.2" names that
+# portal to anyone holding the public site list, which is all of us.
+MIN_CELL = 5
+
+
+def k_floor(counts, k: int = MIN_CELL) -> list:
+    """most_common() pairs with thin buckets folded into a single 'other'."""
+    kept = [[name, n] for name, n in counts.most_common() if n >= k]
+    folded = sum(n for _, n in counts.most_common() if n < k)
+    if folded:
+        kept.append(['other', folded])
+    return kept
+
+
 def read(path: Path) -> list:
     if not path.exists():
         raise SystemExit(f"✗ {path} not found — run the derive scripts first")
@@ -117,7 +133,6 @@ def build(sites: Path, ext: Path) -> dict:
         })
     exts.sort(key=lambda e: -e['count'])
     ext_names = [e['name'] for e in exts]
-    ext_index = {name: i for i, name in enumerate(ext_names)}
 
     # ---- timeline --------------------------------------------------------
     events_per_week = collections.Counter(r['week'] for r in events)
@@ -163,7 +178,18 @@ def build(sites: Path, ext: Path) -> dict:
         up = [1 if weekly.get(w, {}).get('reachable') == '1' else 0 for w in vweeks]
         live = [num(weekly[w]['num_datasets']) for w in seen_weeks
                 if weekly[w]['reachable'] == '1']
-        plugins = [p for p in (newest['extensions'] or '').split('|') if p]
+        # Deliberately not emitted per instance: ckan_version, branch, status
+        # and the plugin list. A named portal beside its exact patch level and
+        # its installed extensions is a list of targets with the attack surface
+        # annotated, and publishing it in a sortable, filterable table turns
+        # "you could crawl this yourself" into "here it is, pre-filtered". The
+        # same figures are published in aggregate below, where they answer the
+        # questions the dashboard exists for without naming anyone. Nothing
+        # downstream can leak a field the payload never carries.
+        #
+        # 'x' is how many plugins, never which: a count names no attack
+        # surface, and it is the one figure that showed which portals are
+        # heavily customised.
         instances.append({
             'n': name,
             'u': newest['url'],
@@ -171,10 +197,7 @@ def build(sites: Path, ext: Path) -> dict:
             'd': num(newest['num_datasets']),
             'g': num(newest['num_groups']),
             'o': num(newest['num_organizations']),
-            'v': newest['ckan_version'] or None,
-            'b': newest['branch'] or None,
-            's': newest['status'],
-            'e': sorted(ext_index[p] for p in plugins if p in ext_index),
+            'x': len([p for p in (newest['extensions'] or '').split('|') if p]),
             'up': up,
             'seen': sum(up),
             'of': len(vweeks),
@@ -198,6 +221,27 @@ def build(sites: Path, ext: Path) -> dict:
     statuses.update(r['status'] for r in latest)
     branches = collections.Counter(r['branch'] for r in latest if r['branch'])
     versions = collections.Counter(r['ckan_version'] for r in latest if r['ckan_version'])
+
+    # Support status per branch, which the page used to derive by walking the
+    # instances. An aggregate keeps the chart without the per-portal fields.
+    branch_status: dict = {}
+    for r in latest:
+        if not r['branch']:
+            continue
+        bucket = branch_status.setdefault(
+            r['branch'], {s: 0 for s in order} | {'total': 0})
+        bucket[r['status']] += 1
+        bucket['total'] += 1
+
+    # The same minimum cell size as k_floor, applied to the cross-tab: a branch
+    # carrying one portal is a fingerprint even without a name attached, and a
+    # branch nobody else runs is the most interesting kind to an attacker.
+    thin = [b for b, v in branch_status.items() if v['total'] < MIN_CELL]
+    if thin:
+        folded = branch_status.setdefault('other', {s: 0 for s in order} | {'total': 0})
+        for b in thin:
+            for key, n in branch_status.pop(b).items():
+                folded[key] += n
     tlds = collections.Counter(h.rsplit('.', 1)[-1] for h in
                                (r['host'] for r in latest) if '.' in h)
 
@@ -237,8 +281,9 @@ def build(sites: Path, ext: Path) -> dict:
         'timeline': timeline,
         'releases': releases_in_window(weeks[0], weeks[-1]),
         'statuses': dict(statuses),
-        'branches': branches.most_common(),
-        'versions': versions.most_common(),
+        'branches': k_floor(branches),
+        'versions': k_floor(versions),
+        'branch_status': branch_status,
         'tlds': tlds.most_common(15),
         'reliability': dict(reliability),
         'exts': exts[:MAX_EXTS],
