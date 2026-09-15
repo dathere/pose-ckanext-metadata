@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How much of the fleet runs supported software?</title>
-<meta name="description" content="Every portal in the latest crawl, by whether the CKAN version it reports still receives patches.">
+<title>Support status</title>
+<meta name="description" content="Where the portals that reported a version stand in the crawl of 2026-09-12: 473 of 732 reported one, 259 did not and are not counted.">
 <meta name="dc.date" content="2026-09-12">
 <meta name="dc.source" content="CKAN Ecosystem Catalog">
 <script src="https://cdn.plot.ly/plotly-4.0.0.min.js" charset="utf-8"></script>
@@ -29,8 +29,8 @@
 </style>
 </head>
 <body>
-<h1>How much of the fleet runs supported software?</h1>
-<p class="sub">Every portal in the latest crawl, by whether the CKAN version it reports still receives patches.</p>
+<h1>Support status</h1>
+<p class="sub">Where the portals that reported a version stand in the crawl of 2026-09-12: 473 of 732 reported one, 259 did not and are not counted.</p>
 <div id="plot"></div>
 <footer>
   <span>Crawl of 2026-09-12 &middot; CKAN Ecosystem Catalog</span>
@@ -38,7 +38,7 @@
     &middot; <a href="https://github.com/dathere/pose-ckanext-metadata">Source data</a></span>
 </footer>
 <script>
-Plotly.newPlot("plot", [{"type": "pie", "hole": 0.62, "sort": false, "direction": "clockwise", "labels": ["On latest patch \u2014 16", "Behind on patches \u2014 189", "End of life \u2014 268", "No version reported \u2014 259"], "values": [16, 189, 268, 259], "marker": {"colors": ["rgba(58,131,58,.8)", "rgba(253,126,20,.8)", "rgba(217,83,79,.8)", "rgba(152,162,179,.8)"], "line": {"color": "#ffffff", "width": 2}}, "textinfo": "percent", "textposition": "inside", "insidetextorientation": "horizontal", "textfont": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12.5, "color": "#ffffff"}, "hovertemplate": "%{label}<br>%{percent} of the fleet<extra></extra>"}], {"font": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 13, "color": "#667085"}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "margin": {"l": 8, "r": 8, "t": 10, "b": 8}, "hoverlabel": {"bgcolor": "#ffffff", "bordercolor": "#e4e7ec", "font": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 13, "color": "#101828"}, "align": "left"}, "showlegend": true, "legend": {"orientation": "v", "x": 1.0, "xanchor": "left", "y": 0.5, "font": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12, "color": "#667085"}, "itemsizing": "constant"}, "annotations": [{"text": "<span style='font-size:26px;color:#101828'>732</span><br><span style='font-size:12px;color:#667085'>portals</span>", "showarrow": false, "x": 0.5, "y": 0.5, "xref": "paper", "yref": "paper", "font": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif"}}]}, {"displayModeBar": true, "displaylogo": false, "responsive": true, "modeBarButtonsToRemove": ["zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "toggleSpikelines"], "toImageButtonOptions": {"format": "png", "filename": "ckan-support-status-2026-09-12", "scale": 2}});
+Plotly.newPlot("plot", [{"type": "bar", "orientation": "h", "name": "On latest patch  16 \u00b7 3%", "y": ["portals"], "x": [16], "marker": {"color": "rgba(58,131,58,.8)", "line": {"color": "#ffffff", "width": 2}}, "width": 0.5, "hovertemplate": "<b>16 portals</b> \u00b7 On latest patch \u00b7 3%<extra></extra>"}, {"type": "bar", "orientation": "h", "name": "Behind on patches  189 \u00b7 40%", "y": ["portals"], "x": [189], "marker": {"color": "rgba(253,126,20,.8)", "line": {"color": "#ffffff", "width": 2}}, "width": 0.5, "hovertemplate": "<b>189 portals</b> \u00b7 Behind on patches \u00b7 40%<extra></extra>"}, {"type": "bar", "orientation": "h", "name": "End of life  268 \u00b7 57%", "y": ["portals"], "x": [268], "marker": {"color": "rgba(217,83,79,.8)", "line": {"color": "#ffffff", "width": 2}}, "width": 0.5, "hovertemplate": "<b>268 portals</b> \u00b7 End of life \u00b7 57%<extra></extra>"}], {"font": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 13, "color": "#667085"}, "paper_bgcolor": "#ffffff", "plot_bgcolor": "#ffffff", "margin": {"l": 8, "r": 8, "t": 10, "b": 8}, "hoverlabel": {"bgcolor": "#ffffff", "bordercolor": "#e4e7ec", "font": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 13, "color": "#101828"}, "align": "left"}, "showlegend": true, "barmode": "stack", "legend": {"orientation": "h", "y": -0.25, "x": 0, "traceorder": "normal", "font": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 13, "color": "#101828"}}, "xaxis": {"showgrid": false, "gridcolor": "#f2f4f7", "zeroline": false, "linecolor": "#e4e7ec", "tickfont": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12, "color": "#667085"}, "automargin": true, "showticklabels": false, "range": [0, 473]}, "yaxis": {"showgrid": false, "gridcolor": "#f2f4f7", "zeroline": false, "linecolor": "#e4e7ec", "tickfont": {"family": "Satoshi, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif", "size": 12, "color": "#667085"}, "automargin": true, "showticklabels": false}, "height": 220}, {"displayModeBar": true, "displaylogo": false, "responsive": true, "modeBarButtonsToRemove": ["zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "toggleSpikelines"], "toImageButtonOptions": {"format": "png", "filename": "ckan-support-status-2026-09-12", "scale": 2}});
 </script>
 </body>
 </html>
