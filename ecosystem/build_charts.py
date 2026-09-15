@@ -146,36 +146,43 @@ AXIS = {
 
 
 def chart_support_status(d):
-    order = ["current", "behind", "eol", "unknown"]
-    counts = [d["statuses"].get(k, 0) for k in order]
-    traces = [{
-        "type": "pie", "hole": 0.62, "sort": False, "direction": "clockwise",
-        "labels": [f"{STATUS_LABEL[k]} — {d['statuses'].get(k, 0)}" for k in order],
-        "values": counts,
-        "marker": {"colors": [STATUS_FILL[k] for k in order],
-                   "line": {"color": PANEL, "width": 2}},
-        "textinfo": "percent", "textposition": "inside",
-        "insidetextorientation": "horizontal",
-        "textfont": {"family": FONT, "size": 12.5, "color": PANEL},
-        "hovertemplate": "%{label}<br>%{percent} of the fleet<extra></extra>",
-    }]
-    total = d["latest_total"]
+    """Support status: where the latest crawl's portals stand, as one bar.
+
+    An overall snapshot rather than a trend, matching the dashboard section:
+    one part-to-whole bar split by status, over the portals that reported a
+    version, with the ones that did not stated in the subtitle instead of
+    drawn as a segment.
+    """
+    latest = d["timeline"][-1] if d.get("timeline") else {}
+    order = ["current", "behind", "eol"]
+    total = sum(latest.get(k, 0) for k in order)
+    traces = []
+    for key in order:
+        n = latest.get(key, 0)
+        share = round(100 * n / total) if total else 0
+        traces.append({
+            "type": "bar", "orientation": "h", "name": f"{STATUS_LABEL[key]}  {n} · {share}%",
+            "y": ["portals"], "x": [n],
+            "marker": {"color": STATUS_FILL[key], "line": {"color": PANEL, "width": 2}},
+            "width": 0.5,
+            "hovertemplate": f"<b>{n} portals</b> · {STATUS_LABEL[key]} · {share}%<extra></extra>",
+        })
     lay = layout(
+        barmode="stack",
         showlegend=True,
-        legend={"orientation": "v", "x": 1.0, "xanchor": "left", "y": 0.5,
-                "font": {"family": FONT, "size": 12, "color": MUTE},
-                "itemsizing": "constant"},
-        annotations=[{
-            "text": (f"<span style='font-size:26px;color:{INK}'>{total}</span>"
-                     f"<br><span style='font-size:12px;color:{MUTE}'>portals</span>"),
-            "showarrow": False, "x": 0.5, "y": 0.5,
-            "xref": "paper", "yref": "paper", "font": {"family": FONT},
-        }],
+        legend={"orientation": "h", "y": -0.25, "x": 0, "traceorder": "normal",
+                "font": {"family": FONT, "size": 13, "color": INK}},
+        xaxis=dict(AXIS, showgrid=False, showticklabels=False, range=[0, total or 1]),
+        yaxis=dict(AXIS, showgrid=False, showticklabels=False),
+        height=220,
+        margin={"l": 8, "r": 8, "t": 10, "b": 8},
     )
+    unreported = latest.get("unknown", 0)
     return ("chart-support-status.html",
-            "How much of the fleet runs supported software?",
-            "Every portal in the latest crawl, by whether the CKAN version it "
-            "reports still receives patches.",
+            "Support status",
+            f"Where the portals that reported a version stand in the crawl of "
+            f"{latest.get('w', '')}: {total} of {latest.get('rows', 0)} reported one, "
+            f"{unreported} did not and are not counted.",
             traces, lay, "ckan-support-status")
 
 
