@@ -186,6 +186,10 @@ def build(sites: Path, ext: Path) -> dict:
         # same figures are published in aggregate below, where they answer the
         # questions the dashboard exists for without naming anyone. Nothing
         # downstream can leak a field the payload never carries.
+        #
+        # 'x' is how many plugins, never which: a count names no attack
+        # surface, and it is the one figure that showed which portals are
+        # heavily customised.
         instances.append({
             'n': name,
             'u': newest['url'],
@@ -193,6 +197,7 @@ def build(sites: Path, ext: Path) -> dict:
             'd': num(newest['num_datasets']),
             'g': num(newest['num_groups']),
             'o': num(newest['num_organizations']),
+            'x': len([p for p in (newest['extensions'] or '').split('|') if p]),
             'up': up,
             'seen': sum(up),
             'of': len(vweeks),
