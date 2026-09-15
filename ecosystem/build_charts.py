@@ -17,6 +17,7 @@ Colours and type match the dashboard on the catalogue, so a chart opened from
 the export icon looks like the section it came from.
 """
 import argparse
+import datetime
 import json
 import pathlib
 
@@ -145,38 +146,124 @@ AXIS = {
 }
 
 
+# A crawl reporting fewer versions than this is a crawler failure, not a
+# measurement. Matches SHARE_MIN in the dashboard template.
+SHARE_MIN = 50
+
+
+def _reporting(row):
+    return row.get("current", 0) + row.get("behind", 0) + row.get("eol", 0)
+
+
+def _usable(row):
+    return row.get("q") == "ok" and not row.get("sus") and _reporting(row) >= SHARE_MIN
+
+
+def eol_share_weeks(rows):
+    """One point per ISO week from its last usable crawl, with gaps marked.
+
+    Mirrors the dashboard's "Past end of life" chart so the embed and the
+    page agree to the decimal. Returns (weeks, gaps): weeks are dicts with
+    w, eol, n and v (the share, 0-100); gaps are (before, after) index pairs
+    into weeks where unusable crawls sat between them.
+    """
+    weeks, first_ix, last_ix = [], [], []
+    for i, row in enumerate(rows):
+        if not _usable(row):
+            continue
+        day = datetime.date.fromisoformat(row["w"])
+        wk = day - datetime.timedelta(days=day.weekday())
+        n = _reporting(row)
+        point = {"w": row["w"], "wk": wk, "eol": row.get("eol", 0), "n": n,
+                 "v": round(100 * row.get("eol", 0) / n, 1)}
+        if weeks and weeks[-1]["wk"] == wk:
+            weeks[-1] = point
+            last_ix[-1] = i
+        else:
+            weeks.append(point)
+            first_ix.append(i)
+            last_ix.append(i)
+    gaps = [(k - 1, k) for k in range(1, len(weeks))
+            if any(not _usable(r) for r in rows[last_ix[k - 1] + 1:first_ix[k]])]
+    return weeks, gaps
+
+
 def chart_support_status(d):
-    order = ["current", "behind", "eol", "unknown"]
-    counts = [d["statuses"].get(k, 0) for k in order]
+    """Past end of life: the share of portals reporting a version on an EOL branch.
+
+    Replaces a donut of the latest crawl's four counts, which restated the
+    headline and the last week-by-week column. Raw counts move with how many
+    portals answered; a share of those that reported is comparable crawl to
+    crawl, and among them the three statuses sum to 100%, so one line carries
+    the whole split.
+    """
+    weeks, gaps = eol_share_weeks(d["timeline"])
+    gap_after = {b for _, b in gaps}
+    # A None between two points is how Plotly breaks a line.
+    x, y, custom = [], [], []
+    for k, p in enumerate(weeks):
+        if k in gap_after:
+            x.append(None)
+            y.append(None)
+            custom.append([None, None])
+        x.append(p["w"])
+        y.append(p["v"])
+        custom.append([p["eol"], p["n"]])
     traces = [{
-        "type": "pie", "hole": 0.62, "sort": False, "direction": "clockwise",
-        "labels": [f"{STATUS_LABEL[k]} — {d['statuses'].get(k, 0)}" for k in order],
-        "values": counts,
-        "marker": {"colors": [STATUS_FILL[k] for k in order],
-                   "line": {"color": PANEL, "width": 2}},
-        "textinfo": "percent", "textposition": "inside",
-        "insidetextorientation": "horizontal",
-        "textfont": {"family": FONT, "size": 12.5, "color": PANEL},
-        "hovertemplate": "%{label}<br>%{percent} of the fleet<extra></extra>",
+        "type": "scatter", "mode": "lines", "connectgaps": False,
+        "x": x, "y": y, "customdata": custom,
+        "line": {"color": STATUS["eol"], "width": 2, "shape": "linear"},
+        "hovertemplate": ("%{x}<br><b>%{y:.1f}%</b> past end of life"
+                          "<br>%{customdata[0]} of %{customdata[1]} reporting a version"
+                          "<extra></extra>"),
     }]
-    total = d["latest_total"]
+    shapes, annotations = [], []
+    if weeks:
+        vals = [p["v"] for p in weeks]
+        lo = max(0, (int(min(vals)) // 10) * 10 - 10)
+        hi = min(100, -(-int(max(vals)) // 10) * 10 + 10)
+        for p, pos in ((weeks[0], "top right"), (weeks[-1], "middle right")):
+            traces.append({
+                "type": "scatter", "mode": "markers+text", "x": [p["w"]], "y": [p["v"]],
+                "marker": {"color": STATUS["eol"], "size": 9,
+                           "line": {"color": PANEL, "width": 2}},
+                "text": [f"{p['v']:.1f}%"], "textposition": pos,
+                "textfont": {"family": FONT, "size": 12, "color": INK},
+                "hoverinfo": "skip",
+            })
+        for a, b in gaps:
+            shapes.append({"type": "rect", "xref": "x", "yref": "paper",
+                           "x0": weeks[a]["w"], "x1": weeks[b]["w"], "y0": 0, "y1": 1,
+                           "fillcolor": "#f7f8fa", "line": {"width": 0}, "layer": "below"})
+        start, end = weeks[0]["wk"].isoformat(), weeks[-1]["w"]
+        by_day = {}
+        for r in d.get("releases", []):
+            if start <= r["d"] <= end:
+                by_day.setdefault(r["d"], []).append(r["v"])
+        for day, vs in sorted(by_day.items()):
+            vs.sort(key=lambda v: [int(n) for n in v.split(".")], reverse=True)
+            at = max(day, weeks[0]["w"])
+            shapes.append({"type": "line", "xref": "x", "yref": "paper",
+                           "x0": at, "x1": at, "y0": 0, "y1": 1,
+                           "line": {"color": STATUS["unknown"], "width": 1, "dash": "dot"}})
+            annotations.append({"x": at, "y": 1.02, "xref": "x", "yref": "paper",
+                                "yanchor": "bottom", "showarrow": False,
+                                "text": f"CKAN {vs[0]}" + (f" +{len(vs) - 1}" if len(vs) > 1 else ""),
+                                "font": {"family": FONT, "size": 11, "color": MUTE}})
+    else:
+        lo, hi = 0, 100
     lay = layout(
-        showlegend=True,
-        legend={"orientation": "v", "x": 1.0, "xanchor": "left", "y": 0.5,
-                "font": {"family": FONT, "size": 12, "color": MUTE},
-                "itemsizing": "constant"},
-        annotations=[{
-            "text": (f"<span style='font-size:26px;color:{INK}'>{total}</span>"
-                     f"<br><span style='font-size:12px;color:{MUTE}'>portals</span>"),
-            "showarrow": False, "x": 0.5, "y": 0.5,
-            "xref": "paper", "yref": "paper", "font": {"family": FONT},
-        }],
+        xaxis=dict(AXIS, showgrid=False, type="date"),
+        yaxis=dict(AXIS, range=[lo, hi], dtick=10, ticksuffix="%"),
+        shapes=shapes, annotations=annotations,
+        margin={"l": 8, "r": 48, "t": 34, "b": 8},
     )
     return ("chart-support-status.html",
-            "How much of the fleet runs supported software?",
-            "Every portal in the latest crawl, by whether the CKAN version it "
-            "reports still receives patches.",
-            traces, lay, "ckan-support-status")
+            "Past end of life",
+            "Share of the portals that reported a version whose CKAN branch no "
+            "longer receives patches, one point per week. Portals that did not "
+            "answer are left out, so a smaller crawl does not read as movement.",
+            traces, lay, "ckan-eol-share")
 
 
 def chart_support_timeline(d):
