@@ -155,6 +155,10 @@ jobs:
         cd sites-workflow
         python patch_instance_counts.py derived
 
+    - name: Step 9 - Rebase on remote main
+      if: ${{ !cancelled() }}
+      run: git pull --rebase --autostash origin main
+
     - name: Step 9 - Commit archived crawl
       if: ${{ !cancelled() }}
       uses: stefanzweifel/git-auto-commit-action@v5
