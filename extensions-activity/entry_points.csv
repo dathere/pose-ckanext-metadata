@@ -12,15 +12,11 @@ ALTERNATIVE-EU/ckanext-keycloak_access_token,keycloak_access_token
 ALTERNATIVE-EU/ckanext-keycloak_auth,keycloak_auth
 AQUACROSS/ckanext-aquacross_theme,aquacross_theme
 Abeelha/ckanext-onboarding-theodoro-bertol,onboarding_theodoro_bertol
-AjuntamentdeBarcelona/ckanext-federagobes,federagobes
-AjuntamentdeBarcelona/ckanext-odatabcn,editfields
-AjuntamentdeBarcelona/ckanext-odatabcn,odatabcn
 AnnaGerber/ckanext-hideorgs,hideorgs
 AppGeo/ckanext-agsview,ags_fs_view
 AppGeo/ckanext-agsview,ags_ms_view
 AustinMastLab/ckanext-digitizationknowledge,digitizationknowledge
 AustinMastLab/ckanext-digitizationknowledge-theme,digitizationknowledge_theme
-BPM-Conseil/ckanext-datapusherplusapi,datapusherplusapi
 BU-Spark/ckanext-spark,spark
 BetaNYC/ckanext-datacity_theme,datacity_theme
 BioplatformsAustralia/ckanext-aup,aup
