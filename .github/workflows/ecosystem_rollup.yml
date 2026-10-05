@@ -16,6 +16,7 @@ permissions:
 
 env:
   CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+  CF_BYPASS_TOKEN: ${{ secrets.CF_BYPASS_TOKEN }}
 
 jobs:
   rollup:
