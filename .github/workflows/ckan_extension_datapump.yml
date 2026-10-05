@@ -13,6 +13,7 @@ permissions:
 env:
   GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
   CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
+  CF_BYPASS_TOKEN: ${{ secrets.CF_BYPASS_TOKEN }}
 
 jobs:
   update-metadata:
