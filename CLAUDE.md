@@ -73,13 +73,14 @@ CKAN_API_KEY=your-key python datapump.py
 - `GITHUB_TOKEN` - GitHub Personal Access Token (extensions pipeline)
 - `CKAN_API_KEY` - CKAN API key with write permissions
 - `AUTO_CONFIRM` - Set to `true` to skip interactive confirmation prompts (yaml pipeline)
+- `CF_BYPASS_TOKEN` - Cloudflare WAF bypass token for ecosystem.ckan.org (required by `config.py`; scripts fail at import without it)
 
 ## GitHub Actions
 
 - **Extensions**: Sundays 02:00 UTC (`.github/workflows/ckan_extension_datapump.yml`)
 - **Sites**: Sundays 03:00 UTC (`.github/workflows/ckan_site_datapump.yml`)
 
-Secrets required: `GH_METADATA_TOKEN`, `CKAN_API_KEY`
+Secrets required: `GH_METADATA_TOKEN`, `CKAN_API_KEY`, `CF_BYPASS_TOKEN`
 
 ## Key Dependencies
 
