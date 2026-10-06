@@ -344,6 +344,7 @@ GreaterLondonAuthority/dfl-ckanext,gla
 GreaterLondonAuthority/dfl-ckanext-havester,ceda_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,datapress_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,fingertips_harvester
+GreaterLondonAuthority/dfl-ckanext-havester,gla_air_quality_dashboard_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,instantatlas_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,laep_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,nomis_localauthprofile
@@ -747,6 +748,7 @@ TIBHannover/ckanext-upgrade-dataset,media_wiki
 TIBHannover/ckanext-user-manual,user_manual
 TIBHannover/ckanext-videoviewer,videoviewer
 TIBHannover/ckanext_sfb_layout,sfb_layout
+TIBHannover/ckanext_sfb_layout,system_stats
 TerriaJS/ckanext-terria_view,terria_view
 TkTech/ckanext-cloudstorage,cloudstorage
 TkTech/ckanext-link,link
@@ -907,6 +909,7 @@ bcgov/ckanext-galileo,galileo
 bcgov/ckanext-openapiviewer,openapi_view
 bcgov/ckanext-sso,sso
 belgium-its-steering-committee/ckanext-benap,benap
+belgium-its-steering-committee/ckanext-benap,benap_dcat_rdf_harvester
 belgium-its-steering-committee/ckanext-benap-harvesters,benap_ckan_harvester
 belgium-its-steering-committee/ckanext-benap-harvesters,benap_dcat_harvester
 belgium-its-steering-committee/ckanext-benap-harvesters,benap_harvesters
