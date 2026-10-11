@@ -551,6 +551,7 @@ OpenGov-OpenData/ckanext-opendata_theme,opengov_custom_css
 OpenGov-OpenData/ckanext-opendata_theme,opengov_custom_footer
 OpenGov-OpenData/ckanext-opendata_theme,opengov_custom_header
 OpenGov-OpenData/ckanext-opendata_theme,opengov_custom_homepage
+OpenGov-OpenData/ckanext-opendata_theme,opengov_custom_search_filter
 OpenGov-OpenData/ckanext-opendata_theme,opengov_custom_theme
 OpenGov-OpenData/ckanext-opendata_theme,phoenixaz_theme
 OpenGov-OpenData/ckanext-opendata_theme,sanantoniotx_theme
@@ -938,6 +939,7 @@ bhavin2897/ckanext-md_comp_layout,md_comp_layout
 bhavin2897/ckanext-oai_metadataschema,oai_metadataschema
 bhavin2897/ckanext-related_resources,related_resources
 bhavin2897/ckanext-wikidata,wikidata
+bjornhagstrom/ckanext-actor-registry,actor_registry
 blagojabozinovski/ckanext-chat-widget,chat_widget
 boxkite/ckanext-donneesqctheme,donneesqc_extrapages
 boxkite/ckanext-donneesqctheme,donneesqc_orgs
@@ -1259,6 +1261,7 @@ datopian/ckanext-saasportal_quote,saasportal_quote
 datopian/ckanext-sitemap,sitemap
 datopian/ckanext-sse,sse
 datopian/ckanext-sse,sse_audit
+datopian/ckanext-sse,sse_upload_scan
 datopian/ckanext-story,story
 datopian/ckanext-translate,translate
 datopian/ckanext-versioning,package_versioning
