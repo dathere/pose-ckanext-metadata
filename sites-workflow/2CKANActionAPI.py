@@ -34,6 +34,9 @@ class SSLIgnoreAdapter(requests.adapters.HTTPAdapter):
 
 INPUT_CSV_FILE = "site_urls.csv"
 OUTPUT_CSV_FILE = "ckan_stats.csv"
+# Kept out of ckan_stats.csv: sites-history stacks that file positionally and
+# check_crawl.sh pins its header, so a new column there breaks the archive.
+ACTIVITY_CSV_FILE = "site_activity.csv"
 MAX_WORKERS = 10  # Number of concurrent threads
 REQUEST_TIMEOUT = 20  # Timeout per request (GitHub Actions has good bandwidth but some sites are slow)
 RETRY_ATTEMPTS = 2  # Number of retries for transient failures (common from cloud IPs)
@@ -102,11 +105,19 @@ class SimpleCKANExtractor:
 
         stats = self.get_empty_stats()
 
-        # Get number of datasets using package_search?rows=0 (returns count without
-        # downloading all IDs — package_list times out on large sites with 10k+ datasets)
-        package_data = self.make_api_call(normalized_url, 'package_search', params={'rows': 0})
+        # Get number of datasets using package_search (returns count without
+        # downloading all IDs — package_list times out on large sites with 10k+ datasets).
+        # rows=1 sorted by metadata_modified also gives the most recently changed
+        # public dataset, which we use as the site's last activity date.
+        package_data = self.make_api_call(
+            normalized_url, 'package_search',
+            params={'rows': 1, 'sort': 'metadata_modified desc'}
+        )
         if package_data and isinstance(package_data.get('result'), dict):
             stats['num_datasets'] = str(package_data['result'].get('count', 0))
+            results = package_data['result'].get('results') or []
+            if results and results[0].get('metadata_modified'):
+                stats['last_activity_date'] = results[0]['metadata_modified'][:10]
 
         # Get number of groups
         group_data = self.make_api_call(normalized_url, 'group_list')
@@ -139,6 +150,7 @@ class SimpleCKANExtractor:
             'num_organizations': '0',
             'ckan_version': '',
             'extensions': '',
+            'last_activity_date': '',
             'tstamp': datetime.now(UTC).strftime('%Y-%m-%d')
         }
     
@@ -225,7 +237,12 @@ class SimpleCKANExtractor:
         
         # Write output file
         with open(output_file, 'w', encoding='utf-8', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=final_fieldnames)
+            writer = csv.DictWriter(f, fieldnames=final_fieldnames, extrasaction='ignore')
+            writer.writeheader()
+            writer.writerows(processed_rows)
+
+        with open(ACTIVITY_CSV_FILE, 'w', encoding='utf-8', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=['name', 'last_activity_date'], extrasaction='ignore')
             writer.writeheader()
             writer.writerows(processed_rows)
         

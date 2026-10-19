@@ -103,7 +103,12 @@ class CKANSiteStatsUpdater:
                 # Only add non-negative values
                 if value >= 0:
                     update_data[ckan_field] = value
-        
+
+        # Only send a date we actually observed, so a failed crawl does not blank it
+        last_activity = stats.get('last_activity_date')
+        if isinstance(last_activity, str) and last_activity:
+            update_data['last_activity_date'] = last_activity
+
         return update_data
 
     def update_package_stats(self, package_name: str, stats: Dict) -> bool:
@@ -129,7 +134,8 @@ class CKANSiteStatsUpdater:
             
             print(f"Updating stats: datasets={update_data.get('num_datasets', 0)}, " +
                   f"groups={update_data.get('num_groups', 0)}, " +
-                  f"orgs={update_data.get('num_organizations', 0)}")
+                  f"orgs={update_data.get('num_organizations', 0)}, " +
+                  f"last_activity={update_data.get('last_activity_date', '-')}")
             
             # Make the patch request
             response = self.session.post(
@@ -167,6 +173,12 @@ class CKANSiteStatsUpdater:
                 print(f"Error: Missing required columns: {missing_columns}")
                 return []
             
+            # Optional side file from 2CKANActionAPI.py: name -> last_activity_date
+            activity = {}
+            if os.path.exists('site_activity.csv'):
+                activity_df = pd.read_csv('site_activity.csv', dtype=str).fillna('')
+                activity = dict(zip(activity_df['name'], activity_df['last_activity_date']))
+
             # Convert to list of dictionaries
             stats_data = []
             for _, row in stats_df.iterrows():
@@ -177,7 +189,8 @@ class CKANSiteStatsUpdater:
                         'stats': {
                             'num_datasets': row.get('num_datasets', 0),
                             'num_groups': row.get('num_groups', 0),
-                            'num_organizations': row.get('num_organizations', 0)
+                            'num_organizations': row.get('num_organizations', 0),
+                            'last_activity_date': activity.get(row['name'], '')
                         }
                     })
             
