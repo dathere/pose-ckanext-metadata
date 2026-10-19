@@ -297,7 +297,7 @@ class CKANSiteStatsUpdater:
         try:
             print("Testing CKAN API connection...")
             
-            response = self.session.get(f"{self.api_base}/site_read")
+            response = self.session.get(f"{self.api_base}/status_show")
             
             if response.status_code == 200:
                 data = response.json()
