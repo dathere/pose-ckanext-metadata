@@ -114,6 +114,7 @@ class SimpleCKANExtractor:
             params={'rows': 1, 'sort': 'metadata_modified desc'}
         )
         if package_data and isinstance(package_data.get('result'), dict):
+            stats['api_reachable'] = 'true'
             stats['num_datasets'] = str(package_data['result'].get('count', 0))
             results = package_data['result'].get('results') or []
             if results and results[0].get('metadata_modified'):
@@ -151,6 +152,7 @@ class SimpleCKANExtractor:
             'ckan_version': '',
             'extensions': '',
             'last_activity_date': '',
+            'api_reachable': 'false',
             'tstamp': datetime.now(UTC).strftime('%Y-%m-%d')
         }
     
@@ -242,7 +244,7 @@ class SimpleCKANExtractor:
             writer.writerows(processed_rows)
 
         with open(ACTIVITY_CSV_FILE, 'w', encoding='utf-8', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=['name', 'last_activity_date'], extrasaction='ignore')
+            writer = csv.DictWriter(f, fieldnames=['name', 'last_activity_date', 'api_reachable'], extrasaction='ignore')
             writer.writeheader()
             writer.writerows(processed_rows)
         
