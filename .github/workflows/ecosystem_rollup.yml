@@ -71,6 +71,15 @@ jobs:
            extensions-workflow/derived/ 2>/dev/null || \
            echo "no extensions-activity/ yet — extension tables will be skipped"
 
+    - name: Export each site's catalog status
+      # Set by the datapump this run follows. Optional for the payload: if the
+      # catalog cannot be reached the dashboard still publishes, just without
+      # the active-only view and the status column.
+      continue-on-error: true
+      run: |
+        echo "=== Exporting site_status.csv ==="
+        python ecosystem/fetch_site_status.py sites-workflow/derived
+
     - name: Join installs against upstream health
       run: |
         echo "=== Building ckan_ecosystem_health.csv ==="
