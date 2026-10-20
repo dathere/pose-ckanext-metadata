@@ -159,6 +159,13 @@ class CKANSiteStatsUpdater:
             # An unreachable site reports 0 for everything; keep its last real counts
             update_data = {} if reachable is False else self.prepare_stats_update(stats)
 
+            # status_show can fail while package_search works, so only send what was reported
+            if reachable:
+                if stats.get('ckan_version'):
+                    update_data['ckan_version'] = stats['ckan_version']
+                if stats.get('extensions'):
+                    update_data['extensions'] = json.loads(stats['extensions'])
+
             new_status = classify_status(
                 current_package.get('status'),
                 reachable,
@@ -205,7 +212,8 @@ class CKANSiteStatsUpdater:
         """Load statistics data from CSV"""
         try:
             print(f"Loading statistics from {stats_file}...")
-            stats_df = pd.read_csv(stats_file)
+            # As strings: pandas would read a version like 2.10 as the float 2.1
+            stats_df = pd.read_csv(stats_file, dtype={'ckan_version': str, 'extensions': str})
             
             # Check required columns
             required_columns = ['name', 'num_datasets', 'num_groups', 'num_organizations']
@@ -231,6 +239,8 @@ class CKANSiteStatsUpdater:
                             'num_datasets': row.get('num_datasets', 0),
                             'num_groups': row.get('num_groups', 0),
                             'num_organizations': row.get('num_organizations', 0),
+                            'ckan_version': row.get('ckan_version') if pd.notna(row.get('ckan_version')) else '',
+                            'extensions': row.get('extensions') if pd.notna(row.get('extensions')) else '',
                             'last_activity_date': activity.get(row['name'], {}).get('last_activity_date', ''),
                             # None when unknown, so classification and count-skipping stay off
                             'api_reachable': {'true': True, 'false': False}.get(
