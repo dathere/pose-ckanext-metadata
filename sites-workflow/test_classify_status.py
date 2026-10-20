@@ -10,13 +10,21 @@ spec.loader.exec_module(updater)
 classify = updater.classify_status
 
 TODAY = date(2026, 10, 19)
+FRESH, OLD = '2026-04-22', '2026-04-21'                               # 180 / 181 days
 
-assert classify('production', '2026-04-22', TODAY) is None          # 180 days: still active
-assert classify('production', '2026-04-21', TODAY) == 'dormant'     # 181 days
-assert classify(None, '2025-01-01', TODAY) == 'dormant'
-assert classify('dormant', '2025-01-01', TODAY) is None             # already dormant
-assert classify('dormant', '2026-10-01', TODAY) == 'production'     # revived
-assert classify('staging', '2026-10-01', TODAY) is None             # active, untouched
-assert classify('production', '', TODAY) is None                    # no date
-assert classify('production', 'garbage', TODAY) is None
+assert classify('active', True, FRESH, TODAY) is None                 # unchanged
+assert classify('active', True, OLD, TODAY) == 'dormant'
+assert classify('dormant', True, OLD, TODAY) is None
+assert classify('dormant', True, FRESH, TODAY) == 'active'            # revived
+assert classify('Production', True, FRESH, TODAY) == 'active'         # normalised
+assert classify('production', True, FRESH, TODAY) == 'active'
+assert classify(None, True, FRESH, TODAY) == 'active'                 # blank
+assert classify('production', True, '', TODAY) == 'active'            # reachable, no public datasets
+assert classify('production', True, 'garbage', TODAY) == 'active'
+assert classify('active', False, '', TODAY) == 'unreachable'
+assert classify('unreachable', False, '', TODAY) is None
+assert classify('unreachable', True, FRESH, TODAY) == 'active'
+assert classify('staging', True, OLD, TODAY) is None                  # manual, untouched
+assert classify('Development', False, '', TODAY) is None
+assert classify('active', None, OLD, TODAY) is None                   # reachability unknown
 print('ok')

@@ -20,22 +20,35 @@ CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 DORMANT_AFTER_DAYS = 180
 
 
-def classify_status(current_status: Optional[str], last_activity: Optional[str], today: date) -> Optional[str]:
-    """New site status from its last activity date, or None to leave it alone.
+# Set by hand; the crawl never overrides them
+MANUAL_STATUSES = {'staging', 'development'}
 
-    No public dataset changed in DORMANT_AFTER_DAYS -> 'dormant'. A dormant site
-    that becomes active again goes back to 'production', since the original
-    value is not kept. No date (crawl failed, no public datasets) changes nothing.
+
+def classify_status(current_status: Optional[str], reachable: Optional[bool],
+                    last_activity: Optional[str], today: date) -> Optional[str]:
+    """New site status from the crawl, or None to leave it alone.
+
+    API did not answer               -> 'unreachable' (the site may still be up)
+    newest public dataset > 180 days -> 'dormant'
+    otherwise (incl. no datasets)    -> 'active'
+
+    Staging/development are never touched. Reachability unknown (no
+    site_activity.csv) changes nothing. Legacy 'production'/'Production'
+    become 'active' on the next run.
     """
-    if not last_activity:
+    if reachable is None or (current_status or '').strip().lower() in MANUAL_STATUSES:
         return None
-    try:
-        age = (today - date.fromisoformat(last_activity)).days
-    except ValueError:
-        return None
-    if age > DORMANT_AFTER_DAYS:
-        return None if current_status == 'dormant' else 'dormant'
-    return 'production' if current_status == 'dormant' else None
+    if not reachable:
+        new = 'unreachable'
+    else:
+        new = 'active'
+        try:
+            if (today - date.fromisoformat(last_activity or '')).days > DORMANT_AFTER_DAYS:
+                new = 'dormant'
+        except ValueError:
+            pass
+    return None if new == current_status else new
+
 
 class CKANSiteStatsUpdater:
     def __init__(self, api_key: str, base_url: str = CKAN_BASE_URL):
@@ -141,15 +154,14 @@ class CKANSiteStatsUpdater:
                 print(f"Could not retrieve package info for {package_name}")
                 return False
             
-            # Prepare stats update using schema fields
-            update_data = self.prepare_stats_update(stats)
-            
-            if not update_data:
-                print(f"No valid statistics to update for {package_name}")
-                return False
-            
+            reachable = stats.get('api_reachable')
+
+            # An unreachable site reports 0 for everything; keep its last real counts
+            update_data = {} if reachable is False else self.prepare_stats_update(stats)
+
             new_status = classify_status(
                 current_package.get('status'),
+                reachable,
                 update_data.get('last_activity_date'),
                 datetime.now(UTC).date(),
             )
@@ -157,13 +169,14 @@ class CKANSiteStatsUpdater:
                 print(f"Status {current_package.get('status') or '-'} -> {new_status}")
                 update_data['status'] = new_status
 
+            if not update_data:
+                print(f"Nothing to update for {package_name}")
+                return True
+
             # Add package ID to update data
             update_data['id'] = package_name
             
-            print(f"Updating stats: datasets={update_data.get('num_datasets', 0)}, " +
-                  f"groups={update_data.get('num_groups', 0)}, " +
-                  f"orgs={update_data.get('num_organizations', 0)}, " +
-                  f"last_activity={update_data.get('last_activity_date', '-')}")
+            print(f"Patching: {update_data}")
             
             # Make the patch request
             response = self.session.post(
@@ -205,7 +218,7 @@ class CKANSiteStatsUpdater:
             activity = {}
             if os.path.exists('site_activity.csv'):
                 activity_df = pd.read_csv('site_activity.csv', dtype=str).fillna('')
-                activity = dict(zip(activity_df['name'], activity_df['last_activity_date']))
+                activity = {r['name']: r for _, r in activity_df.iterrows()}
 
             # Convert to list of dictionaries
             stats_data = []
@@ -218,7 +231,10 @@ class CKANSiteStatsUpdater:
                             'num_datasets': row.get('num_datasets', 0),
                             'num_groups': row.get('num_groups', 0),
                             'num_organizations': row.get('num_organizations', 0),
-                            'last_activity_date': activity.get(row['name'], '')
+                            'last_activity_date': activity.get(row['name'], {}).get('last_activity_date', ''),
+                            # None when unknown, so classification and count-skipping stay off
+                            'api_reachable': {'true': True, 'false': False}.get(
+                                activity.get(row['name'], {}).get('api_reachable', '')),
                         }
                     })
             
