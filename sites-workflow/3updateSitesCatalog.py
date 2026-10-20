@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pandas as pd
 import cloudscraper
 import json
-from datetime import datetime
+from datetime import date, datetime, UTC
 import time
 import traceback
 from typing import Dict, Optional, List
@@ -17,6 +17,25 @@ from config import USER_AGENT, CKAN_BASE_URL, SESSION_HEADERS
 # Configuration
 CKAN_API_BASE = f"{CKAN_BASE_URL}/api/3/action"
 CKAN_API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
+DORMANT_AFTER_DAYS = 180
+
+
+def classify_status(current_status: Optional[str], last_activity: Optional[str], today: date) -> Optional[str]:
+    """New site status from its last activity date, or None to leave it alone.
+
+    No public dataset changed in DORMANT_AFTER_DAYS -> 'dormant'. A dormant site
+    that becomes active again goes back to 'production', since the original
+    value is not kept. No date (crawl failed, no public datasets) changes nothing.
+    """
+    if not last_activity:
+        return None
+    try:
+        age = (today - date.fromisoformat(last_activity)).days
+    except ValueError:
+        return None
+    if age > DORMANT_AFTER_DAYS:
+        return None if current_status == 'dormant' else 'dormant'
+    return 'production' if current_status == 'dormant' else None
 
 class CKANSiteStatsUpdater:
     def __init__(self, api_key: str, base_url: str = CKAN_BASE_URL):
@@ -129,6 +148,15 @@ class CKANSiteStatsUpdater:
                 print(f"No valid statistics to update for {package_name}")
                 return False
             
+            new_status = classify_status(
+                current_package.get('status'),
+                update_data.get('last_activity_date'),
+                datetime.now(UTC).date(),
+            )
+            if new_status:
+                print(f"Status {current_package.get('status') or '-'} -> {new_status}")
+                update_data['status'] = new_status
+
             # Add package ID to update data
             update_data['id'] = package_name
             
@@ -269,7 +297,7 @@ class CKANSiteStatsUpdater:
         try:
             print("Testing CKAN API connection...")
             
-            response = self.session.get(f"{self.api_base}/site_read")
+            response = self.session.get(f"{self.api_base}/status_show")
             
             if response.status_code == 200:
                 data = response.json()
