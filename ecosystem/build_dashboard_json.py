@@ -72,6 +72,28 @@ def k_floor(counts, k: int = MIN_CELL) -> list:
     return kept
 
 
+def branch_breakdown(rows, order) -> dict:
+    """Support status per branch, thin branches folded into 'other'."""
+    out: dict = {}
+    for r in rows:
+        if not r['branch']:
+            continue
+        bucket = out.setdefault(r['branch'], {s: 0 for s in order} | {'total': 0})
+        bucket[r['status']] += 1
+        bucket['total'] += 1
+
+    # The same minimum cell size as k_floor, applied to the cross-tab: a branch
+    # carrying one portal is a fingerprint even without a name attached, and a
+    # branch nobody else runs is the most interesting kind to an attacker.
+    thin = [b for b, v in out.items() if v['total'] < MIN_CELL]
+    if thin:
+        folded = out.setdefault('other', {s: 0 for s in order} | {'total': 0})
+        for b in thin:
+            for key, n in out.pop(b).items():
+                folded[key] += n
+    return out
+
+
 def read(path: Path) -> list:
     if not path.exists():
         raise SystemExit(f"✗ {path} not found — run the derive scripts first")
@@ -93,6 +115,12 @@ def build(sites: Path, ext: Path) -> dict:
     cohort_rows = read(sites / 'ckan_extension_cohort_series.csv')
     upgrades = read(sites / 'ckan_version_changes.csv')
     events = read(sites / 'ckan_extension_changes.csv')
+    # The catalog's own site status (active/dormant/unreachable/...), exported
+    # by fetch_site_status.py. Optional: without it the active slice and the
+    # per-instance status are left out and the page hides both.
+    status_csv = sites / 'site_status.csv'
+    site_status = ({r['name']: r['status'] for r in read(status_csv)}
+                   if status_csv.exists() else None)
 
     weeks = sorted({r['week'] for r in long_rows})
     suspect = [r['week'] for r in quality if r.get('quality') != 'ok']
@@ -206,6 +234,10 @@ def build(sites: Path, ext: Path) -> dict:
             'gone': last not in weekly,
             'growth': (live[-1] - live[0]) if len(live) >= 2 else 0,
         })
+        if site_status is not None:
+            # The site's catalog status, shown on its public page already. Not
+            # the support status, which stays aggregate-only (see above).
+            instances[-1]['st'] = site_status.get(name) or None
     instances.sort(key=lambda i: -i['d'])
 
     # Every bucket is emitted even when empty. The page indexes these by name
@@ -224,24 +256,7 @@ def build(sites: Path, ext: Path) -> dict:
 
     # Support status per branch, which the page used to derive by walking the
     # instances. An aggregate keeps the chart without the per-portal fields.
-    branch_status: dict = {}
-    for r in latest:
-        if not r['branch']:
-            continue
-        bucket = branch_status.setdefault(
-            r['branch'], {s: 0 for s in order} | {'total': 0})
-        bucket[r['status']] += 1
-        bucket['total'] += 1
-
-    # The same minimum cell size as k_floor, applied to the cross-tab: a branch
-    # carrying one portal is a fingerprint even without a name attached, and a
-    # branch nobody else runs is the most interesting kind to an attacker.
-    thin = [b for b, v in branch_status.items() if v['total'] < MIN_CELL]
-    if thin:
-        folded = branch_status.setdefault('other', {s: 0 for s in order} | {'total': 0})
-        for b in thin:
-            for key, n in branch_status.pop(b).items():
-                folded[key] += n
+    branch_status = branch_breakdown(latest, order)
     tlds = collections.Counter(h.rsplit('.', 1)[-1] for h in
                                (r['host'] for r in latest) if '.' in h)
 
@@ -300,6 +315,9 @@ def build(sites: Path, ext: Path) -> dict:
                         'sus': r['week'] in suspect_set} for r in events],
     }
 
+    if site_status is not None:
+        payload |= active_slice(latest, site_status, order)
+
     health_csv = ext / 'ckan_ecosystem_health.csv'
     if health_csv.exists():
         health = [r for r in read(health_csv) if r['instances_count'] != '']
@@ -326,6 +344,31 @@ def build(sites: Path, ext: Path) -> dict:
     return payload
 
 
+
+
+def active_slice(latest, site_status, order) -> dict:
+    """Support status and version spread for the portals the catalog marks active.
+
+    'active' is set by the sites datapump: the API answered and a public
+    dataset changed in the last 180 days. Dormant, unreachable and hand-set
+    staging/development sites are left out, as are sites with no status yet.
+
+    Thin buckets fold by the slice's own counts, the same k_floor as the whole
+    fleet. Subtracting this from the fleet tables gives counts for the
+    non-active portals, but only as "n of the ~150 dormant sites that report a
+    version", which names none of them; folding on that complement as well hid
+    2.10.7 (62 of its 65 portals active) and a third of the slice with it.
+    """
+    rows = [r for r in latest if site_status.get(r['name']) == 'active']
+    statuses = collections.Counter({s: 0 for s in order})
+    statuses.update(r['status'] for r in rows)
+    sub_versions = collections.Counter(r['ckan_version'] for r in rows if r['ckan_version'])
+    return {'active': {
+        'rows': len(rows),
+        'statuses': dict(statuses),
+        'versions': k_floor(sub_versions),
+        'branch_status': branch_breakdown(rows, order),
+    }}
 
 
 # ---------------------------------------------------------------- extensions
@@ -493,6 +536,9 @@ def main() -> int:
     print(f"  latest crawl {payload['generated']}: {payload['latest_total']} portals, "
           f"{payload['with_ext']} reported plugins, "
           f"{payload['total_datasets']:,} datasets")
+    if 'active' in payload:
+        a = payload['active']
+        print(f"  active slice: {a['rows']} of {payload['latest_total']} portals marked active")
     if 'at_risk' in payload:
         print(f"  {len(payload['health'])} extensions joined to GitHub health, "
               f"{payload['at_risk']} at risk")
