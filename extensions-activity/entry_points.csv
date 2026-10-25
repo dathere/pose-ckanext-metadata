@@ -618,6 +618,7 @@ PacificCommunity/ckanext-spc-pdh,spc_prdr_res_energy_harvester
 PacificCommunity/ckanext-spc-pdh,spc_sprep_harvester
 PacificCommunity/ckanext-spc-pdh,spc_user
 Patrick1Rhode/ckanext-scheming_iso19115,scheming_iso19115
+Phen-ICS/ckanext-citations,citations
 Pooya-Oladazimi/ckanext-my-first-cool-extension,my_cool_new_plugin
 Pooya-Oladazimi/ckanext-my-first-cool-extension,my_cool_second_plugin
 PopulateTools/ckanext-topics,topics
