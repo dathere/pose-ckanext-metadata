@@ -1214,6 +1214,8 @@ dathere/ckanext-discourse-extension,discourse
 dathere/ckanext-officedocs,officedocs_view
 dathere/ckanext-openapi_viewer,openapi_viewer
 dathere/ckanext-twdh_reports,twdh_reports
+dathere/ckanext-webpageviewplus,webpage_view_plus
+dathere/ckanext-webpageviewplus,webpage_view_plus_thumbnails
 dathere/datapusher-plus,datapusher_plus
 datopian/ckanext-aircan,aircan
 datopian/ckanext-asset-storage,asset_storage
