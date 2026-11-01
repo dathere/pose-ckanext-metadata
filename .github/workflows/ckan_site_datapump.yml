@@ -13,35 +13,21 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_METADATA_TOKEN }}
   CKAN_API_KEY: ${{ secrets.CKAN_API_KEY }}
   CF_BYPASS_TOKEN: ${{ secrets.CF_BYPASS_TOKEN }}
+  BATCH_SIZE: 500
 
 jobs:
-  update-sites-metadata:
+  # Step 1 + batch plan. Step 2 is split into BATCH_SIZE-site batches because a
+  # single job crawling every site ran ~1h50m and hit the 120 minute job limit
+  # before step 3 could finish.
+  discover:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 30
+    outputs:
+      batches: ${{ steps.plan.outputs.batches }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.12'
-        cache: 'pip'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r sites-workflow/requirements.txt
-    
-    - name: Install qsv
-      run: |
-        QSV_VERSION=22.0.1
-        curl -sSLo "$RUNNER_TEMP/qsv.zip" \
-          "https://github.com/dathere/qsv/releases/download/$QSV_VERSION/qsv-$QSV_VERSION-x86_64-unknown-linux-gnu.zip"
-        unzip -q -o "$RUNNER_TEMP/qsv.zip" -d "$RUNNER_TEMP/qsv"
-        sudo install "$RUNNER_TEMP/qsv/qsv" /usr/local/bin/qsv
-        qsv --version
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/setup-sites
 
     - name: Step 1 - Extract Sites URLs from CKAN
       run: |
@@ -54,18 +40,91 @@ jobs:
         # 2026-09-06 crawl. Checking the file merely exists let that through,
         # so check its shape and compare its size against the last real crawl.
         ../ecosystem/check_crawl.sh site_urls.csv 'name,url' ../sites-history
-    
-    - name: Step 2 - Fetch Sites Data via CKAN Action API
+
+    - name: Plan batches
+      id: plan
       run: |
-        echo "=== STEP 2: Fetching sites data via CKAN Action API ==="
+        ROWS=$(qsv count sites-workflow/site_urls.csv)
+        BATCHES=$(jq -nc --argjson n "$ROWS" --argjson s "$BATCH_SIZE" '[range(0; (($n + $s - 1) / $s | floor))]')
+        echo "✓ $ROWS sites in batches of $BATCH_SIZE: $BATCHES"
+        echo "batches=$BATCHES" >> "$GITHUB_OUTPUT"
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: site-urls
+        path: sites-workflow/site_urls.csv
+        retention-days: 1
+
+  fetch:
+    needs: discover
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: ${{ fromJSON(needs.discover.outputs.batches) }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/setup-sites
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: site-urls
+        path: sites-workflow
+
+    - name: Step 2 - Fetch Sites Data via CKAN Action API (batch ${{ matrix.batch }})
+      run: |
+        echo "=== STEP 2: Fetching batch ${{ matrix.batch }} via CKAN Action API ==="
         cd sites-workflow
+        qsv slice --start $(( ${{ matrix.batch }} * BATCH_SIZE )) --len "$BATCH_SIZE" site_urls.csv -o batch.csv
+        mv batch.csv site_urls.csv
         python 2CKANActionAPI.py
+        echo "✓ Batch ${{ matrix.batch }} extraction completed"
+
+        # Shape only: the size-vs-history floor is checked on the merged crawl.
+        ../ecosystem/check_crawl.sh ckan_stats.csv \
+          'tstamp,name,url,num_datasets,num_groups,num_organizations,ckan_version,extensions'
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: sites-batch-${{ matrix.batch }}
+        path: |
+          sites-workflow/ckan_stats.csv
+          sites-workflow/site_activity.csv
+        retention-days: 1
+
+  update-sites-metadata:
+    needs: [discover, fetch]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/setup-sites
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: site-urls
+        path: sites-workflow
+
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: sites-batch-*
+        path: batches
+
+    - name: Merge batches
+      run: |
+        echo "=== Merging fetch batches ==="
+        cd sites-workflow
+        qsv cat rows ../batches/sites-batch-*/ckan_stats.csv -o ckan_stats.csv
+        qsv cat rows ../batches/sites-batch-*/site_activity.csv -o site_activity.csv
         echo "✓ Sites data extraction completed"
 
         ../ecosystem/check_crawl.sh ckan_stats.csv \
           'tstamp,name,url,num_datasets,num_groups,num_organizations,ckan_version,extensions' \
           ../sites-history
-    
+
     - name: Step 3 - Update CKAN Sites Catalog
       continue-on-error: true
       run: |
