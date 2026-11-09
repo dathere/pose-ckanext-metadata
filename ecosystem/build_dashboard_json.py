@@ -34,7 +34,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # nobody looks at.
 TOP_PAIRS = 60
 MAX_PAIRS = 1200
-MAX_EXTS = 400
 
 
 # The release table enrich.luau classifies against. The dashboard marks these
@@ -92,6 +91,17 @@ def branch_breakdown(rows, order) -> dict:
             for key, n in out.pop(b).items():
                 folded[key] += n
     return out
+
+
+def portals_using(latest, instances) -> dict:
+    """Plugin name -> sorted indexes into instances of the portals loading it."""
+    index = {inst['n']: ix for ix, inst in enumerate(instances)}
+    using = collections.defaultdict(set)
+    for row in latest:
+        for plugin in (row['extensions'] or '').split('|'):
+            if plugin:
+                using[plugin].add(index[row['name']])
+    return {plugin: sorted(ixs) for plugin, ixs in using.items()}
 
 
 def read(path: Path) -> list:
@@ -213,7 +223,9 @@ def build(sites: Path, ext: Path) -> dict:
         # "you could crawl this yourself" into "here it is, pre-filtered". The
         # same figures are published in aggregate below, where they answer the
         # questions the dashboard exists for without naming anyone. Nothing
-        # downstream can leak a field the payload never carries.
+        # downstream can leak a field the payload never carries. The exception
+        # is exts[].by: which portals load a plugin, with no version or support
+        # status beside it.
         #
         # 'x' is how many plugins, never which: a count names no attack
         # surface, and it is the one figure that showed which portals are
@@ -239,6 +251,13 @@ def build(sites: Path, ext: Path) -> dict:
             # the support status, which stays aggregate-only (see above).
             instances[-1]['st'] = site_status.get(name) or None
     instances.sort(key=lambda i: -i['d'])
+
+    # "Who uses this plugin?" Site pages already publish each portal's plugin
+    # list; this answers it from the plugin's side, by the name status_show
+    # reports. Indexes into instances, so the largest portals come first.
+    using = portals_using(latest, instances)
+    for ext in exts:
+        ext['by'] = using.get(ext['name'], [])
 
     # Every bucket is emitted even when empty. The page indexes these by name
     # and a missing key reads as undefined, which took out the whole reliability
@@ -301,7 +320,7 @@ def build(sites: Path, ext: Path) -> dict:
         'branch_status': branch_status,
         'tlds': tlds.most_common(15),
         'reliability': dict(reliability),
-        'exts': exts[:MAX_EXTS],
+        'exts': exts,
         'ext_names': ext_names,
         'families': families.most_common(14),
         'pairs': [{'a': a, 'b': b, 'n': n} for (a, b), n in pairs.most_common(MAX_PAIRS)],
