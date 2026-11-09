@@ -26,6 +26,7 @@ jobs:
       - name: Fetch CKAN data and generate static files
         env:
           CKAN_SITE_URL: ${{ vars.CKAN_SITE_URL }}
+          CF_BYPASS_TOKEN: ${{ secrets.CF_BYPASS_TOKEN }}
         run: |
           python - <<'SCRIPT'
           import json
@@ -43,6 +44,7 @@ jobs:
           os.makedirs(OUTPUT_DIR, exist_ok=True)
 
           scraper = cloudscraper.create_scraper()
+          scraper.headers["x-cf-bypass"] = os.environ["CF_BYPASS_TOKEN"]
 
           # --- Build sites.geojson ---
           geojson = {"type": "FeatureCollection", "features": []}
