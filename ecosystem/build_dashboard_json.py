@@ -256,8 +256,8 @@ def build(sites: Path, ext: Path) -> dict:
     # list; this answers it from the plugin's side, by the name status_show
     # reports. Indexes into instances, so the largest portals come first.
     using = portals_using(latest, instances)
-    for ext in exts:
-        ext['by'] = using.get(ext['name'], [])
+    for entry in exts:
+        entry['by'] = using.get(entry['name'], [])
 
     # Every bucket is emitted even when empty. The page indexes these by name
     # and a missing key reads as undefined, which took out the whole reliability
