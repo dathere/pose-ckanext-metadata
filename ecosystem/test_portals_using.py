@@ -16,3 +16,9 @@ latest = [
 assert builder.portals_using(latest, instances) == {'charts_view': [3], 'dcat': [0, 3]}
 assert builder.portals_using([], instances) == {}
 print('ok')
+
+# Package -> portal indexes, against the same instances list.
+assert builder.package_portals({'ckanext-x': {'small', 'big'}, 'ckanext-y': {'nobody'}}, {'big': 0, 'small': 3}) \
+    == {'ckanext-x': [0, 3], 'ckanext-y': []}
+assert builder.package_portals({}, {}) == {}
+print('ok')
