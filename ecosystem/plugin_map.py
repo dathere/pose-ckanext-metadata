@@ -120,16 +120,48 @@ def entry_point_packages(entry_points_csv: Path, known: dict,
             for plugin, repos in declared.items()}
 
 
-def resolve(plugin: str, family_map: dict, known: dict, entry_points: dict | None = None) -> str | None:
+def declared_plugins(entry_points_csv: Path, known: dict) -> dict:
+    """package -> every plugin its own repository declares, before any tie-break.
+
+    entry_point_packages() gives each plugin to one package; this keeps what each
+    package says about itself, which resolve() needs to tell a package's own
+    plugin from one that only shares its name.
+    """
+    if not entry_points_csv.exists():
+        return {}
+    repo_to_pkg = {(m.get('repo') or '').lower(): p for p, m in known.items() if m.get('repo')}
+    declared = defaultdict(set)
+    with entry_points_csv.open(newline='', encoding='utf-8') as fh:
+        for row in csv.DictReader(fh):
+            package = repo_to_pkg.get((row['repository_name'] or '').lower())
+            if package:
+                declared[package].add(row['plugin'])
+    return declared
+
+
+def resolve(plugin: str, family_map: dict, known: dict, entry_points: dict | None = None,
+            declared: dict | None = None) -> str | None:
     """Map a plugin name to the catalog package that provides it, first hit wins.
 
-    Order is by descending certainty: an exact package name is unambiguous, a
-    declared entry point is a statement of fact, the family regexes are a
-    backstop for repositories that declare nothing readable.
+    Order is by descending certainty: an exact package name, a declared entry
+    point, then the family regexes as a backstop for repositories that declare
+    nothing readable.
+
+    The exact-name match stands unless the package declares entry points of its
+    own and this plugin is not among them. ckanext-charts declares charts_view
+    and charts_builder_view; a portal's own plugin called `charts` merely shares
+    its name and is not credited to it. A package that declares nothing readable
+    keeps the name match, and so does one where republished copies split the
+    declaration (each copy declares the plugin, only one wins the stars tie-break
+    in entry_points).
+
+    declared is declared_plugins(); without it, the exact-name match always stands.
     """
     for candidate in (f'ckanext-{plugin}', f"ckanext-{plugin.replace('_', '-')}"):
         if candidate in known:
-            return candidate
+            own = declared.get(candidate) if declared else None
+            if not own or plugin in own:
+                return candidate
     if entry_points and plugin in entry_points:
         return entry_points[plugin]
     for candidate in (family_map.get(plugin), plugin):
@@ -139,12 +171,16 @@ def resolve(plugin: str, family_map: dict, known: dict, entry_points: dict | Non
 
 
 def observed_instances(instances_csv: Path, family_map: dict, known: dict,
-                       entry_points: dict | None = None, skip_core: bool = False) -> dict:
+                       entry_points: dict | None = None, skip_core: bool = False,
+                       plugins_out: dict | None = None, declared: dict | None = None) -> dict:
     """Package name -> set of instance names seen running it.
 
     Distinct instances, not plugin hits: ckanext-dcat ships dcat,
     dcat_json_interface and dcat_rdf_harvester, so counting hits would treat one
     portal as three.
+
+    plugins_out, if given, is filled with package -> the plugin names seen
+    running (not every plugin it declares), for the dashboard's detail card.
     """
     instances = defaultdict(set)
     with instances_csv.open(newline='', encoding='utf-8') as fh:
@@ -152,17 +188,28 @@ def observed_instances(instances_csv: Path, family_map: dict, known: dict,
             for plugin in filter(None, (row.get('extensions') or '').split('|')):
                 if skip_core and plugin in CORE_PLUGINS:
                     continue
-                package = resolve(plugin, family_map, known, entry_points)
+                package = resolve(plugin, family_map, known, entry_points, declared)
                 if package and not (skip_core and package in CORE_PACKAGES):
                     instances[package].add(row['name'])
+                    if plugins_out is not None:
+                        plugins_out.setdefault(package, set()).add(plugin)
     return instances
+
+
+def observed_packages(derived: Path, known: dict, entry_points_csv: Path | None = None,
+                      skip_core: bool = False, stars: dict | None = None):
+    """(package -> instance names seen running it, package -> plugin names seen)."""
+    family_map = families(derived / 'ckan_extension_ranking.csv')
+    eps = entry_point_packages(entry_points_csv, known, stars) if entry_points_csv else {}
+    declared = declared_plugins(entry_points_csv, known) if entry_points_csv else {}
+    plugins = {}
+    seen = observed_instances(derived / 'ckan_instances_clean.csv', family_map, known,
+                              eps, skip_core, plugins, declared)
+    return seen, plugins
 
 
 def observed_counts(derived: Path, known: dict, entry_points_csv: Path | None = None,
                     skip_core: bool = False, stars: dict | None = None) -> dict:
     """Package name -> number of distinct instances seen running it."""
-    family_map = families(derived / 'ckan_extension_ranking.csv')
-    eps = entry_point_packages(entry_points_csv, known, stars) if entry_points_csv else {}
-    seen = observed_instances(derived / 'ckan_instances_clean.csv', family_map, known,
-                              eps, skip_core)
+    seen, _ = observed_packages(derived, known, entry_points_csv, skip_core, stars)
     return {package: len(names) for package, names in seen.items()}

@@ -104,6 +104,15 @@ def portals_using(latest, instances) -> dict:
     return {plugin: sorted(ixs) for plugin, ixs in using.items()}
 
 
+def package_portals(seen, index) -> dict:
+    """Package -> sorted indexes into instances of the portals running it.
+
+    Same indexes as exts[].by, so the page resolves both against one list.
+    """
+    return {package: sorted(index[n] for n in names if n in index)
+            for package, names in seen.items()}
+
+
 def read(path: Path) -> list:
     if not path.exists():
         raise SystemExit(f"✗ {path} not found — run the derive scripts first")
@@ -428,7 +437,7 @@ def _upkeep(days, archived):
     return 'still'
 
 
-def build_extensions(sites: Path, ext: Path, generated: str) -> dict:
+def build_extensions(sites: Path, ext: Path, generated: str, instance_index: dict | None = None) -> dict:
     """The extension-side tables: attention, livelier downstream, and the lot.
 
     No release data is read. Most CKAN extensions never tag one, so release
@@ -442,8 +451,10 @@ def build_extensions(sites: Path, ext: Path, generated: str) -> dict:
     catalog = plugin_map.catalog_extensions()
     stars = {k: num(v.get('stars')) for k, v in activity.items()}
 
-    reach = plugin_map.observed_counts(sites, catalog, ext / 'entry_points.csv',
-                                       skip_core=True, stars=stars)
+    seen, seen_plugins = plugin_map.observed_packages(
+        sites, catalog, ext / 'entry_points.csv', skip_core=True, stars=stars)
+    reach = {package: len(names) for package, names in seen.items()}
+    portals = package_portals(seen, instance_index or {})
     instances = read(sites / 'ckan_instances_clean.csv')
     reporting = sum(1 for r in instances if (r.get('extensions') or '').strip())
     today = datetime.date.fromisoformat(generated)
@@ -504,6 +515,13 @@ def build_extensions(sites: Path, ext: Path, generated: str) -> dict:
                                'nfa': _age(act.get('newest_fork_pushed_at'), today),
                                'forks': forks})
 
+    # Which entry points and which portals sit behind each count. Set after the
+    # attention and downstream rows were copied from these, so they stay small.
+    # Omitted at zero installs: nothing to list.
+    for row in rows:
+        if row['i']:
+            row['plugins'] = sorted(seen_plugins.get(row['p'], ()))
+            row['by'] = portals.get(row['p'], [])
     rows.sort(key=lambda r: -r['i'])
     # Forks weighted above stars: forking means someone used the code.
     attention.sort(key=lambda r: -(r['ds'] * 3 + r['df'] * 2 + r['dc']))
@@ -538,7 +556,9 @@ def main() -> int:
     # The extension side is optional: if the activity collector has not run,
     # the instance dashboard still publishes rather than failing.
     if (args.ext_derived / 'github_activity.csv').exists():
-        payload |= build_extensions(args.sites_derived, args.ext_derived, payload['generated'])
+        index = {inst['n']: ix for ix, inst in enumerate(payload['instances'])}
+        payload |= build_extensions(args.sites_derived, args.ext_derived,
+                                    payload['generated'], index)
     else:
         print('  no github_activity.csv — extension tables skipped')
 
