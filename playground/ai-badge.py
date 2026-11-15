@@ -19,6 +19,7 @@ Inputs (prompted at runtime):
 """
 
 import csv
+import os
 import sys
 import time
 import getpass
@@ -122,7 +123,7 @@ def main():
     print(f"Loaded {len(urls)} dataset URL(s) from CSV.")
 
     # 2. API key
-    api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJZdlVuZU9hcEhhblFyVFF1YXNhbVQxTklHRU51eGZPekx6RVMwZnRrbjY4aDBxQ19uYUU4QmFhNlQ5M2xGNTZoZGU4VG52RmxVSmFKcVZZZyIsImlhdCI6MTc3Mjk5ODIyNX0.gf4_kl8bt39upYFBoyzzAWKBXvhu_dL9FInON7AHOMw"
+    api_key = os.environ.get("CKAN_API_KEY") or getpass.getpass("CKAN Admin API key: ").strip()
 
 
     # 3. Confirm
