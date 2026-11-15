@@ -344,6 +344,7 @@ GreaterLondonAuthority/dfl-ckanext,gla
 GreaterLondonAuthority/dfl-ckanext-havester,ceda_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,datapress_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,fingertips_harvester
+GreaterLondonAuthority/dfl-ckanext-havester,gigl_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,gla_air_quality_dashboard_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,instantatlas_harvester
 GreaterLondonAuthority/dfl-ckanext-havester,laep_harvester
@@ -479,7 +480,6 @@ Nithyavasudevan/ckanext-glasgow,ec_changelog_harvester
 Nithyavasudevan/ckanext-glasgow,ec_initial_harvester
 Nithyavasudevan/ckanext-glasgow,glasgow_harvest
 Nithyavasudevan/ckanext-glasgow,glasgow_schema
-NorwegianRefugeeCouncil/ckanext-api-tracking,api_tracking
 NuCivic/ckanext-cmap,cmap_auth_functions
 NuCivic/ckanext-cmap,cmap_configurer
 NuCivic/ckanext-cmap,cmap_dataset_form
@@ -1770,6 +1770,7 @@ okfn/ckanext-activityinfo,activityinfo
 okfn/ckanext-aerc,aerc
 okfn/ckanext-aiglobal,aiglobal
 okfn/ckanext-announcements,announcements
+okfn/ckanext-api-tracking,api_tracking
 okfn/ckanext-apps,apps
 okfn/ckanext-barnet,barnet
 okfn/ckanext-cadastaroles,cadastaroles
@@ -1995,6 +1996,7 @@ pmlrsg/ckanext-resourcepicker,resourcepicker
 prefeitura-curvelo/ckanext-curvelo_theme,curvelo_theme
 pricilakrepeki/CGU_ckanext-cgu-dataset-form,cgu_dataset_form
 promptlylabs/ckanext-oidc,oidc
+qld-gov-au/ckanext-csrf-filter,csrf_filter
 qld-gov-au/ckanext-data-qld,data_qld
 qld-gov-au/ckanext-data-qld,data_qld_google_analytics
 qld-gov-au/ckanext-data-qld,data_qld_integration
