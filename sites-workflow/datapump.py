@@ -6,7 +6,8 @@ Replaces the existing resource in-place:
   2. Download existing datastore records (and their field schema)
   3. Append new rows
   4. Create a new resource (datastore-type, no file upload)
-  5. Push merged data to datastore via datastore_create, with an explicit schema
+  5. Push merged data in batches: datastore_create (with an explicit schema)
+     for the first, datastore_upsert insert for the rest
   6. Only once the push succeeded: delete the old resource views and resource
   7. Create a datatables_view for the new resource
 """
@@ -33,6 +34,7 @@ API_KEY = os.getenv('CKAN_API_KEY', 'CKAN_API_KEY')
 DATASET_ID = 'ckan-sites-metadata'
 RESOURCE_NAME = 'CKAN Sites Dynamic Metadata'
 CSV_FILE_PATH = 'ckan_stats.csv'
+PUSH_BATCH = 5000  # rows per datastore request
 
 scraper = cloudscraper.create_scraper()
 scraper.headers.update(SESSION_HEADERS)
@@ -207,8 +209,31 @@ def build_fields(df: pd.DataFrame, existing_fields: list) -> list:
     return fields
 
 
+def _post_action(action: str, data: dict) -> bool:
+    """POST one CKAN action; log and return False on any failure."""
+    url = f"{CKAN_URL}/api/3/action/{action}"
+    try:
+        resp = scraper.post(url, json=data, headers=AUTH, timeout=60)
+        if not resp.ok:
+            logger.error(f"{action} HTTP {resp.status_code}: {resp.text[:500]}")
+            return False
+        result = resp.json()
+        if result.get('success'):
+            return True
+        logger.error(f"{action} failed: {result.get('error')}")
+        return False
+    except Exception as e:
+        logger.error(f"Error calling {action}: {e}")
+        return False
+
+
 def push_to_datastore(resource_id: str, df: pd.DataFrame, fields: list) -> bool:
-    """Push full dataframe to CKAN datastore via datastore_create."""
+    """Push full dataframe to CKAN datastore in PUSH_BATCH-row requests.
+
+    One datastore_create for the whole history (46k+ rows, ~14MB) started
+    getting 502s from the origin in Nov 2026, so the first batch goes in with
+    the schema via datastore_create and the rest via datastore_upsert insert.
+    """
     records = df.to_dict(orient='records')
     cleaned = []
     for r in records:
@@ -218,31 +243,29 @@ def push_to_datastore(resource_id: str, df: pd.DataFrame, fields: list) -> bool:
                 cleaned_r[k] = v.item() if hasattr(v, 'item') else v
         cleaned.append(cleaned_r)
 
-    print(f"\nInserting {len(cleaned)} records...")
-    logger.info(f"Pushing {len(cleaned)} records to datastore...")
-    url = f"{CKAN_URL}/api/3/action/datastore_create"
-    data = {
-        'resource_id': resource_id,
-        'fields': fields,
-        'records': cleaned,
-        'force': True,
-        'calculate_record_count': True,
-    }
-    try:
-        resp = scraper.post(url, json=data, headers=AUTH, timeout=60)
-        if not resp.ok:
-            logger.error(f"datastore_create HTTP {resp.status_code}: {resp.text[:500]}")
-            resp.raise_for_status()
-        result = resp.json()
-        if result.get('success'):
-            print(f"✓ Successfully inserted {len(cleaned)} records")
-            logger.info(f"Inserted {len(cleaned)} records to resource {resource_id}")
-            return True
-        logger.error(f"datastore_create failed: {result.get('error')}")
-        return False
-    except Exception as e:
-        logger.error(f"Error pushing to datastore: {e}")
-        return False
+    print(f"\nInserting {len(cleaned)} records in batches of {PUSH_BATCH}...")
+    logger.info(f"Pushing {len(cleaned)} records to datastore in batches of {PUSH_BATCH}...")
+    starts = range(0, max(len(cleaned), 1), PUSH_BATCH)
+    for i, start in enumerate(starts):
+        last = i == len(starts) - 1
+        data = {
+            'resource_id': resource_id,
+            'records': cleaned[start:start + PUSH_BATCH],
+            'force': True,
+            'calculate_record_count': last,
+        }
+        if i == 0:
+            ok = _post_action('datastore_create', {**data, 'fields': fields})
+        else:
+            ok = _post_action('datastore_upsert', {**data, 'method': 'insert'})
+        if not ok:
+            logger.error(f"Batch {i + 1}/{len(starts)} (rows {start}+) failed")
+            return False
+        print(f"  batch {i + 1}/{len(starts)} ok")
+
+    print(f"✓ Successfully inserted {len(cleaned)} records")
+    logger.info(f"Inserted {len(cleaned)} records to resource {resource_id}")
+    return True
 
 
 def create_resource_view(resource_id: str) -> bool:
