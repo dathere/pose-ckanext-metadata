@@ -1,6 +1,7 @@
 """Self-check for datapump's datastore schema builder. Run: python test_datapump.py"""
 import pandas as pd
-from datapump import build_fields
+import datapump
+from datapump import build_fields, push_to_datastore
 
 df = pd.DataFrame({
     'tstamp': ['2026-08-23 0:00:00'],
@@ -34,4 +35,33 @@ assert build_fields(df, []) == [
     {'id': 'ckan_version', 'type': 'text'},
     {'id': 'new_col', 'type': 'numeric'},
 ]
+
+# push_to_datastore: create first batch with schema, upsert the rest, stop on failure.
+class Resp:
+    def __init__(self, ok): self.ok, self.status_code, self.text = ok, 200 if ok else 502, ''
+    def json(self): return {'success': True}
+
+calls = []
+fail_at = None
+def fake_post(url, json, headers, timeout):
+    calls.append((url.rsplit('/', 1)[1], json))
+    return Resp(len(calls) != fail_at)
+datapump.scraper.post = fake_post
+datapump.PUSH_BATCH = 2
+
+big = pd.DataFrame({'a': [1, 2, 3, 4, 5]})
+assert push_to_datastore('r1', big, [{'id': 'a', 'type': 'int'}])
+assert [c[0] for c in calls] == ['datastore_create', 'datastore_upsert', 'datastore_upsert'], calls
+assert 'fields' in calls[0][1] and 'fields' not in calls[1][1]
+assert calls[1][1]['method'] == 'insert'
+assert sum(len(c[1]['records']) for c in calls) == 5
+assert [c[1]['calculate_record_count'] for c in calls] == [False, False, True]
+
+calls.clear(); fail_at = 2
+assert not push_to_datastore('r1', big, [])
+assert len(calls) == 2  # stops after the failed batch
+
+calls.clear(); fail_at = None
+assert push_to_datastore('r1', big.iloc[:0], [])  # empty df still creates the table
+assert [c[0] for c in calls] == ['datastore_create']
 print("ok")
